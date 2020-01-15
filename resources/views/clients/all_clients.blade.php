@@ -16,7 +16,11 @@
     @include('partials.breadcrumb')
     <!-- End Breadcrumb Area -->
 
-
+    @if ( $message = Session::get('success') )
+    <div class="alert alert-success rounded-pill" role="alert">
+            {{ $message }}
+        </div>
+    @endif
       <!-- Start -->
       <div class="row">
         <div class="col col-md-12">
@@ -42,57 +46,20 @@
                                     <th>Action</th> 
                                 </tr>
                             </thead>
-
                             <tbody>
+                                @foreach ($all_clients as $client)
+                                    
                                 <tr>
-                                    <td>#6791679</td>
+                                    <td>{{ $client->clientid }}</td>
                                     <td class="name">
-                                        <img src="assets/img/user1.jpg" alt="image">
-                                        Atony Rony
+                                        {{-- <img src="assets/img/user1.jpg" alt="image"> --}}
+                                        {{ $client->fname ." ". $client->lname }}
                                     </td>
-                                    <td>12 May 2019</td>
-                                    <td>$564</td>
-                                    <td><span class="badge badge-primary">Received</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#6791674</td>
-                                    <td class="name">
-                                        <img src="assets/img/user2.jpg" alt="image">
-                                        Tom Hardy
-                                    </td>
-                                    <td>11 May 2019</td>
-                                    <td>$954</td>
-                                    <td><span class="badge badge-success">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#6791654</td>
-                                    <td class="name">
-                                        <img src="assets/img/user3.jpg" alt="image">
-                                        Colin Firth
-                                    </td>
-                                    <td>10 May 2019</td>
-                                    <td>$214</td>
-                                    <td><span class="badge badge-danger">Declined</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#6791699</td>
-                                    <td class="name">
-                                        <img src="assets/img/user4.jpg" alt="image">
-                                        Jude Law
-                                    </td>
-                                    <td>09 May 2019</td>
-                                    <td>$120</td>
-                                    <td><span class="badge badge-success">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#6791647</td>
-                                    <td class="name">
-                                        <img src="assets/img/user5.jpg" alt="image">
-                                        Idris Elba
-                                    </td>
-                                    <td>08 May 2019</td>
-                                    <td>$999</td>
-                                    <td><span class="badge badge-primary">Received</span></td>
+                                    <td>{{ $client->email }}</td>
+                                    <td>{{ $client->phone1 }}</td>
+                                    <td>{{ $client->phone2 }}</span></td>
+                                    <td>{{ $client->title }}</span></td>
+                                    {{-- <td><span class="badge badge-primary">Received</span></td> --}}
                                     <td>
                                         <a href="#" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                             <i class="bx bx-envelope"></i>
@@ -105,6 +72,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

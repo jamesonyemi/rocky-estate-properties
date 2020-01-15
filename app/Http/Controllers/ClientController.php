@@ -17,7 +17,9 @@ class ClientController extends Controller
     public function index()
     {
         //code
-        return view('clients.index');
+        $clients     =  DB::table("tblclients");
+        $all_clients =  $clients->get();
+        return view('clients.index', compact('all_clients'));
     }
 
     /**
@@ -46,10 +48,8 @@ class ClientController extends Controller
     {
         //code 
         $postData = static::allExcept();
-        // print_r($postData); exit();
         $createNewClient = DB::table('tblclients')->insert([ $postData ]);
-        exit;
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')->with('success', 'New Client Created Sucessfully');
     }
 
     // /**
