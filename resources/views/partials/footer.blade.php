@@ -1,4 +1,4 @@
-x <!-- Footer -->
+<!-- Footer -->
             <div class="flex-grow-1"></div>
 
 <!-- Start Footer -->

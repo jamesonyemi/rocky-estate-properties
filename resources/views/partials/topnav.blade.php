@@ -284,14 +284,14 @@
                 <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="menu-profile">
                         <span class="name">Hi {{ Auth::user()->name }}</span>
-                        <img src="assets/img/user1.jpg" class="rounded-circle" alt="image">
+                    <img src="{{ asset('assets/img/user1.jpg') }}" class="rounded-circle" alt="user image">
                     </div>
                 </a>
 
                 <div class="dropdown-menu">
                     <div class="dropdown-header d-flex flex-column align-items-center">
                         <div class="figure mb-3">
-                            <img src="assets/img/user1.jpg" class="rounded-circle" alt="image">
+                            <img src="{{ asset('assets/img/user1.jpg') }}" class="rounded-circle" alt="user image">
                         </div>
                         <div class="info text-center">
                             <span class="name">{{ Auth::user()->name }}</span>

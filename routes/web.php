@@ -12,14 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('auth.login');	
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/clients', 'ClientController@index')->name('clients');
-Route::get('/projects', 'ProjectController@index')->name('projects');
-Route::get('/project-status', 'ProjectStatusController@index')->name('project-status');
-Route::get('/project-report', 'ProjectReportController@index')->name('project-report');
-Route::get('/users', 'UserRoleController@index')->name('users');
+// Route::get('/create', 'ClientController@create')->name('new-client');
+Route::resource('clients', 'ClientController');
+// Route::get('/projects', 'ProjectController@index')->name('projects');
+// Route::get('/project-status', 'ProjectStatusController@index')->name('project-status');
+// Route::get('/project-report', 'ProjectReportController@index')->name('project-report');
+// Route::get('/users', 'UserRoleController@index')->name('users');

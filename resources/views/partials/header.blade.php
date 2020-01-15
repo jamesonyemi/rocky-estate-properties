@@ -23,4 +23,4 @@
 <link rel="icon" type="image/png" href=" {{asset('assets/img/favicon.png')}} ">
     </head>
 
-    {{-- @yield('content') --}}
+<body>
