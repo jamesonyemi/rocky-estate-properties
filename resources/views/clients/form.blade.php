@@ -154,7 +154,7 @@
                       <div class="container">
                           <div class="row">
                               <div class="col text-center">
-                                  <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
+                                  <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database    "></i>
                                     Save</button>
                                 </div>
                                 <div class="form-group col-md-2"></div>

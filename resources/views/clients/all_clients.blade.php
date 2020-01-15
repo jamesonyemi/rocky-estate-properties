@@ -34,7 +34,7 @@
                 <hr>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="client-data">
                             <thead>
                                 <tr>
                                     <th>ID</th>

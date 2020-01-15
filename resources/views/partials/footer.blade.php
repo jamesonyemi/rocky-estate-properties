@@ -19,8 +19,10 @@
 
         <!-- Footer Scripts -->
         <!-- Vendors Min JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="{{asset('assets/js/scrollable-datatable.js')}}"></script>
 <script src="{{asset('assets/js/vendors.min.js')}} "></script>
-
 <!-- ApexCharts JS -->
 <script src="{{asset('assets/js/apexcharts/apexcharts.min.js')}} "></script>
 <script src="{{asset('assets/js/apexcharts/apexcharts-stock-prices.js')}} "></script>
