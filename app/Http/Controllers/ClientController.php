@@ -89,11 +89,18 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //code 
-        $client_id  = DB::table('tblclients')->where('clientid', $id)->value('clientid');
-        $clients    = DB::table('tblclients')->all;
-        var_dump($clients); exit;
-        return view('clients.edit', compact('client_id'. 'client_id'));
+        $clients    = DB::table('tblclients')->where('clientid', $id)->get();
+        $genders    = DB::table('vw_clientgenderstatus')->get();    
+        foreach ($clients as $key1 => $value1) {
+            # code...
+            foreach ($genders as $key2 => $value2) {
+                # code...
+                $value1->gender = $value2->genderType;
+                $value1;     
+            }
+        }
+        // $genders    = DB::table('vw_clientgenderstatus')->pluck('genderId', 'genderType');
+        return view('clients.edit', compact('clients', 'genders', 'value1'));
     }
 
     /**
@@ -105,29 +112,12 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        static::processUpdate();
+        $updateData = static::allExcept();
+        $update_clientInfo = DB::table('tblclients')->where('clientid', $id)->update($updateData);
+        return redirect()->route('clients.index')->with('success', 'Client Info Updated');
     }
 
-     private static function processUpdate() 
-     {
-        $clients = DB::table('tblclients')->find($id);
-
-        $clients->title         =   $request->get('title');
-        $clients->lname         =   $request->get('lname');
-        $clients->oname         =   $request->get('oname');
-        $clients->gender        =   $request->get('gender');
-        $clients->nationality   =   $request->get('nationality');
-        $clients->relationship  =   $request->get('relationship');
-        $clients->email         =   $request->get('email');
-        $clients->phone1        =   $request->get('phone1');
-        $clients->phone2        =   $request->get('phone2');
-        $clients->nok           =   $request->get('nok');
-        $clients->dob           =   $request->get('dob');
-
-        $clients->save();
-        return redirect('/clients')->with('success', 'Client Info Updated!');
-     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -137,8 +127,9 @@ class ClientController extends Controller
     public function destroy($id)
     {
         //code
-        $delete_client = Contact::find($id);
-        $delete_client->delete();
-        return redirect('/clients')->with('success', 'Client Info Deleted!');
+        $flag_as_deleted     =  ['isdeleted' => "yes"];
+        $update_clientInfo   =  DB::table('tblclients')->where('clientid', $id)->update($flag_as_deleted);
+        // $delete_client->insert()->delete();
+        return redirect('/clients')->with('success', 'Client Info Deleted');
     }
 }

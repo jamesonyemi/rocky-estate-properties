@@ -112,7 +112,6 @@
                             <label for="validate_gender">Gender</label>
                             <select id="gender" name="gender" class="form-control custom-select"
                                 required>
-                                <option value="">Specify your Gender</option>
                                 @foreach ($genders as $id => $gender_type)
                                 <option value="{{ $gender_type }}" class="text-capitalize">{{ ucwords($id)  }}</option>
                                 @endforeach
@@ -155,8 +154,8 @@
                       <div class="container">
                           <div class="row">
                               <div class="col text-center">
-                                  <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database    "></i>
-                                    Save</button>
+                                  <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
+                                    Add New Client</button>
                                 </div>
                                 <div class="form-group col-md-2"></div>
                         </div>

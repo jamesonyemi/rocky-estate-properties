@@ -44,7 +44,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($all_clients as $client)
-                                    
+                                    @if ( $client->isdeleted === "no" )
                                 <tr>
                                     <td>{{ $client->clientid }}</td>
                                     <td class="name">
@@ -57,23 +57,25 @@
                                     <td>{{ $client->title }}</span></td>
                                     {{-- <td><span class="badge badge-primary">Received</span></td> --}}
                                     <td>
-                                        <a href=" {{ route('clients.show', $client->clientid)}}" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                        {{-- <a href=" {{ route('clients.show', $client->clientid)}}" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                             <i class="bx bx-envelope"></i>
-                                        </a>
+                                        </a> --}}
                                         <a href="{{ route('clients.edit', $client->clientid) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                                 <i class="bx bx-edit"></i>
                                             </a>
-                                        <a  href="{{ route('clients.destroy', $client->clientid)  }}" class="d-inline-block text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                        <a  href="#" class="d-inline-block text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
                                             onclick="event.preventDefault();
                                                      document.getElementById('delete_client').submit();">
-                                            <i class="bx bx-trash"></i>
-                                        </a>
-                                        <form id="delete_client" action="{{ route('clients.destroy', $client->clientid) }}" method="post" style="display: none;">
+                                       
+                                        <form id="delete_client" action="{{ route('clients.destroy', $client->clientid) }}" method="post" >
                                             {{ csrf_field() }}
                                             <input name="_method" type="hidden" value="DELETE">
-                                        </form>
+                                            <i class="bx bx-trash"></i>
+                                        </form> 
+                                    </a>
                                     </td>
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
