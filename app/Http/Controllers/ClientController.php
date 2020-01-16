@@ -18,9 +18,9 @@ class ClientController extends Controller
     public function index()
     {
         //code 
-        $regions     =  DB::table('tblregion')->pluck('rid', 'region');
-        $clients     =  DB::table("tblclients");
-        $all_clients =  $clients->get();
+        $regions        =  DB::table('tblregion')->pluck('rid', 'region');
+        $clients        =  DB::table("tblclients");
+        $all_clients    =  $clients->get();
         return view('clients.index', compact('all_clients', 'regions'));
     }
 
@@ -89,7 +89,11 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+        //code 
+        $client_id  = DB::table('tblclients')->where('clientid', $id)->value('clientid');
+        $clients    = DB::table('tblclients')->all;
+        var_dump($clients); exit;
+        return view('clients.edit', compact('client_id'. 'client_id'));
     }
 
     /**
@@ -101,8 +105,28 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        static::processUpdate();
     }
+
+     private static function processUpdate() 
+     {
+        $clients = DB::table('tblclients')->find($id);
+
+        $clients->title         =   $request->get('title');
+        $clients->lname         =   $request->get('lname');
+        $clients->oname         =   $request->get('oname');
+        $clients->gender        =   $request->get('gender');
+        $clients->nationality   =   $request->get('nationality');
+        $clients->relationship  =   $request->get('relationship');
+        $clients->email         =   $request->get('email');
+        $clients->phone1        =   $request->get('phone1');
+        $clients->phone2        =   $request->get('phone2');
+        $clients->nok           =   $request->get('nok');
+        $clients->dob           =   $request->get('dob');
+
+        $clients->save();
+        return redirect('/clients')->with('success', 'Client Info Updated!');
+     }
 
     /**
      * Remove the specified resource from storage.
@@ -112,6 +136,9 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //code
+        $delete_client = Contact::find($id);
+        $delete_client->delete();
+        return redirect('/clients')->with('success', 'Client Info Deleted!');
     }
 }

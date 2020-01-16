@@ -16,11 +16,7 @@
     @include('partials.breadcrumb')
     <!-- End Breadcrumb Area -->
 
-    @if ( $message = Session::get('success') )
-    <div class="alert alert-success rounded-pill" role="alert">
-            {{ $message }}
-        </div>
-    @endif
+   @include('partials.success_alert')
       <!-- Start -->
       <div class="row">
         <div class="col col-md-12">
@@ -61,15 +57,21 @@
                                     <td>{{ $client->title }}</span></td>
                                     {{-- <td><span class="badge badge-primary">Received</span></td> --}}
                                     <td>
-                                        {{-- <a href="#" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                        <a href=" {{ route('clients.show', $client->clientid)}}" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                             <i class="bx bx-envelope"></i>
-                                        </a> --}}
-                                        <a href="#" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
-                                            <i class="bx bx-edit"></i>
                                         </a>
-                                        <a href="#" class="d-inline-block text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
+                                        <a href="{{ route('clients.edit', $client->clientid) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                <i class="bx bx-edit"></i>
+                                            </a>
+                                        <a  href="{{ route('clients.destroy', $client->clientid)  }}" class="d-inline-block text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('delete_client').submit();">
                                             <i class="bx bx-trash"></i>
                                         </a>
+                                        <form id="delete_client" action="{{ route('clients.destroy', $client->clientid) }}" method="post" style="display: none;">
+                                            {{ csrf_field() }}
+                                            <input name="_method" type="hidden" value="DELETE">
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach
