@@ -17,9 +17,8 @@
 <link rel="stylesheet" href="{{ asset('assets/css/style.css') }} ">
 <!-- Responsive CSS -->
 <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }} ">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<title>{{ config('app.name', 'Laravel') }}</title>
 <link rel="icon" type="image/png" href=" {{asset('assets/img/favicon.png')}} ">
     </head>
 

@@ -113,8 +113,9 @@
                             <select id="gender" name="gender" class="form-control custom-select"
                                 required>
                                 <option value="">Specify your Gender</option>
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
+                                @foreach ($genders as $id => $gender_type)
+                                <option value="{{ $gender_type }}" class="text-capitalize">{{ ucwords($id)  }}</option>
+                                @endforeach
                             </select>
                         </div>
                         

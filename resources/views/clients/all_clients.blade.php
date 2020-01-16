@@ -34,7 +34,7 @@
                 <hr>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table" id="client-data">
+                        <table class="table" id="client-datatable">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -61,9 +61,9 @@
                                     <td>{{ $client->title }}</span></td>
                                     {{-- <td><span class="badge badge-primary">Received</span></td> --}}
                                     <td>
-                                        <a href="#" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                        {{-- <a href="#" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                             <i class="bx bx-envelope"></i>
-                                        </a>
+                                        </a> --}}
                                         <a href="#" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                             <i class="bx bx-edit"></i>
                                         </a>
@@ -80,5 +80,8 @@
             </div>
         </div>
     </div>
-    <!-- End -->
+    <!-- End -->    
 @include('partials.footer')
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="{{asset('assets/js/scrollable_datatable.js')}}" type="text/javascript"></script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+// use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -16,10 +17,11 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //code
+        //code 
+        $regions     =  DB::table('tblregion')->pluck('rid', 'region');
         $clients     =  DB::table("tblclients");
         $all_clients =  $clients->get();
-        return view('clients.index', compact('all_clients'));
+        return view('clients.index', compact('all_clients', 'regions'));
     }
 
     /**
@@ -30,7 +32,8 @@ class ClientController extends Controller
     public function create()
     {
         //code
-        return view('clients.create');
+        $genders = DB::table('tblgender')->pluck('id', 'type');
+        return view('clients.create', compact('genders'));
     }
 
     public static function allExcept() {

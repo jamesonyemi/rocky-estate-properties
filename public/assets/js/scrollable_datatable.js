@@ -1,7 +1,10 @@
+'use strict';
+
 $(document).ready(function() {
-    $('#client-data').DataTable( {
+    $('#client-datatable').DataTable( {
         "scrollY":        "200px",
         "scrollCollapse": true,
-        "paging":         false
-    } );
-} );
+        "paging":         true,
+        "pagingType":     "full_numbers"
+    });
+});
