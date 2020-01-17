@@ -22,7 +22,7 @@
             </div>
             <div class="card-body">
                 <hr style="background-color:fuchsia; opacity:0.1">
-                @foreach ($clients as $client)
+                @foreach ($get_clientById as $client)
                 <form class="mt-5" action="{{ route('clients.update', $client->clientid) }}"  method="POST">
                     {{ csrf_field() }}
                     <input name="_method" type="hidden" value="PUT">
@@ -92,19 +92,23 @@
                     <div class="form-group col-md-4">
                     <label for="validate_country">Nationality</label>
                     <select id="nationality" name="nationality" class="form-control custom-select" required>
-                        <option value="{{ $region_id }}">{{ ucwords($region_name) }}</option>
+                        @foreach ($regions as $region => $value)
+                        <option value="{{ $value->rid }}">{{ ucwords($value->region) }}</option>
+                        @endforeach
                         </select>
                         </div>
                         <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
                             <label for="validate_gender">Gender</label>
                             <select id="gender" name="gender" class="form-control custom-select"
-                                required>                   
-                                <option value="{{ $gender_id }}" class="text-capitalize">{{ ucwords($gender_type)  }}</option>
+                                required>  
+                                @foreach ($genders as $id => $gender_type)
+                                <option value="{{ $gender_type->id }}" class="text-capitalize">{{ ucwords($gender_type->type)  }}</option>
+                                @endforeach
                             </select>
                         </div>
                         {{-- TODO, ADD FUNCTIONALITY TO ALLOW GENDER STATUS TO BE CHANGE --}}
-                        @include('clients.update_gender')
+                        {{-- @include('clients.update_gender') --}}
                     </div>
 
                     <div class="form-row">

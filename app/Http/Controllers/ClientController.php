@@ -89,32 +89,35 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $regions    = DB::table('tblregion')->get();
+        $clients    = DB::table('tblclients')->get();
         $genders    = DB::table('tblgender')->get();    
-        $clients    = DB::table('tblclients')->where('clientid', $id)->get();
+        $regions     = DB::table('tblregion')->get();
+        $get_regionById    = DB::table('tblregion')->pluck('rid','region');
+        $get_clientById    = DB::table('tblclients')->where('clientid', $id)->get();
 
-        foreach ($clients as $key => $client_value) 
-        {
-            foreach ($regions as $region_id => $region) 
-            { 
-                if( ($client_value->nationality === $region->rid) ) 
-                {
-                    $region_name  =  $region->region;
-                    $region_id    =  $region->rid;
-                }
-            }
+        // foreach ($clients as $key => $client_value) 
+        // {
+        //     // foreach ($regions as $region_id => $region) 
+        //     // { 
+        //     //     // if( ($client_value->nationality === $region->rid) ) 
+        //     //     //  {
+        //     //         // $region_name  =  $region->region;
+        //     //         // $region_id    =  $region->rid;
+        //     //         // dd($region_id);
+        //     //    // }
+        //     // }
 
-            foreach ($genders as $gender_id => $gender) 
-            { 
-                if( ($client_value->gender === $gender->id) ) 
-                {
-                    $gender_type  =  $gender->type;
-                    $gender_id    =  $gender->id;
-                }
-            }
-        }
+        //     foreach ($genders as $gender_id => $gender) 
+        //     { 
+        //         if( ($client_value->gender === $gender->id) ) 
+        //         {
+        //             $gender_type  =  $gender->type;
+        //             $gender_id    =  $gender->id;
+        //         }
+        //     }
+        // }
 
-        return view('clients.edit', compact('clients', 'genders', 'regions', 'gender_type', 'gender_id', 'region_name','region_id'));
+        return view('clients.edit', compact('clients', 'genders', 'regions','get_clientById','get_regionById'));
     }
 
     /**
@@ -126,6 +129,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd($_POST);
         $updateData = static::allExcept();
         $update_clientInfo = DB::table('tblclients')->where('clientid', $id)->update($updateData);
         return redirect()->route('clients.index')->with('success', 'Client Info Updated');
@@ -151,8 +155,7 @@ class ClientController extends Controller
         # code...
         $genders =  DB::table('tblgender')->pluck('id', 'type');
         $clients    = DB::table('tblclients')->where('clientid', $id)->get();    
-        $flag     =  ['gender' => $_POST[0]['gender'] ];
-        return view('clients.update_gender', compact('genders', 'clients','flag'));
+        return view('clients.edit', compact('genders', 'clients'));
     }
 
     public function updateGenderStatus(Request $request, $id)
@@ -160,12 +163,10 @@ class ClientController extends Controller
 
 
         # code...
-        $flag_as_deleted     =  ['gender' => "2"];
-        $flag_as     =  ['gender' => $_POST[0]['gender'] ];
+        $flag_as     =  ['gender' => "1"];
         $genders               =  DB::table('tblgender')->pluck('id', 'id');    
         // $gender_modified       =  $request->input('gender');
         $client_gender         =  DB::table('tblclients')->where('clientid', $id)->update($flag_as);
-        dd($client_gender);
         return redirect()->route('clients.edit');
 
     }

@@ -58,6 +58,12 @@
                     <span class="menu-title">Users</span>
                 </a>
             </li>
+            <li class="nav-item ">
+                <a href="pages/Users.html" class="nav-link">
+                    <span class="icon"><i class='bx bx-align-justify'></i></span>
+                    <span class="menu-title">System Setup</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

@@ -23,7 +23,6 @@
                  <div class="form-group col-md-4">
                   <label for="validate_gender">Gender</label>
                   <select id="gender" name="gender" class="form-control custom-select"
-                  {{$flag}}
                       required>
                       @foreach ($genders as $id => $gender_type)
                       <option value="{{ $gender_type->id }}" class="text-capitalize">{{ ucwords($gender_type->type)  }}</option>
