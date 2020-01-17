@@ -92,46 +92,19 @@
                     <div class="form-group col-md-4">
                     <label for="validate_country">Nationality</label>
                     <select id="nationality" name="nationality" class="form-control custom-select" required>
-                        @if ( empty($client->nationality) )
-                        <option value="">Select Nationality</option>
-                        <option value="1">Ghana</option>
-                        <option value="2">USA</option>
-                        <option value="3">Canada</option>
-                        <option value="4">Togo</option>
-                        <option value="5">Mali</option>
-                        <option value="6">Senegal</option>
-                        <option value="7">Portugal</option>
-                        <option value="8">Argentina</option>
-                        <option value="9">Spain</option>
-                        <option value="10">Holland</option>
-                        <option value="11">Iceland</option>
-                        <option value="12">Russia</option>
-                        @else
-                            <option value="{{$client->nationality}}">{{ $client->nationality }}</option>
-                        @endif
+                        <option value="{{ $region_id }}">{{ ucwords($region_name) }}</option>
                         </select>
                         </div>
-                        <div class="form-group col-md-2">
-
-                        </div>
+                        <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
                             <label for="validate_gender">Gender</label>
                             <select id="gender" name="gender" class="form-control custom-select"
-                                required>
-                                @foreach ($genders as $key => $value)                    
-                                {{ $value->genderId }}
-                                <option value="{{ $value->genderId }}" class="text-capitalize">{{ ($value->genderType)  }}</option>
-                                @endforeach
+                                required>                   
+                                <option value="{{ $gender_id }}" class="text-capitalize">{{ ucwords($gender_type)  }}</option>
                             </select>
                         </div>
-
-                        <div class="form-group col-md-4">
-                            <label for="disabledSelect">Gender</label>
-                            <select id="disabledSelect" name="gender" class="form-control custom-select">
-                                <option value="{{ $value->genderId }}" class="text-capitalize">{{ ($value1->genderType)  }}</option>
-                            </select>
-                          </div>
-                        
+                        {{-- TODO, ADD FUNCTIONALITY TO ALLOW GENDER STATUS TO BE CHANGE --}}
+                        @include('clients.update_gender')
                     </div>
 
                     <div class="form-row">
@@ -185,6 +158,35 @@
   <div class="flex-grow-1"></div>
 </div>
 <!-- End Main Content Wrapper -->
-
 @include('partials.footer_script')
-    
+
+<script type="text/javascript">
+'use strict';
+let genderStatus = ( () => {
+     $('#genderStatus').click( (e) => { $('#exampleModal').modal('show'); e.preventDefault(); })
+})();
+
+</script>
+
+<script>
+    $(function (){
+        $.ajaxSetup({
+          headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('#change-gender').on('click', function (event) {
+            // let gender = '';
+          $.post("{{ route('gender_update', $client->clientid) }}", { 
+            // {{ route('clients.update', $client->clientid) }}
+            gender: $(this).data("gender"),
+            // name: $(this).data("name"),
+            // state: $(this).is(":checked") ? 0 : 1 // toggles
+          }).done(function(data) {
+            console.log(gender);
+              console.log(data)
+          });
+        });
+    });
+</script>

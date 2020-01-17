@@ -18,9 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-// Route::get('/create', 'ClientController@create')->name('new-client');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/update-gender/{client_id}/update_gender', 'ClientController@genderStatus')->name('gender_status');
+Route::post('/update-gender/{client_id}', 'ClientController@updateGenderStatus')->name('gender_update');
 Route::resource('clients', 'ClientController');
-// Route::get('/projects', 'ProjectController@index')->name('projects');
-// Route::get('/project-status', 'ProjectStatusController@index')->name('project-status');
-// Route::get('/project-report', 'ProjectReportController@index')->name('project-report');
-// Route::get('/users', 'UserRoleController@index')->name('users');

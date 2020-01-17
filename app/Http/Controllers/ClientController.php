@@ -89,18 +89,32 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
+        $regions    = DB::table('tblregion')->get();
+        $genders    = DB::table('tblgender')->get();    
         $clients    = DB::table('tblclients')->where('clientid', $id)->get();
-        $genders    = DB::table('vw_clientgenderstatus')->get();    
-        foreach ($clients as $key1 => $value1) {
-            # code...
-            foreach ($genders as $key2 => $value2) {
-                # code...
-                $value1->gender = $value2->genderType;
-                $value1;     
+
+        foreach ($clients as $key => $client_value) 
+        {
+            foreach ($regions as $region_id => $region) 
+            { 
+                if( ($client_value->nationality === $region->rid) ) 
+                {
+                    $region_name  =  $region->region;
+                    $region_id    =  $region->rid;
+                }
+            }
+
+            foreach ($genders as $gender_id => $gender) 
+            { 
+                if( ($client_value->gender === $gender->id) ) 
+                {
+                    $gender_type  =  $gender->type;
+                    $gender_id    =  $gender->id;
+                }
             }
         }
-        // $genders    = DB::table('vw_clientgenderstatus')->pluck('genderId', 'genderType');
-        return view('clients.edit', compact('clients', 'genders', 'value1'));
+
+        return view('clients.edit', compact('clients', 'genders', 'regions', 'gender_type', 'gender_id', 'region_name','region_id'));
     }
 
     /**
@@ -129,7 +143,30 @@ class ClientController extends Controller
         //code
         $flag_as_deleted     =  ['isdeleted' => "yes"];
         $update_clientInfo   =  DB::table('tblclients')->where('clientid', $id)->update($flag_as_deleted);
-        // $delete_client->insert()->delete();
         return redirect('/clients')->with('success', 'Client Info Deleted');
+    }
+
+    public function genderStatus($id)
+    {
+        # code...
+        $genders =  DB::table('tblgender')->pluck('id', 'type');
+        $clients    = DB::table('tblclients')->where('clientid', $id)->get();    
+        $flag     =  ['gender' => $_POST[0]['gender'] ];
+        return view('clients.update_gender', compact('genders', 'clients','flag'));
+    }
+
+    public function updateGenderStatus(Request $request, $id)
+    {
+
+
+        # code...
+        $flag_as_deleted     =  ['gender' => "2"];
+        $flag_as     =  ['gender' => $_POST[0]['gender'] ];
+        $genders               =  DB::table('tblgender')->pluck('id', 'id');    
+        // $gender_modified       =  $request->input('gender');
+        $client_gender         =  DB::table('tblclients')->where('clientid', $id)->update($flag_as);
+        dd($client_gender);
+        return redirect()->route('clients.edit');
+
     }
 }
