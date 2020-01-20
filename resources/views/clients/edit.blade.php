@@ -103,7 +103,8 @@
                             <select id="gender" name="gender" class="form-control custom-select"
                                 required>  
                                 @foreach ($genders as $id => $gender_type)
-                                <option value="{{ $gender_type->id }}" class="text-capitalize">{{ ucwords($gender_type->type)  }}</option>
+                                {{-- <option value="{{ $gender_type->id }}" class="text-capitalize">{{ ucwords($gender_type->type)  }}</option> --}}
+                                <option value="{{$gender_type->id}}" {{ $gender_type->id === $client->gender ? 'selected' : ''}}>{{$gender_type->type}}</option>
                                 @endforeach
                             </select>
                         </div>
