@@ -89,21 +89,12 @@
                     <div class="form-row">
                     <div class="form-group col-md-4">
                     <label for="validate_country">Nationality</label>
-                    <select id="nationality" name="nationality" class="form-control custom-select" required>
-                            <option value="">Select Nationality</option>
-                            <option value="1">Ghana</option>
-                            <option value="2">USA</option>
-                            <option value="3">Canada</option>
-                            <option value="4">Togo</option>
-                            <option value="5">Mali</option>
-                            <option value="6">Senegal</option>
-                            <option value="7">Portugal</option>
-                            <option value="8">Argentina</option>
-                            <option value="9">Spain</option>
-                            <option value="10">Holland</option>
-                            <option value="11">Iceland</option>
-                            <option value="12">Russia</option>
-                        </select>
+                    <select id="gender" name="gender" class="form-control custom-select"
+                                required>
+                                @foreach ($countryId as $key => $country)
+                                <option value="{{ $country }}" class="text-capitalize">{{ ucwords($key)  }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group col-md-2">
 

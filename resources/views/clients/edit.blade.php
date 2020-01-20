@@ -22,7 +22,7 @@
             </div>
             <div class="card-body">
                 <hr style="background-color:fuchsia; opacity:0.1">
-                @foreach ($get_clientById as $client)
+                @foreach ($clientId as $client)
                 <form class="mt-5" action="{{ route('clients.update', $client->clientid) }}"  method="POST">
                     {{ csrf_field() }}
                     <input name="_method" type="hidden" value="PUT">
@@ -92,8 +92,9 @@
                     <div class="form-group col-md-4">
                     <label for="validate_country">Nationality</label>
                     <select id="nationality" name="nationality" class="form-control custom-select" required>
-                        @foreach ($regions as $region => $value)
-                        <option value="{{ $value->rid }}">{{ ucwords($value->region) }}</option>
+                        @foreach ($countryId as $key => $country)
+                        <option value="{{ $key }}" {{ old('nationality', in_array($country,[$country]) ? $client->nationality : 'null') == $key ? 'selected' : '' }}>
+                            {{ ucwords($country) }}</option>
                         @endforeach
                         </select>
                         </div>
@@ -102,14 +103,18 @@
                             <label for="validate_gender">Gender</label>
                             <select id="gender" name="gender" class="form-control custom-select"
                                 required>  
+<<<<<<< HEAD
                                 @foreach ($genders as $id => $gender_type)
                                 {{-- <option value="{{ $gender_type->id }}" class="text-capitalize">{{ ucwords($gender_type->type)  }}</option> --}}
                                 <option value="{{$gender_type->id}}" {{ $gender_type->id === $client->gender ? 'selected' : ''}}>{{$gender_type->type}}</option>
+=======
+                                @foreach ($genId as $key => $gender)
+                                <option value="{{ $key }}" {{ old('gender', in_array($gender,[$gender]) ? $client->gender : 'null') == $key ? 'selected' : '' }}>
+                                       {{ $gender }}
+>>>>>>> a396e5716f65a5e44f7ef55095b124e2032abaac
                                 @endforeach
                             </select>
                         </div>
-                        {{-- TODO, ADD FUNCTIONALITY TO ALLOW GENDER STATUS TO BE CHANGE --}}
-                        {{-- @include('clients.update_gender') --}}
                     </div>
 
                     <div class="form-row">
@@ -130,7 +135,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                               <label for="validate_nok">Relationship to Next of Kin</label>
-                              <input type="text" class="form-control" id="relationship"name="relationship" value="{{ $client->relationship }}">
+                              <input type="text" class="form-control" id="relationship"name="relationship"
+                               value="{{ $client->relationship }}">
                           </div>
                           <div class="form-group col-md-2">
   

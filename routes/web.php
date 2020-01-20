@@ -22,3 +22,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/update-gender/{client_id}/update_gender', 'ClientController@genderStatus')->name('gender_status');
 Route::post('/update-gender/{client_id}', 'ClientController@updateGenderStatus')->name('gender_update');
 Route::resource('clients', 'ClientController');
+Route::resource('projects', 'ProjectController');
