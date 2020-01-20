@@ -22,52 +22,53 @@
         <div class="col col-md-12">
             <div class="card recent-orders-box mb-30">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3>Clients</h3>
+                    <h3>projects</h3>
                     <div>
-                        <a href="{{ route('clients.create') }}"> <button type="button" class="btn btn-success btn-sm rounded-pill">New Client</button></a>
+                        <a href="{{ route('projects.create') }}"> <button type="button" class="btn btn-success btn-sm rounded-pill">New project</button></a>
                     </div>
                 </div>
                 <hr>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table" id="client-datatable">
+                        <table class="table" id="project-datatable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Location</th>
+                                    <th>PID</th>
+                                    <th>Owner</th>
                                     <th>Project Title</th>
+                                    <th>Region</th>
+                                    <th>Town</th>
+                                    <th>Phone</th>
                                     <th>Action</th> 
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($all_clients as $client)
-                                    {{-- @if ( $client->isdeleted === "no" ) --}}
+                                @foreach ($all_projects as $project)
+                                    {{-- @if ( $project->isdeleted === "no" ) --}}
                                 <tr>
-                                    <td>{{ $client->clientid }}</td>
+                                    <td>{{ $project->pid }}</td>
                                     <td class="name">
                                         {{-- <img src="assets/img/user1.jpg" alt="image"> --}}
-                                        {{ $client->fname ." ". $client->lname }}
+                                       
+                                        {{ $project->title}}  {{-- TODO -- OwnerName of Project --}}
                                     </td>
-                                    <td>{{ $client->email }}</td>
-                                    <td>{{ $client->phone1 }}</td>
-                                    <td>{{ $client->phone2 }}</span></td>
-                                    <td>{{ $client->title }}</span></td>
+                                    <td>{{ $project->title }}</span></td>
+                                    <td>{{ $project->region }}</span></td>
+                                    <td>{{ $project->town }}</td>
+                                    <td>{{ $project->stage }}</td>
                                     {{-- <td><span class="badge badge-primary">Received</span></td> --}}
                                     <td>
-                                        {{-- <a href=" {{ route('clients.show', $client->clientid)}}" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                        {{-- <a href=" {{ route('projects.show', $project->pid)}}" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                             <i class="bx bx-envelope"></i>
                                         </a> --}}
-                                        <a href="{{ route('clients.edit', $client->clientid) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                        <a href="{{ route('projects.edit', $project->pid) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                                 <i class="bx bx-edit"></i>
                                             </a>
                                         <a  href="#" class="d-inline-block text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
                                             onclick="event.preventDefault();
-                                                     document.getElementById('delete_client').submit();">
+                                                     document.getElementById('delete_project').submit();">
                                        
-                                        <form id="delete_client" action="{{ route('clients.destroy', $client->clientid) }}" method="post" >
+                                        <form id="delete_project" action="{{ route('projects.destroy', $project->pid) }}" method="post" >
                                             {{ csrf_field() }}
                                             <input name="_method" type="hidden" value="DELETE">
                                             <i class="bx bx-trash"></i>

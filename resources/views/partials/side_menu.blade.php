@@ -25,14 +25,14 @@
             <li class="nav-item-title">Pages</li>
 
             <li class="nav-item ">
-                <a href=" {{ url('clients')}} " class="nav-link">
+                <a href=" {{ url('clients') }} " class="nav-link">
                     <span class="icon"><i class='bx bx-user-circle'></i></span>
                     <span class="menu-title">Clients</span>
                 </a>
             </li>
 
             <li class="nav-item ">
-                <a href="pages/project.html" class="nav-link">
+                <a href="{{ url('projects') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-help-circle'></i></span>
                     <span class="menu-title">Projects</span>
                 </a>

@@ -92,9 +92,9 @@
                     <div class="form-group col-md-4">
                     <label for="validate_country">Nationality</label>
                     <select id="nationality" name="nationality" class="form-control custom-select" required>
-                        @foreach ($regionId as $key => $region)
-                        <option value="{{ $key }}" {{ old('nationality', in_array($region,[$region]) ? $client->nationality : 'null') == $key ? 'selected' : '' }}>
-                            {{ ucwords($region) }}</option>
+                        @foreach ($countryId as $key => $country)
+                        <option value="{{ $key }}" {{ old('nationality', in_array($country,[$country]) ? $client->nationality : 'null') == $key ? 'selected' : '' }}>
+                            {{ ucwords($country) }}</option>
                         @endforeach
                         </select>
                         </div>
@@ -129,7 +129,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                               <label for="validate_nok">Relationship to Next of Kin</label>
-                              <input type="text" class="form-control" id="relationship"name="relationship" value="{{ $client->relationship }}">
+                              <input type="text" class="form-control" id="relationship"name="relationship"
+                               value="{{ $client->relationship }}">
                           </div>
                           <div class="form-group col-md-2">
   

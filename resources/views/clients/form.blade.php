@@ -91,8 +91,8 @@
                     <label for="validate_country">Nationality</label>
                     <select id="gender" name="gender" class="form-control custom-select"
                                 required>
-                                @foreach ($regionId as $id => $region)
-                                <option value="{{ $region }}" class="text-capitalize">{{ ucwords($id)  }}</option>
+                                @foreach ($countryId as $key => $country)
+                                <option value="{{ $country }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                 @endforeach
                             </select>
                         </div>

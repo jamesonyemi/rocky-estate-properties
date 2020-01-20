@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-// use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -33,9 +33,9 @@ class ClientController extends Controller
     {
         //code
         $genders = DB::table('tblgender')->pluck('id', 'type');
-        $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
+        $countryId = DB::table('tblcountry')->get()->pluck('id', 'country_name');
 
-        return view('clients.create', compact('genders', 'regionId'));
+        return view('clients.create', compact('genders', 'countryId'));
     }
 
     public static function allExcept()
@@ -94,13 +94,13 @@ class ClientController extends Controller
     {
         $clients    = DB::table('tblclients')->get();
         $genders    = DB::table('tblgender')->get();
-        $regions    = DB::table('tblregion')->get();
+        $countries  = DB::table('tblcountry')->get();
 
-        $genId    = DB::table('tblgender')->get()->pluck('type', 'id');
-        $regionId = DB::table('tblregion')->get()->pluck('region', 'rid');
-        $clientId = DB::table('tblclients')->where('clientid', $id)->get();
+        $genId      = DB::table('tblgender')->get()->pluck('type', 'id');
+        $countryId  = DB::table('tblcountry')->get()->pluck('country_name', 'id');
+        $clientId   = DB::table('tblclients')->where('clientid', $id)->get();
 
-        return view('clients.edit', compact('clientId', 'clients', 'genders', 'genId', 'regions', 'regionId', 'regionId'));
+        return view('clients.edit', compact('clientId', 'clients', 'genders', 'genId', 'countries', 'countryId', ));
     }
 
     /**
