@@ -100,7 +100,7 @@ class ClientController extends Controller
         $countryId  = DB::table('tblcountry')->get()->pluck('country_name', 'id');
         $clientId   = DB::table('tblclients')->where('clientid', $id)->get();
 
-        return view('clients.edit', compact('clientId', 'clients', 'genders', 'genId', 'countries', 'countryId', ));
+        return view('clients.edit', compact('clientId', 'clients', 'genders', 'genId', 'countries', 'countryId' ));
     }
 
     /**

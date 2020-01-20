@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\ClientController;
+
 
 
 class ProjectController extends Controller
@@ -41,12 +43,6 @@ class ProjectController extends Controller
         return view('projects.create', compact('genders', 'townId', 'regionId', 'project_status'));
     }
 
-    public static function allExcept()
-    {
-        $data = request()->except(['_token', '_method']);
-        return $data;
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -57,9 +53,8 @@ class ProjectController extends Controller
     {
         //code 
         // dd($request->input());
-        $postData      = static::allExcept();
+        $postData      = ClientController::allExcept();
         $createProject = DB::table('tblproject')->insertGetId($postData);
-        dd($createProject);
         return redirect()->route('projects.index')->with('success', 'Project #' . "\n" . $createProject . 'Created Sucessfully');
     }
 
@@ -103,14 +98,14 @@ class ProjectController extends Controller
         $countries  = DB::table('tblcountry')->get();
 
         $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
-        $genId    = DB::table('tblgender')->get()->pluck('type', 'id');
+        $townId    = DB::table('tbltown')->get()->pluck('town', 'tid');
         $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
         $projectId = DB::table('tblproject')->where('pid', $projectid)->get();
         $countryId  = DB::table('tblcountry')->get()->pluck('country_name', 'id');
         $project_status =  DB::table('tblstatus')->get()->pluck('status', 'id');
         
 
-        return view('projects.edit', compact('projectId', 'projects', 'countries', 'genId', 
+        return view('projects.edit', compact('projectId', 'projects', 'countries', 'townId', 
                                             'regions', 'countryId', 'project_status'));
     }
 
@@ -124,9 +119,9 @@ class ProjectController extends Controller
     public function update(Request $request, $projectid)
     {
         // dd($_POST);
-        $updateData = static::allExcept();
+        $updateData = ClientController::allExcept();
         $update_project = DB::table('tblproject')->where('pid', $projectid)->update($updateData);
-        return redirect()->route('projects.index')->with('success', 'Project '.$projectid.' Info Updated');
+        return redirect()->route('projects.index')->with('success', 'Project # '.$projectid.' Updated');
     }
 
 

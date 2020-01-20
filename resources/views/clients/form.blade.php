@@ -89,8 +89,8 @@
                     <div class="form-row">
                     <div class="form-group col-md-4">
                     <label for="validate_country">Nationality</label>
-                    <select id="gender" name="gender" class="form-control custom-select"
-                                required>
+                    <select id="gender" name="gender" class="form-control custom-select"  required>
+                                <option>-- select --</option>
                                 @foreach ($countryId as $key => $country)
                                 <option value="{{ $country }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                 @endforeach
@@ -101,8 +101,8 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="validate_gender">Gender</label>
-                            <select id="gender" name="gender" class="form-control custom-select"
-                                required>
+                            <select id="gender" name="gender" class="form-control custom-select"  required>
+                            <option>-- select --</option>
                                 @foreach ($genders as $id => $gender_type)
                                 <option value="{{ $gender_type }}" class="text-capitalize">{{ ucwords($id)  }}</option>
                                 @endforeach

@@ -39,9 +39,9 @@
             </li>
 
             <li class="nav-item ">
-                <a href="pages/project-status.html" class="nav-link">
+                <a href="{{ url('onsite-visit/create') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-receipt'></i></span>
-                    <span class="menu-title">Status</span>
+                    <span class="menu-title">On Site Visit</span>
                 </a>
             </li>
 

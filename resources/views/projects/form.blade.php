@@ -73,6 +73,7 @@
                     <div class="form-group col-md-4">
                         <label for="validate_country">Region</label>
                         <select id="region" name="region" class="form-control custom-select" required>
+                            <option>-- select --</option>
                           @foreach ($regionId as $id => $region)
                                 <option value="{{ $region }}" class="text-capitalize">{{ ucwords($id)  }}</option>
                                 @endforeach
@@ -84,9 +85,10 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_country">Town</label>
-                             <select id="town" name="town" class="form-control custom-select" required>
-                          @foreach ($regionId as $id => $region)
-                                <option value="{{ $region }}" class="text-capitalize">{{ ucwords($id)  }}</option>
+                            <select id="town" name="town" class="form-control custom-select" required>
+                                <option>-- select --</option>
+                          @foreach ($townId as $key => $town)
+                                <option value="{{ $town }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                 @endforeach
                         </select>
 
@@ -105,8 +107,9 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="project_state">Current State of Project</label>
-                            <select id="stage" name="stage" class="form-control custom-select" required>
-                            @foreach ($project_status as $key => $status) 
+                            <select id="statusid" name="statusid" class="form-control custom-select" required>
+                                <option>-- select --</option>
+                                @foreach ($project_status as $key => $status) 
                                 <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                 @endforeach
                             </select>
@@ -117,7 +120,7 @@
                        
                         <div class="form-group col-md-4">
                             <label for="validate_phone_number">Total Cost of Project</label>
-                            <input type="text" class="form-control" id="totalcost"
+                            <input type="number" step="0.1" class="form-control" id="totalcost"
                                 name="totalcost" required>
 
                         </div> 

@@ -101,15 +101,10 @@
                         <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
                             <label for="validate_gender">Gender</label>
-                            <select id="gender" name="gender" class="form-control custom-select"
-                                required>  
-                                @foreach ($genders as $id => $gender_type)
-                                {{-- <option value="{{ $gender_type->id }}" class="text-capitalize">{{ ucwords($gender_type->type)  }}</option> --}}
-                                <option value="{{$gender_type->id}}" {{ $gender_type->id === $client->gender ? 'selected' : ''}}>{{$gender_type->type}}</option>
+                            <select id="gender" name="gender" class="form-control custom-select" required>  
                                 @foreach ($genId as $key => $gender)
                                 <option value="{{ $key }}" {{ old('gender', in_array($gender,[$gender]) ? $client->gender : 'null') == $key ? 'selected' : '' }}>
-                                       {{ $gender }}
-
+                                       {{ ucwords($gender) }}
                                 @endforeach
                             </select>
                         </div>

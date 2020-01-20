@@ -22,7 +22,7 @@
         <div class="col col-md-12">
             <div class="card recent-orders-box mb-30">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3>projects</h3>
+                    <h3>Projects</h3>
                     <div>
                         <a href="{{ route('projects.create') }}"> <button type="button" class="btn btn-success btn-sm rounded-pill">New project</button></a>
                     </div>
@@ -38,7 +38,7 @@
                                     <th>Project Title</th>
                                     <th>Region</th>
                                     <th>Town</th>
-                                    <th>Phone</th>
+                                    <th>Status</th>
                                     <th>Action</th> 
                                 </tr>
                             </thead>
@@ -55,7 +55,7 @@
                                     <td>{{ $project->title }}</span></td>
                                     <td>{{ $project->region }}</span></td>
                                     <td>{{ $project->town }}</td>
-                                    <td>{{ $project->stage }}</td>
+                                    <td>{{ $project->statusid }}</td>
                                     {{-- <td><span class="badge badge-primary">Received</span></td> --}}
                                     <td>
                                         {{-- <a href=" {{ route('projects.show', $project->pid)}}" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">

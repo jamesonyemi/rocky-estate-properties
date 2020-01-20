@@ -87,9 +87,9 @@
                         <div class="form-group col-md-4">
                             <label for="validate_country">Town</label>
                              <select id="town" name="town" class="form-control custom-select" required>
-                            @foreach ($countryId as $key => $country)
-                        <option value="{{ $key }}" {{ old('town', in_array($country,[$country]) ? $project->town : 'null') == $key ? 'selected' : '' }}>
-                            {{ ucwords($country) }}</option>
+                            @foreach ($townId as $key => $town)
+                        <option value="{{ $key }}" {{ old('town', in_array($town,[$town]) ? $project->town : 'null') == $key ? 'selected' : '' }}>
+                            {{ ucwords($town) }}</option>
                         @endforeach
                         </select>
 
@@ -107,9 +107,9 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="project_state">Current State of Project</label>
-                            <select id="stage" name="stage" class="form-control custom-select" required>
+                            <select id="statusid" name="statusid" class="form-control custom-select" required>
                             @foreach ($project_status as $key => $status) 
-                               <option value="{{ $key }}" {{ old('stage', in_array($status,[$status]) ? $project->town : 'null') == $key ? 'selected' : '' }}>
+                               <option value="{{ $key }}" {{ old('statusid', in_array($status,[$status]) ? $project->town : 'null') == $key ? 'selected' : '' }}>
                             {{ ucwords($status) }}</option>
                                 @endforeach
                             </select>
