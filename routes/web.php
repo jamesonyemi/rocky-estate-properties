@@ -24,3 +24,6 @@ Route::post('/update-gender/{client_id}', 'ClientController@updateGenderStatus')
 Route::resource('clients', 'ClientController');
 Route::resource('projects', 'ProjectController');
 Route::resource('onsite-visit', 'OnsiteVisitController');
+
+Route::get('/projects/create/{id}','ProjectController@getTowns');
+

@@ -42,5 +42,9 @@
 
 <!-- Custom JS -->
 <script src="{{asset('assets/js/custom.js')}}"></script>
+<script src="{{asset('assets/js/jquery-3.3.1.js')}}" type="text/javascript"></script>
+<script src="{{asset('assets/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('assets/js/scrollable_datatable.js')}}" type="text/javascript"></script>
+<script src="{{asset('assets/js/dynamic_dropdown.js')}}" type="text/javascript"></script>
 </body>
 </html>

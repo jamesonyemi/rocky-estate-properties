@@ -17,6 +17,7 @@
     <!-- End Breadcrumb Area -->
 
    @include('partials.success_alert')
+   
       <!-- Start -->
       <div class="row">
         <div class="col col-md-12">
@@ -30,7 +31,7 @@
                 <hr>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table" id="project-datatable">
+                        <table class="table" id="dtable" >
                             <thead>
                                 <tr>
                                     <th>PID</th>
@@ -47,7 +48,7 @@
                                     {{-- @if ( $project->isdeleted === "no" ) --}}
                                 <tr>
                                     <td>{{ $project->pid }}</td>
-                                    <td class="name">
+                                    <td >
                                         {{-- <img src="assets/img/user1.jpg" alt="image"> --}}
                                        
                                         {{ $project->title}}  {{-- TODO -- OwnerName of Project --}}
@@ -85,8 +86,7 @@
             </div>
         </div>
     </div>
+    
     <!-- End -->    
+    
 @include('partials.footer')
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script src="{{asset('assets/js/scrollable_datatable.js')}}" type="text/javascript"></script>

@@ -36,11 +36,19 @@ class ProjectController extends Controller
     {
         //code
         $genders  = DB::table('tblgender')->pluck('id', 'type');
+        $regions  = DB::table('tblregion')->pluck('region', 'rid');
         $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
         $townId = DB::table('tbltown')->get()->pluck('tid', 'town');
+        $titleId = DB::table('tbltitle')->get()->pluck('tid', 'salutation');
         $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
 
-        return view('projects.create', compact('genders', 'townId', 'regionId', 'project_status'));
+        return view('projects.create', compact('genders', 'townId','regions', 'regionId', 'project_status','titleId'));
+    }
+
+    public function getTowns($id) 
+    {
+        $towns =  DB::table("tbltown")->where("rid",$id)->pluck("town","rid");
+        return json_encode($towns);
     }
 
     /**
@@ -101,7 +109,7 @@ class ProjectController extends Controller
         $townId    = DB::table('tbltown')->get()->pluck('town', 'tid');
         $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
         $projectId = DB::table('tblproject')->where('pid', $projectid)->get();
-        $countryId  = DB::table('tblcountry')->get()->pluck('country_name', 'id');
+        $countryId  = DB::table('tblcountry')->get()->pluck('region_name', 'id');
         $project_status =  DB::table('tblstatus')->get()->pluck('status', 'id');
         
 

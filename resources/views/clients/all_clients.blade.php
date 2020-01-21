@@ -30,7 +30,7 @@
                 <hr>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table" id="client-datatable">
+                        <table class="table" id="dtable">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -46,24 +46,24 @@
                                 @foreach ($all_clients as $client)
                                     {{-- @if ( $client->isdeleted === "no" ) --}}
                                 <tr>
-                                    <td>{{ $client->clientid }}</td>
-                                    <td class="name">
+                                    <td style='text-align:left'>{{ $client->clientid }}</td>
+                                    <td style='text-align:left'>
                                         {{-- <img src="assets/img/user1.jpg" alt="image"> --}}
                                         {{ $client->fname ." ". $client->lname }}
                                     </td>
-                                    <td>{{ $client->email }}</td>
+                                    <td style='text-align:left'>{{ $client->email }}</td>
                                     <td>{{ $client->phone1 }}</td>
                                     <td>{{ $client->phone2 }}</span></td>
                                     <td>{{ $client->title }}</span></td>
                                     {{-- <td><span class="badge badge-primary">Received</span></td> --}}
                                     <td>
-                                        {{-- <a href=" {{ route('clients.show', $client->clientid)}}" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
-                                            <i class="bx bx-envelope"></i>
-                                        </a> --}}
+                                        <a href=" {{ route('clients.show', $client->clientid)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                            <i data-feather="eye"></i>
+                                        </a>
                                         <a href="{{ route('clients.edit', $client->clientid) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                                 <i class="bx bx-edit"></i>
                                             </a>
-                                        <a  href="#" class="d-inline-block text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                        <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
                                             onclick="event.preventDefault();
                                                      document.getElementById('delete_client').submit();">
                                        
@@ -86,6 +86,3 @@
     </div>
     <!-- End -->    
 @include('partials.footer')
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script src="{{asset('assets/js/scrollable_datatable.js')}}" type="text/javascript"></script>

@@ -1,7 +1,7 @@
 'use strict';
 
 $(document).ready(function() {
-    $('#client-datatable').DataTable( {
+    $('#dtable').DataTable( {
         "scrollY":        "200px",
         "scrollCollapse": true,
         "paging":         true,

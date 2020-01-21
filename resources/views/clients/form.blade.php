@@ -27,8 +27,12 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_title">Title</label>
-                            <input type="text" class="form-control " placeholder="" id="title"
-                                name="title">
+                            <select id="title" name="title" class="form-control custom-select" required>
+                                <option>-- select --</option>
+                              @foreach ($titleId as $id => $title)
+                                    <option value="{{ $title }}" class="text-capitalize">{{ ucwords($id)  }}</option>
+                                    @endforeach
+                            </select>
                         </div>
                         <div class="form-group col-md-2">
 

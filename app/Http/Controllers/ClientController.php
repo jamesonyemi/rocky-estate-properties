@@ -34,8 +34,9 @@ class ClientController extends Controller
         //code
         $genders = DB::table('tblgender')->pluck('id', 'type');
         $countryId = DB::table('tblcountry')->get()->pluck('id', 'country_name');
+        $titleId = DB::table('tbltitle')->get()->pluck('tid', 'salutation');
 
-        return view('clients.create', compact('genders', 'countryId'));
+        return view('clients.create', compact('genders', 'countryId','titleId'));
     }
 
     public static function allExcept()
@@ -81,7 +82,24 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        //
+        //code
+        $clients    = DB::table('tblclients')->get();
+        $genders    = DB::table('tblgender')->get();
+        $countries  = DB::table('tblcountry')->get();
+        
+        $genId      = DB::table('tblgender')->get()->pluck('type', 'id');
+        $countryId  = DB::table('tblcountry')->get()->pluck('country_name', 'id');
+        $clientId   = DB::table('tblclients')->where('clientid', $id)->get();
+        $format_date = static::textualDate();
+
+        return view('clients.show', compact('clientId', 'clients', 'genders', 'genId', 'countries', 'countryId', 'formate_date' ));
+    }
+
+    public static function textualDate( $date_field = '')
+    {
+        # code...
+        $text_format = date("l, jS F, Y", strtotime($date_field));
+        return $text_format;
     }
 
     /**

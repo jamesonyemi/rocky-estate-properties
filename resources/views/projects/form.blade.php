@@ -63,48 +63,51 @@
                     {{ csrf_field() }}
                     <div class="form-row">
                         <div class="form-group col-md-4">
+                            <label for="validate_region">Client</label>
+                                <select id="town" name="town" class="form-control custom-select" required>
+                                    <option>-- select --</option>
+                            @foreach ($townId as $key => $town)
+                                    <option value="{{ $town }}" class="text-capitalize">{{ ucwords($key)  }}</option>
+                                    @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2"> </div>
+                        <div class="form-group col-md-4">
                             <label for="validate_title">Project Title</label>
-                            <input type="text" class="form-control " placeholder="" id="title"
-                                name="title" required>
+                                <select id="title" name="title" class="form-control custom-select" required>
+                                    <option>-- select --</option>
+                                  @foreach ($titleId as $id => $title)
+                                        <option value="{{ $title }}" class="text-capitalize">{{ ucwords($id)  }}</option>
+                                        @endforeach
+                                </select>
                         </div>
-                        <div class="form-group col-md-2">
-
-                        </div>
-                    <div class="form-group col-md-4">
-                        <label for="validate_country">Region</label>
-                        <select id="region" name="region" class="form-control custom-select" required>
-                            <option>-- select --</option>
-                          @foreach ($regionId as $id => $region)
-                                <option value="{{ $region }}" class="text-capitalize">{{ ucwords($id)  }}</option>
-                                @endforeach
-                        </select>
+                    </div>
                     
-                    </div>
-                    </div>
-               
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="validate_country">Town</label>
-                            <select id="town" name="town" class="form-control custom-select" required>
+                            <label for="validate_region">Region</label>
+                            <select id="region" name="region" class="form-control custom-select" required>
                                 <option>-- select --</option>
-                          @foreach ($townId as $key => $town)
-                                <option value="{{ $town }}" class="text-capitalize">{{ ucwords($key)  }}</option>
-                                @endforeach
-                        </select>
-
+                            @foreach ($regions as $id => $region)
+                                    <option value="{{ $id }}" class="text-capitalize">{{ ucwords($region)  }}</option>
+                                    @endforeach
+                            </select>
                         </div>
-                        <div class="form-group col-md-2">
-
+                        <div class="form-group col-md-2"></div>
+                
+                        <div class="form-group col-md-4">
+                            <label for="title">Towns:</label>
+                            <select id="town" name="town" class="form-control">
+                            </select>
                         </div>
-                       
+                    </div>
+                    <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="other_landmark">Other Land Marks Close to Project</label>
                             <input type="text" class="form-control" id="landmark"
                                 name="landmark" required>
-
                         </div>
-                    </div>
-                    <div class="form-row">
+                        <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-4">
                             <label for="project_state">Current State of Project</label>
                             <select id="statusid" name="statusid" class="form-control custom-select" required>
@@ -114,24 +117,18 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-2">
-
-                        </div>
-                       
+                    </div>
+                    <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_phone_number">Total Cost of Project</label>
                             <input type="number" step="0.1" class="form-control" id="totalcost"
                                 name="totalcost" required>
-
-                        </div> 
-                    </div>
-                    <div class="form-row">
+                        </div>
+                        <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_othername">Project Description</label>
-                            <textarea name="description" id="description" cols="100%" rows="10" required></textarea>
+                            <textarea name="description" id="description" cols="43" rows="6" required></textarea>
                         </div>
-                            {{-- <div class="form-group col-md-2"></div> --}}
-                        
                     </div>
                      <hr style="background-color:fuchsia; opacity:0.1">
                       <div class="container">
@@ -154,6 +151,6 @@
 <!-- End Main Content Wrapper -->
 
 @include('partials.footer_script')
-    
+        
 
       
