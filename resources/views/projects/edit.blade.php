@@ -74,9 +74,9 @@
                     <div class="form-group col-md-4">
                         <label for="validate_country">Region</label>
                         <select id="region" name="region" class="form-control custom-select" required>
-                         @foreach ($countryId as $key => $country)
-                        <option value="{{ $key }}" {{ old('region', in_array($country,[$country]) ? $project->region : 'null') == $key ? 'selected' : '' }}>
-                            {{ ucwords($country) }}</option>
+                            @foreach ($regionId as $key => $value)
+                        <option value="{{ $key }}" {{ old('region', in_array($value,[$value]) ? $project->rid : 'null') === $key ? 'selected' : '' }}>
+                            {{ ucwords($value) }}</option>
                         @endforeach
                         </select>
                     
@@ -126,9 +126,10 @@
                         </div> 
                     </div>
                     <div class="form-row">
+                        <div class="form-group col-md-6"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_othername">Project Description</label>
-                        <textarea name="description" id="description" cols="100%" rows="10" value="{{ old('description', $project->description) }}"> 
+                        <textarea name="description" id="description" cols="43" rows="6" required value="{{ old('description', $project->description) }}"> 
                             {{$project->description}}</textarea>
                         </div>
                             {{-- <div class="form-group col-md-2"></div> --}}

@@ -22,9 +22,11 @@ class ProjectController extends Controller
         //code 
         $regions        =  DB::table('tblregion')->pluck('rid', 'region');
         $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
+        $all_clients    =  DB::table('tblclients')->get();
         $projects       =  DB::table("tblproject");
         $all_projects   =  $projects->get();
-        return view('projects.index', compact('all_projects', 'regions', 'project_status'));
+
+        return view('projects.index', compact('all_projects', 'regions', 'project_status', 'all_clients'));
     }
 
     /**
@@ -37,12 +39,15 @@ class ProjectController extends Controller
         //code
         $genders  = DB::table('tblgender')->pluck('id', 'type');
         $regions  = DB::table('tblregion')->pluck('region', 'rid');
+
         $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
-        $townId = DB::table('tbltown')->get()->pluck('tid', 'town');
-        $titleId = DB::table('tbltitle')->get()->pluck('tid', 'salutation');
+        $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
+        $titleId  = DB::table('tbltitle')->get()->pluck('tid', 'salutation');
         $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
 
-        return view('projects.create', compact('genders', 'townId','regions', 'regionId', 'project_status','titleId'));
+        $all_clients    =  DB::table('tblclients')->get();
+
+        return view('projects.create', compact('genders', 'townId','regions', 'regionId', 'project_status','titleId', 'all_clients'));
     }
 
     public function getTowns($id) 
@@ -100,21 +105,21 @@ class ProjectController extends Controller
      */
     public function edit($projectid)
     {
-        $projects = DB::table('tblproject')->get();
-        $genders  = DB::table('tblgender')->get();
-        $regions  = DB::table('tblregion')->get();
-        $countries  = DB::table('tblcountry')->get();
+        $projects   =  DB::table('tblproject')->get();
+        $genders    =  DB::table('tblgender')->get();
+        $regions    =  DB::table('tblregion')->get();
+        $countries  =  DB::table('tblcountry')->get();
 
-        $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
-        $townId    = DB::table('tbltown')->get()->pluck('town', 'tid');
-        $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
-        $projectId = DB::table('tblproject')->where('pid', $projectid)->get();
-        $countryId  = DB::table('tblcountry')->get()->pluck('region_name', 'id');
-        $project_status =  DB::table('tblstatus')->get()->pluck('status', 'id');
+        $project_status = DB::table('tblstatus')->get()->pluck('id', 'status');
+        $townId         = DB::table('tbltown')->get()->pluck('town', 'tid');
+        $regionId       = DB::table('tblregion')->get()->pluck('region', 'rid');
+        $projectId      = DB::table('tblproject')->where('pid', $projectid)->get();
+        $countryId      = DB::table('tblcountry')->get()->pluck('region_name', 'id');
+        $project_status = DB::table('tblstatus')->get()->pluck('status', 'id');
         
 
         return view('projects.edit', compact('projectId', 'projects', 'countries', 'townId', 
-                                            'regions', 'countryId', 'project_status'));
+                                            'regions', 'regionId','countryId', 'project_status'));
     }
 
     /**

@@ -64,11 +64,12 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_region">Client</label>
-                                <select id="town" name="town" class="form-control custom-select" required>
+                                <select id="clientid" name="clientid" class="form-control custom-select" required>
                                     <option>-- select --</option>
-                            @foreach ($townId as $key => $town)
-                                    <option value="{{ $town }}" class="text-capitalize">{{ ucwords($key)  }}</option>
-                                    @endforeach
+                            @foreach ($all_clients as $key => $client)
+                                <option value="{{ $client->clientid }}" class="text-capitalize">
+                                    {{ ucwords( ($client->title)."\n".($client->fname)."\n".($client->lname))  }}</option>
+                            @endforeach
                             </select>
                         </div>
                         <div class="form-group col-md-2"> </div>
