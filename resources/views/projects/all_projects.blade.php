@@ -80,6 +80,17 @@
                                 {{-- @endif --}}
                                 @endforeach
                             </tbody>
+                             <tfoot>
+            <tr>
+                 <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Status</th>
+                <th></th> 
+            </tr>
+        </tfoot>
                         </table>
                     </div>
                 </div>
