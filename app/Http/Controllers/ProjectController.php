@@ -25,8 +25,10 @@ class ProjectController extends Controller
         $all_clients    =  DB::table('tblclients')->get();
         $projects       =  DB::table("tblproject");
         $all_projects   =  $projects->get();
+        $clientWithProjects = ClientController::clientWithProjects();
 
-        return view('projects.index', compact('all_projects', 'regions', 'project_status', 'all_clients'));
+
+        return view('projects.index', compact('all_projects', 'regions', 'project_status', 'all_clients', 'clientWithProjects'));
     }
 
     /**

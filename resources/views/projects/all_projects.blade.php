@@ -64,20 +64,25 @@
                                         </thead>
 
                                         <tbody>
-                                            @foreach ($all_projects as $project)
+                                            @foreach ($clientWithProjects as $project)
                                                 {{-- @if ( $project->isdeleted === "no" ) --}}
                                             <tr>
                                                 <td style='text-align:center'>{{ $project->pid }}</td>
-                                                <td style='text-align:left'>
-                                                    {{-- <img src="assets/img/user1.jpg" alt="image"> --}}
-                                                   
-                                                    {{ $project->title}}  {{-- TODO -- OwnerName of Project --}}
+                                                <td style='text-align:left'>{{ $project->full_name }}</span></td>
+                                                <td style='text-align:left'> {{ $project->project_title}} </td>
+                                                <td>{{ $project->region }}</span></td>
+                                                <td>{{ $project->location }}</td>
+                                                <td>
+                                                    @if ($project->client_project_status == 'completed')
+                                                    <span class="badge badge-primary">{!! ucfirst($project->client_project_status) !!}</span>
+                                                        
+                                                    @endif
+                                                    
+                                                    @if ($project->client_project_status === 'ongoing')
+                                                    <span class="badge badge-primary">{!! ucfirst($project->client_project_status) !!}</span>
+                                                        
+                                                    @endif
                                                 </td>
-                                                <td style='text-align:left'>{{ $project->title }}</span></td>
-                                                <td>{{ $project->rid }}</span></td>
-                                                <td>{{ $project->town }}</td>
-                                                <td>{{ $project->statusid }}</td>
-                                                {{-- <td><span class="badge badge-primary">Received</span></td> --}}
                                                 <td>
                                                     <a href=" {{ route('projects.show', $project->pid)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>

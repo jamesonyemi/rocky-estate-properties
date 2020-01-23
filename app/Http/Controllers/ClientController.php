@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
-
+use PhpParser\Node\Expr\AssignOp\Concat;
 
 class ClientController extends Controller
 {
@@ -21,7 +21,27 @@ class ClientController extends Controller
         $regions        =  DB::table('tblregion')->pluck('rid', 'region');
         $clients        =  DB::table("tblclients");
         $all_clients    =  $clients->get();
-        return view('clients.index', compact('all_clients', 'regions'));
+        $clientWithProjects = static::clientWithProjects();
+            // dd($clientWithProjects); 
+        return view('clients.index', compact('all_clients', 'regions','clientWithProjects'));
+    }
+
+    public static function clientWithProjects()
+    {
+        # code...
+        $clientWithProjects  = DB::table('tblclients')
+            ->join('tblproject', 'tblproject.clientid', '=', 'tblclients.clientid')
+            ->join('tbltown', 'tbltown.tid', '=', 'tblproject.tid')
+            ->join('tblstatus', 'tblstatus.id','=', 'tblproject.statusid')
+            ->join('tblregion', 'tblregion.rid', '=', 'tblproject.rid')
+            ->select('tblproject.rid as region_id', 'tblregion.region', 'tbltown.tid as location_id',
+                        'tbltown.town as location', 'tblproject.title as project_title','tblclients.phone1 as client_prime_contact',
+                        'tblclients.phone2 as client_second_contact','tblclients.email as client_email','tblproject.pid',   
+                        'tblclients.clientid',( DB::raw('Concat(tblclients.fname, " ", tblclients.lname) as full_name') ),  
+                        'tblstatus.status as client_project_status', 'tblstatus.id as client_project_status_id')
+            ->orderBy('tblproject.pid')->get()->toArray();
+            
+            return $clientWithProjects;
     }
 
     /**

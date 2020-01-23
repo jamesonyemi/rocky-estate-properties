@@ -16,7 +16,7 @@ $(document).ready(function() {
         "paging": true,
         "pagingType": "full_numbers",
         initComplete: function() {
-            this.api().columns([5]).every(function() {
+            this.api().columns().every(function() {
                 var column = this;
                 var select = $('<select><option value=""></option></select>')
                     .appendTo($(column.footer()).empty())
