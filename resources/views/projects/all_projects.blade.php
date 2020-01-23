@@ -49,7 +49,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title"></h4>
-                                    <div class="card-title-desc divider">  </div    >   
+                                    <div class="card-title-desc">  </div>   
                                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
@@ -64,25 +64,16 @@
                                         </thead>
 
                                         <tbody>
+
                                             @foreach ($clientWithProjects as $project)
                                                 {{-- @if ( $project->isdeleted === "no" ) --}}
                                             <tr>
-                                                <td style='text-align:center'>{{ $project->pid }}</td>
-                                                <td style='text-align:left'>{{ $project->full_name }}</span></td>
-                                                <td style='text-align:left'> {{ $project->project_title}} </td>
+                                            <td ></td>
+                                                <td >{{ $project->full_name }}</span></td>
+                                                <td > {{ $project->project_title}} </td>
                                                 <td>{{ $project->region }}</span></td>
                                                 <td>{{ $project->location }}</td>
-                                                <td>
-                                                    @if ($project->client_project_status == 'completed')
-                                                    <span class="badge badge-primary">{!! ucfirst($project->client_project_status) !!}</span>
-                                                        
-                                                    @endif
-                                                    
-                                                    @if ($project->client_project_status === 'ongoing')
-                                                    <span class="badge badge-primary">{!! ucfirst($project->client_project_status) !!}</span>
-                                                        
-                                                    @endif
-                                                </td>
+                                                <td><span class="badge badge-success">{{ ucfirst($project->client_project_status) }}</span></td>    
                                                 <td>
                                                     <a href=" {{ route('projects.show', $project->pid)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>
@@ -103,19 +94,10 @@
                                                 </td>
                                             </tr>
                                             {{-- @endif --}}
+                                          
                                             @endforeach
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>Status</th>
-                                            <th></th> 
-                                            </tr>
-                                        </tfoot>
+
                                     </table>
 
                                 </div>

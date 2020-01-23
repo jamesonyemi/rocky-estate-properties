@@ -20,7 +20,7 @@
 
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3>Project Details</h3>
+                <h3>Project Summary</h3>
 
                 <!-- <div class="dropdown">
                     <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
@@ -58,86 +58,82 @@
                         </div>
                     </div>
                 </form> -->
-
-                <form class="mt-5" action="{{route('projects.store') }}"  method="POST">
-                    {{ csrf_field() }}
+                @foreach ($projectId as $project)
                     <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="validate_region">Client</label>
-                                <select id="clientid" name="clientid" class="form-control custom-select" required>
-                                    <option>-- select --</option>
-                            @foreach ($all_clients as $key => $client)
-                                <option value="{{ $client->clientid }}" class="text-capitalize">
-                                    {{ ucwords( ($client->title)."\n".($client->fname)."\n".($client->lname))  }}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
                             <label for="validate_title">Project Title</label>
-                            <input type="text" class="form-control" id="title"
-                            name="title" required>
-                                
+                            <input type="text" class="form-control " placeholder="" id="title"
+                                name="title" value="{{ old('title', $project->title) }}" disabled>
                         </div>
-                    </div>
+                        <div class="form-group col-md-2">
+
+                        </div>
+                    <div class="form-group col-md-4">
+                        <label for="validate_country">Region</label>
+                        <select  id="region" name="region" class="form-control custom-select" disabled>
+                            @foreach ($regionId as $key => $value)
+                        <option value="{{ $key }}" {{ old('region', in_array($value,[$value]) ? $project->rid : 'null') === $key ? 'selected' : '' }}>
+                            {{ ucwords($value) }}</option>
+                        @endforeach
+                        </select>
                     
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="validate_region">Region</label>
-                            <select id="region" name="region" class="form-control custom-select" required>
-                                <option>-- select --</option>
-                            @foreach ($regions as $id => $region)
-                                    <option value="{{ $id }}" class="text-capitalize">{{ ucwords($region)  }}</option>
-                                    @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2"></div>
-                
-                        <div class="form-group col-md-4">
-                            <label for="title">Towns:</label>
-                            <select id="town" name="town" class="form-control">
-                            </select>
-                        </div>
                     </div>
+                    </div>
+               
                     <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="validate_country">Town</label>
+                             <select id="town" name="town" class="form-control custom-select" disabled>
+                            @foreach ($townId as $key => $town)
+                        <option value="{{ $key }}" {{ old('town', in_array($town,[$town]) ? $project->tid : 'null') == $key ? 'selected' : '' }}>
+                            {{ ucwords($town) }}</option>
+                        @endforeach
+                        </select>
+
+                        </div>
+                        <div class="form-group col-md-2">
+
+                        </div>
+                       
                         <div class="form-group col-md-4">
                             <label for="other_landmark">Other Land Marks Close to Project</label>
-                            <input type="text" class="form-control" id="landmark"
-                                name="landmark" required>
+                            <input type="text" class="form-control" id="landmark" 
+                                name="landmark" value="{{ old('title', $project->landmark) }}" disabled>
                         </div>
-                        <div class="form-group col-md-2"></div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="project_state">Current State of Project</label>
-                            <select id="statusid" name="statusid" class="form-control custom-select" required>
-                                <option>-- select --</option>
-                                @foreach ($project_status as $key => $status) 
-                                <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
+                            <select id="statusid" name="statusid" class="form-control custom-select" disabled>
+                            @foreach ($project_status as $key => $status) 
+                               <option value="{{ $key }}" {{ old('statusid', in_array($status,[$status]) ? $project->tid : 'null') == $key ? 'selected' : '' }}>
+                            {{ ucwords($status) }}</option>
                                 @endforeach
                             </select>
                         </div>
-                    </div>
-                    <div class="form-row">
+                        <div class="form-group col-md-2">
+
+                        </div>
+                       
                         <div class="form-group col-md-4">
                             <label for="validate_phone_number">Total Cost of Project</label>
-                            <input type="number" step="0.1" class="form-control" id="totalcost"
-                                name="totalcost" required>
-                        </div>
-                        <div class="form-group col-md-2"></div>
+                            <input type="text" class="form-control" id="totalcost"
+                                name="totalcost" value="{{ old('totalcost', $project->totalcost) }}" disabled>
+
+                        </div> 
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_othername">Project Description</label>
-                            <textarea name="description" id="description" cols="43" rows="6" required></textarea>
+                        <textarea name="description" id="description" cols="43" rows="6" disabled value="{{ old('description', $project->description) }}"> 
+                            {{$project->description}}</textarea>
                         </div>
+                            {{-- <div class="form-group col-md-2"></div> --}}
+                        
                     </div>
-                     <hr style="background-color:fuchsia; opacity:0.1">
-                      <div class="container">
-                          <div class="row">
-                              <div class="col text-center">
-                                  <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
-                                    Add New Project</button>
-                                </div>
-                                <div class="form-group col-md-2"></div>
-                        </div>
-                      </div>
+                     
+                      @endforeach
                 </form>
             </div>
         </div>
@@ -148,7 +144,7 @@
 </div>
 <!-- End Main Content Wrapper -->
 
-@include('partials.footer_script')
-        
+@include('partials.footer')
+    
 
       

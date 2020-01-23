@@ -37,7 +37,7 @@
                                 <h4 class="mb-0 font-size-18">All Clients</h4>
                                 <div class="page-title-right">
                                 <a href="{{ route('clients.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
-                                    New Project</a> 
+                                    New Client</a> 
                                 </div>
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                     <!-- end page title -->
 
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-12">    
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title"></h4>
@@ -66,7 +66,7 @@
                                         <tbody>
                                             @foreach ($clientWithProjects as $item) 
                                             <tr>
-                                                <td style='text-align:left'>{{ $item->clientid }}</td>
+                                                <td style='text-align:left'></td>
                                                 <td style='text-align:left'>  {{ $item->full_name }} </td>
                                                 <td style='text-align:left'>{{ $item->client_email }}</td>
                                                 <td>{{ $item->client_prime_contact }}</td>

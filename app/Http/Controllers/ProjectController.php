@@ -17,6 +17,7 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+  
     public function index()
     {
         //code 
@@ -25,6 +26,7 @@ class ProjectController extends Controller
         $all_clients    =  DB::table('tblclients')->get();
         $projects       =  DB::table("tblproject");
         $all_projects   =  $projects->get();
+    
         $clientWithProjects = ClientController::clientWithProjects();
 
 
@@ -96,7 +98,22 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        //code
+        $projects   =  DB::table('tblproject')->get();
+        $genders    =  DB::table('tblgender')->get();
+        $regions    =  DB::table('tblregion')->get();
+        $countries  =  DB::table('tblcountry')->get();
+
+        $project_status = DB::table('tblstatus')->get()->pluck('id', 'status');
+        $townId         = DB::table('tbltown')->get()->pluck('town', 'tid');
+        $regionId       = DB::table('tblregion')->get()->pluck('region', 'rid');
+        $projectId      = DB::table('tblproject')->where('pid', $id)->get();
+        $countryId      = DB::table('tblcountry')->get()->pluck('region_name', 'id');
+        $project_status = DB::table('tblstatus')->get()->pluck('status', 'id');
+        
+
+        return view('projects.show', compact('projectId', 'projects', 'countries', 'townId', 
+                                            'regions', 'regionId','countryId', 'project_status'));
     }
 
     /**

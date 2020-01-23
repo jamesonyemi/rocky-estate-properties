@@ -64,6 +64,26 @@
 
             <form method="POST" action="{{ route('onsite-visit.store')}}" enctype="multipart/form-data" class="mt-5">
                 {{ csrf_field() }}
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="img_url">Client</label>
+                        <input type="text" class="form-control" id="img_url" name="img_url[]" multiple required>
+
+                    </div>
+                    <div class="form-group col-md-2">
+
+                    </div>
+                   
+                    <div class="form-group col-md-4">
+                        <label for="status">Project</label>
+                        <select id="stage" name="stage" class="form-control custom-select" required>
+                            <option>-- select --</option>
+                            @foreach ($project_status as $key => $status) 
+                                <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
+                                @endforeach
+                            </select>
+                    </div>
+                </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="date_of_visit">Date of Visit</label>
@@ -76,19 +96,19 @@
                        
                         <div class="form-group col-md-4">
                             <label for="status">Status of Project on Visit</label>
-                            <option>-- select --</option>
                             <select id="stage" name="stage" class="form-control custom-select" required>
+                                <option>-- select --</option>
                                 @foreach ($project_status as $key => $status) 
                                     <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                     @endforeach
                                 </select>
                         </div>
                     </div>
-                    <div class="form-row">
+                    {{-- <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="owner">Owner of Project</label>
-                            <option>-- select --</option>
                             <select id="clientid" name="clientid" class="form-control custom-select" required>
+                                <option>-- select --</option>
                                 @foreach ($project_status as $key => $status) 
                                     <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                     @endforeach
@@ -97,14 +117,14 @@
                         <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-4">
                             <label for="visit_id">Project Visited</label>
-                            <option>-- select --</option>
                             <select id="project" name="vid" class="form-control custom-select" required>
+                                <option>-- select --</option>
                                 @foreach ($project_visited as $key => $status) 
                                     <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                     @endforeach
                                 </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="img_url">Photos of Project on Visit</label>
