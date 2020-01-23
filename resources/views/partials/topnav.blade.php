@@ -6,7 +6,7 @@
             <span class="bottom-bar"></span>
         </div>
 
-        {{-- <ul class="navbar-nav left-nav align-items-center">
+        <ul class="navbar-nav left-nav align-items-center">
             <li class="nav-item">
                 <a href="app/email/inbox.html" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email">
                     <i class="bx bx-envelope"></i>
@@ -84,6 +84,11 @@
                     </div>
                 </div>
             </li> --}}
+        </ul>
+
+        <form class="nav-search-form d-none ml-auto d-md-block">
+            <label><i class="bx bx-search"></i></label>
+            <input type="text" class="form-control" placeholder="Search here...">
         </form>
 
         <ul class="navbar-nav right-nav align-items-center">
@@ -276,8 +281,8 @@
             <li class="nav-item dropdown profile-nav-item">
                 <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="menu-profile">
-                        <span class="name">Hi! {{ Auth::user()->name}}</span>
-                        <img src="{{ asset('assets/img/user1.jpg') }}" class="rounded-circle" alt="image">
+                        <span class="name">Hi {{ Auth::user()->name }}</span>
+                        <img src="{{ asset('assets/img/user1.jpg') }}" class="rounded-circle" alt="user image">
                     </div>
                 </a>
 
