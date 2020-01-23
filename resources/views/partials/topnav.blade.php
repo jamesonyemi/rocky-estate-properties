@@ -1,13 +1,13 @@
 <nav class="navbar top-navbar navbar-expand">
     <div class="collapse navbar-collapse" id="navbarSupportContent">
-        <div class="responsive-burger-menu d-block d-lg-none">
+        <div class="responsive-burger-menu d-block d-lg-none active">
             <span class="top-bar"></span>
             <span class="middle-bar"></span>
             <span class="bottom-bar"></span>
         </div>
 
-        <ul class="navbar-nav left-nav align-items-center">
-            {{-- <li class="nav-item">
+        {{-- <ul class="navbar-nav left-nav align-items-center">
+            <li class="nav-item">
                 <a href="app/email/inbox.html" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email">
                     <i class="bx bx-envelope"></i>
                 </a>
@@ -84,11 +84,6 @@
                     </div>
                 </div>
             </li> --}}
-        </ul>
-
-        <form class="nav-search-form d-none ml-auto d-md-block">
-            <label><i class="bx bx-search"></i></label>
-            <input type="text" class="form-control" placeholder="Search here...">
         </form>
 
         <ul class="navbar-nav right-nav align-items-center">
@@ -281,19 +276,19 @@
             <li class="nav-item dropdown profile-nav-item">
                 <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="menu-profile">
-                        <span class="name">Hi {{ Auth::user()->name }}</span>
-                        <img src="{{ asset('assets/img/user1.jpg') }}" class="rounded-circle" alt="user image">
+                        <span class="name">Hi! {{ Auth::user()->name}}</span>
+                        <img src="{{ asset('assets/img/user1.jpg') }}" class="rounded-circle" alt="image">
                     </div>
                 </a>
 
                 <div class="dropdown-menu">
                     <div class="dropdown-header d-flex flex-column align-items-center">
                         <div class="figure mb-3">
-                            <img src="{{ asset('assets/img/user1.jpg') }}" class="rounded-circle" alt="user image">
+                            <img src="assets/img/user1.jpg" class="rounded-circle" alt="image">
                         </div>
                         <div class="info text-center">
-                            <span class="name">{{ Auth::user()->name }}</span>
-                            <p class="mb-3 email">{{ Auth::user()->email }}</p>
+                            <span class="name">{{ Auth::user()->name}}</span>
+                            <p class="mb-3 email">{{ Auth::user()->email}}</p>
                         </div>
                     </div>
 
@@ -325,7 +320,7 @@
                     <div class="dropdown-footer">
                         <ul class="profile-nav">
                             <li class="nav-item">
-                                <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
+                                  <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     <i class='bx bx-log-out'></i> <span>Logout</span>
                                 </a>
