@@ -41,9 +41,19 @@
                                 </div>
                             </div>
                         </div>
-                    </div><br>
+                    </div>
+                    <br>
                     <!-- end page title -->
 
+                    <!-- FILTERING BY PROJECT STATUS  -->
+                    <div><span id="filter_status"></span></div>
+                    <!-- END OF FILTERING BY PROJECT STATUS-->
+
+            
+     
+      
+
+                   
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -68,12 +78,12 @@
                                             @foreach ($clientWithProjects as $project)
                                                 {{-- @if ( $project->isdeleted === "no" ) --}}
                                             <tr>
-                                            <td ></td>
+                                                <td id="project_id"></td>
                                                 <td >{{ $project->full_name }}</span></td>
                                                 <td > {{ $project->project_title}} </td>
                                                 <td>{{ $project->region }}</span></td>
-                                                <td>{{ $project->location }}</td>
-                                                <td><span class="badge badge-success">{{ ucfirst($project->client_project_status) }}</span></td>    
+                                                <td>{{ $project->location }}</td>   
+                                                <td id="status"> {{ ucfirst($project->client_project_status) }} </td> 
                                                 <td>
                                                     <a href=" {{ route('projects.show', $project->pid)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>
@@ -97,7 +107,6 @@
                                           
                                             @endforeach
                                         </tbody>
-
                                     </table>
 
                                 </div>

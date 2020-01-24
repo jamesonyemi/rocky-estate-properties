@@ -66,62 +66,62 @@
 
                 <ul class="sidemenu-nav-second-level">
                     <li class="nav-item ">
-                        <a href="pages/login.html" class="nav-link">
+                        <a href="pages/towns.html" class="nav-link">
                             <span class="icon"><i class='bx bx-log-in'></i></span>
-                            <span class="menu-title">Login v1</span>
+                            <span class="menu-title">Towns</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="pages/login-with-image.html" class="nav-link">
+                        <a href="pages/nationality.html" class="nav-link">
                             <span class="icon"><i class='bx bxs-log-in'></i></span>
-                            <span class="menu-title">Login v2</span>
+                            <span class="menu-title">Nationality</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="pages/register.html" class="nav-link">
+                        <a href="pages/title.html" class="nav-link">
                             <span class="icon"><i class='bx bx-log-in-circle'></i></span>
-                            <span class="menu-title">Register v1</span>
+                            <span class="menu-title">Title</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="pages/register-with-image.html" class="nav-link">
+                        <a href="pages/currency.html" class="nav-link">
                             <span class="icon"><i class='bx bxs-log-in-circle'></i></span>
-                            <span class="menu-title">Register v2</span>
+                            <span class="menu-title">Currency</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="pages/forgot-password.html" class="nav-link">
+                        <a href="pages/User-type.html" class="nav-link">
                             <span class="icon"><i class='bx bx-lock'></i></span>
-                            <span class="menu-title">Forgot Password v1</span>
+                            <span class="menu-title">User Type</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="pages/forgot-password-with-image.html" class="nav-link">
+                        <a href="pages/project-status.html" class="nav-link">
                             <span class="icon"><i class='bx bx-lock-alt'></i></span>
-                            <span class="menu-title">Forgot Password v2</span>
+                            <span class="menu-title">Project Status</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="pages/reset-password.html" class="nav-link">
+                        <a href="pages/region.html" class="nav-link">
                             <span class="icon"><i class='bx bx-log-out'></i></span>
-                            <span class="menu-title">Reset Password v1</span>
+                            <span class="menu-title">Regions</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="pages/reset-password-with-image.html" class="nav-link">
+                        <a href="pages/gender-type.html" class="nav-link">
                             <span class="icon"><i class='bx bx-log-out-circle'></i></span>
-                            <span class="menu-title">Reset Password v2</span>
+                            <span class="menu-title">Gender</span>
                         </a>
                     </li>
 
-                    <li class="nav-item ">
+                    {{-- <li class="nav-item ">
                         <a href="pages/session-lock-screen.html" class="nav-link">
                             <span class="icon"><i class='bx bxs-lock-open-alt'></i></span>
                             <span class="menu-title">Lock Screen v1</span>
@@ -133,7 +133,7 @@
                             <span class="icon"><i class='bx bxs-lock-open'></i></span>
                             <span class="menu-title">Lock Screen v2</span>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </li>
         </ul>

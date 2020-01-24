@@ -60,6 +60,14 @@ class ProjectController extends Controller
         return json_encode($towns);
     }
 
+    public function clientToProject($clientid) 
+    {
+        $clientProject =  DB::table("tblproject")->where("clientid",$clientid)->pluck("title","pid");
+        // dd($clientProject);
+        return json_encode($clientProject);
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -174,7 +182,7 @@ class ProjectController extends Controller
     public function genderStatus($projectid)
     {
         # code...
-        $genders     =  DB::table('tblgender')->pluck('id', 'type');
+        $genders     = DB::table('tblgender')->pluck('id', 'type');
         $projects    = DB::table('tblproject')->where('clientid', $projectid)->get();
         return view('project.edit', compact('genders', 'project'));
     }

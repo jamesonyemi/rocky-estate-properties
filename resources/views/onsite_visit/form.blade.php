@@ -66,22 +66,21 @@
                 {{ csrf_field() }}
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="img_url">Client</label>
-                        <input type="text" class="form-control" id="img_url" name="img_url[]" multiple required>
-
-                    </div>
-                    <div class="form-group col-md-2">
-
-                    </div>
-                   
-                    <div class="form-group col-md-4">
-                        <label for="status">Project</label>
-                        <select id="stage" name="stage" class="form-control custom-select" required>
+                        <label for="client">Client</label>
+                        <select id="clientid" name="clientid" class="form-control custom-select" required>
                             <option>-- select --</option>
-                            @foreach ($project_status as $key => $status) 
-                                <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
+                        @foreach ($clients as $client_id => $client)
+                                <option value="{{ $client_id }}" class="text-capitalize">
+                                    {{ ucwords( $client )  }}
+                                </option>
                                 @endforeach
-                            </select>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2"></div>
+            
+                    <div class="form-group col-md-4">
+                        <label for="pid">Project:</label>
+                        <select id="pid" name="pid" class="form-control"></select>
                     </div>
                 </div>
                     <div class="form-row">
@@ -90,10 +89,7 @@
                             <input type="date" class="form-control" id="visit_date" name="visit_date">
 
                         </div>
-                        <div class="form-group col-md-2">
-
-                        </div>
-                       
+                        <div class="form-group col-md-2">  </div>
                         <div class="form-group col-md-4">
                             <label for="status">Status of Project on Visit</label>
                             <select id="stage" name="stage" class="form-control custom-select" required>
@@ -134,7 +130,10 @@
                         <div class="form-group col-md-2">
 
                         </div>
-                       
+                       <div class="form-group col-md-4">
+                            <label for="visit_comment">Brief Comment</label>
+                            <textarea name="comment" id="comment" cols="44" rows="6" required></textarea>
+                        </div>
                         <!-- <div class="form-group col-md-4">
                             <label for="validate_phone_number">Other Project</label>
                             <input type="text" class="form-control" id="land_mark"
@@ -142,14 +141,14 @@
 
                         </div> -->
                     </div>
-                    <div class="form-row">
+                    {{-- <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="visit_comment">Brief Comment</label>
                             <textarea name="comment" id="comment" cols="100%" rows="10" required></textarea>
                         </div>
-                            {{-- <div class="form-group col-md-2"></div> --}}
+                            <div class="form-group col-md-2"></div>
                         
-                    </div>
+                    </div> --}}
                     
                     <hr style="background-color:fuchsia; opacity:0.1">
                     <div class="container">

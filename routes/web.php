@@ -26,4 +26,5 @@ Route::resource('projects', 'ProjectController');
 Route::resource('onsite-visit', 'OnsiteVisitController');
 
 Route::get('/projects/create/{id}','ProjectController@getTowns');
+Route::get('/onsite-visit/create/{clientid}','OnsiteVisitController@clientToProject');
 

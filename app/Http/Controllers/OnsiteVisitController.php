@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Input;
 
 class OnsiteVisitController extends Controller
@@ -33,12 +34,24 @@ class OnsiteVisitController extends Controller
     {
         //code
         $genders  = DB::table('tblgender')->pluck('id', 'type');
+        $regions  = DB::table('tblregion')->pluck('region', 'rid');
         $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
+
+        // $clientProject = ProjectController::clientToProject();
+
+        $clients = DB::table('tblclients')->get()->pluck('fname', 'clientid');
         $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
         $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
         $project_visited =  DB::table('tblproject')->get()->pluck('pid', 'title')->sort();
 
-        return view('onsite_visit.create', compact('genders', 'townId', 'regionId', 'project_status', 'project_visited'));
+        return view('onsite_visit.create', compact('genders', 'townId','regions', 'regionId', 'clients', 'project_status', 'project_visited'));
+    }
+
+    public function clientToProject($clientid) 
+    {
+        $clientProject =  DB::table("tblproject")->where("clientid",$clientid)->pluck("title","clientid");
+        // dd($clientProject);
+        return json_encode($clientProject);
     }
 
     /**
