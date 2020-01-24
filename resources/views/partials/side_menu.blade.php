@@ -58,11 +58,83 @@
                     <span class="menu-title">Users</span>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a href="pages/Users.html" class="nav-link">
-                    <span class="icon"><i class='bx bx-align-justify'></i></span>
+             <li class="nav-item">
+                <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
+                    <span class="icon"><i class='bx bx-lock-open'></i></span>
                     <span class="menu-title">System Setup</span>
                 </a>
+
+                <ul class="sidemenu-nav-second-level">
+                    <li class="nav-item ">
+                        <a href="pages/login.html" class="nav-link">
+                            <span class="icon"><i class='bx bx-log-in'></i></span>
+                            <span class="menu-title">Login v1</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="pages/login-with-image.html" class="nav-link">
+                            <span class="icon"><i class='bx bxs-log-in'></i></span>
+                            <span class="menu-title">Login v2</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="pages/register.html" class="nav-link">
+                            <span class="icon"><i class='bx bx-log-in-circle'></i></span>
+                            <span class="menu-title">Register v1</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="pages/register-with-image.html" class="nav-link">
+                            <span class="icon"><i class='bx bxs-log-in-circle'></i></span>
+                            <span class="menu-title">Register v2</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="pages/forgot-password.html" class="nav-link">
+                            <span class="icon"><i class='bx bx-lock'></i></span>
+                            <span class="menu-title">Forgot Password v1</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="pages/forgot-password-with-image.html" class="nav-link">
+                            <span class="icon"><i class='bx bx-lock-alt'></i></span>
+                            <span class="menu-title">Forgot Password v2</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="pages/reset-password.html" class="nav-link">
+                            <span class="icon"><i class='bx bx-log-out'></i></span>
+                            <span class="menu-title">Reset Password v1</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="pages/reset-password-with-image.html" class="nav-link">
+                            <span class="icon"><i class='bx bx-log-out-circle'></i></span>
+                            <span class="menu-title">Reset Password v2</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="pages/session-lock-screen.html" class="nav-link">
+                            <span class="icon"><i class='bx bxs-lock-open-alt'></i></span>
+                            <span class="menu-title">Lock Screen v1</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="pages/session-lock-screen-with-image.html" class="nav-link">
+                            <span class="icon"><i class='bx bxs-lock-open'></i></span>
+                            <span class="menu-title">Lock Screen v2</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>

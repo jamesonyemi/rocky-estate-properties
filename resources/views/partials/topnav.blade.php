@@ -7,7 +7,7 @@
         </div>
 
         <ul class="navbar-nav left-nav align-items-center">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="app/email/inbox.html" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Email">
                     <i class="bx bx-envelope"></i>
                 </a>
@@ -29,7 +29,7 @@
                 <a href="app/todo.html" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Todo List">
                     <i class="bx bx-edit"></i>
                 </a>
-            </li> --}}
+            </li>  --}}
 
             {{-- <li class="nav-item dropdown apps-box">
                 <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
