@@ -288,11 +288,11 @@
                 <div class="dropdown-menu">
                     <div class="dropdown-header d-flex flex-column align-items-center">
                         <div class="figure mb-3">
-                            <img src="assets/img/user1.jpg" class="rounded-circle" alt="image">
+                            <img src="{{ asset('assets/img/user1.jpg') }}" class="rounded-circle" alt="image">
                         </div>
                         <div class="info text-center">
-                            <span class="name">{{ Auth::user()->name}}</span>
-                            <p class="mb-3 email">{{ Auth::user()->email}}</p>
+                            <span class="name">{{ Auth::user()->name }}</span>
+                            <p class="mb-3 email">{{ Auth::user()->email }}</p>
                         </div>
                     </div>
 

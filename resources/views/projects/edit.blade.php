@@ -88,7 +88,7 @@
                             <label for="validate_country">Town</label>
                              <select id="town" name="town" class="form-control custom-select" required>
                             @foreach ($townId as $key => $town)
-                        <option value="{{ $key }}" {{ old('town', in_array($town,[$town]) ? $project->town : 'null') == $key ? 'selected' : '' }}>
+                        <option value="{{ $key }}" {{ old('town', in_array($town,[$town]) ? $project->tid : 'null') == $key ? 'selected' : '' }}>
                             {{ ucwords($town) }}</option>
                         @endforeach
                         </select>
@@ -109,7 +109,7 @@
                             <label for="project_state">Current State of Project</label>
                             <select id="statusid" name="statusid" class="form-control custom-select" required>
                             @foreach ($project_status as $key => $status) 
-                               <option value="{{ $key }}" {{ old('statusid', in_array($status,[$status]) ? $project->town : 'null') == $key ? 'selected' : '' }}>
+                               <option value="{{ $key }}" {{ old('statusid', in_array($status,[$status]) ? $project->tid : 'null') == $key ? 'selected' : '' }}>
                             {{ ucwords($status) }}</option>
                                 @endforeach
                             </select>

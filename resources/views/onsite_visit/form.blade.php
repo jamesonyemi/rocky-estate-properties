@@ -69,11 +69,15 @@
                         <label for="client">Client</label>
                         <select id="clientid" name="clientid" class="form-control custom-select" required>
                             <option>-- select --</option>
-                        @foreach ($clients as $client_id => $client)
-                                <option value="{{ $client_id }}" class="text-capitalize">
-                                    {{ ucwords( $client )  }}
+                            @foreach ($clients as $client_id => $client)
+                            
+                                @if ($client->clientid )
+                                <option value="{{ $client->clientid }}" class="text-capitalize">
+                                    {{ ucwords( $client->title . " " .$client->fname . " " . $client->lname)  }}
                                 </option>
-                                @endforeach
+                                @endif
+                                
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-2"></div>
@@ -86,13 +90,13 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="date_of_visit">Date of Visit</label>
-                            <input type="date" class="form-control" id="visit_date" name="visit_date">
+                            <input type="date" class="form-control" id="vdate" name="vdate">
 
                         </div>
                         <div class="form-group col-md-2">  </div>
                         <div class="form-group col-md-4">
                             <label for="status">Status of Project on Visit</label>
-                            <select id="stage" name="stage" class="form-control custom-select" required>
+                            <select id="status" name="status" class="form-control custom-select" required>
                                 <option>-- select --</option>
                                 @foreach ($project_status as $key => $status) 
                                     <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
@@ -132,7 +136,7 @@
                         </div>
                        <div class="form-group col-md-4">
                             <label for="visit_comment">Brief Comment</label>
-                            <textarea name="comment" id="comment" cols="44" rows="6" required></textarea>
+                            <textarea name="comments" id="comments" cols="44" rows="6" required></textarea>
                         </div>
                         <!-- <div class="form-group col-md-4">
                             <label for="validate_phone_number">Other Project</label>
@@ -164,9 +168,7 @@
             </div>
         </div>
      <!-- End -->
-  <!-- Footer -->
-  <div class="flex-grow-1"></div>
-</div>
+ 
 <!-- End Main Content Wrapper -->
 
-@include('partials.footer_script')
+@include('partials.footer')
