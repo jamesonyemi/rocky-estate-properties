@@ -13,7 +13,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Input;
 
-class OnsiteVisitController extends Controller
+class StageOfCompletionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,10 +22,23 @@ class OnsiteVisitController extends Controller
      */
     public function index()
     {
-        //
+        //code
+         //code
+        $genders  = DB::table('tblgender')->pluck('id', 'type');
+        $regions  = DB::table('tblregion')->pluck('region', 'rid');
+        $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
+        $clients  = DB::table('tblclients')->get();
+   
+        $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
+        $project_status  = DB::table('tblstatus')->get()->pluck('id', 'status');
+        $project_phase   = DB::table('tblproject_phase')->get()->pluck('id', 'phase');
+        $project_visited = DB::table('tblproject')->get()->pluck('pid', 'title')->sort();
+
+        return view('stage_completion.index', compact('genders', 'townId','regions', 'regionId', 
+                    'clients', 'project_status', 'project_visited', 'project_phase'));
     }
 
-    /**
+       /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -130,7 +143,7 @@ class OnsiteVisitController extends Controller
      */
     public function edit($id)
     {
-        //
+        //  
     }
 
     /**

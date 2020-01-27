@@ -33,28 +33,34 @@
 
             <li class="nav-item ">
                 <a href="{{ url('projects') }}" class="nav-link">
-                    <span class="icon"><i class='bx bx-help-circle'></i></span>
+                    <span class="icon"><i class='bx bx-briefcase-alt-2'></i></span>
                     <span class="menu-title">Projects</span>
                 </a>
             </li>
 
             <li class="nav-item ">
                 <a href="{{ url('onsite-visit/create') }}" class="nav-link">
-                    <span class="icon"><i class='bx bx-receipt'></i></span>
+                    <span class="icon"><i class=' bx bx-building-house'></i></span>
                     <span class="menu-title">On Site Visit</span>
                 </a>
             </li>
 
             <li class="nav-item ">
-                <a href="pages/project-report.html" class="nav-link">
-                    <span class="icon"><i class='bx bx-images'></i></span>
+                <a href="{{ url('reports') }}" class="nav-link">
+                    <span class="icon"><i class=' bx bx-bar-chart'></i></span>
                     <span class="menu-title">Reports</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="{{ url('stage-of-completion') }}" class="nav-link">
+                    <span class="icon"><i class='bx bxs-news'></i></span>
+                    <span class="menu-title">Stages of Completion</span>
                 </a>
             </li>
 
             <li class="nav-item ">
-                <a href="pages/Users.html" class="nav-link">
-                    <span class="icon"><i class='bx bx-align-justify'></i></span>
+                <a href="{{ url('users.index') }}" class="nav-link">
+                    <span class="icon"><i class=' bx bxs-user-detail'></i></span>
                     <span class="menu-title">Users</span>
                 </a>
             </li>
@@ -96,7 +102,14 @@
                     <li class="nav-item ">
                         <a href="pages/User-type.html" class="nav-link">
                             <span class="icon"><i class='bx bx-lock'></i></span>
-                            <span class="menu-title">User Type</span>
+                            <span class="menu-title">Assign Role to User</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="pages/branches.html" class="nav-link">
+                            <span class="icon"><i class='bx bx-lock'></i></span>
+                            <span class="menu-title">Branches</span>
                         </a>
                     </li>
 

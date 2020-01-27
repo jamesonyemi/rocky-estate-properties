@@ -143,12 +143,7 @@
         </div>
 
         <!-- End -->
-  <!-- Footer -->
-  <div class="flex-grow-1"></div>
-</div>
-<!-- End Main Content Wrapper -->
-
-@include('partials.footer_script')
+ @include('partials.footer')
         
 
       
