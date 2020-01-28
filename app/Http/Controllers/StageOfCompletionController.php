@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProjectController;
+use Faker\UniqueGenerator;
 use Illuminate\Support\Facades\Input;
 
 class StageOfCompletionController extends Controller
@@ -23,7 +24,6 @@ class StageOfCompletionController extends Controller
     public function index()
     {
         //code
-         //code
         $genders  = DB::table('tblgender')->pluck('id', 'type');
         $regions  = DB::table('tblregion')->pluck('region', 'rid');
         $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
@@ -75,44 +75,58 @@ class StageOfCompletionController extends Controller
         //code 
         if ($request->hasFile('img_url')) {
 
-            $destinationPath = public_path() . '/master/';
+            $destinationPath = public_path() . '/stage_of_completion_img/';
             $files  = $request->file('img_url');   // will get all files
 
             //this statement will loop through all files.
             foreach ($files as $file) {
 
-                $file_name  = $file->getClientOriginalName();               //Get file original name
-                $full_path  = $file->move($destinationPath, $file_name);    //move files to destination folder
-                $image_Url  = $full_path;
+                $file_name        =  $file->getClientOriginalName();               //Get file original name+extension
+                $alternative_name =  pathinfo($file_name, PATHINFO_FILENAME);      //Get file original name, without extension
+                $full_path        =  $file->move($destinationPath, $file_name);    //move files to destination folder
+                $image_Url        =  $full_path;
             
-                $save_visit = DB::table('tblvisit')->insertGetId(array_merge(
-                    request()->except(['_token', '_method','img_url','clientid','pid']), 
+                $save_projectStage = DB::table('tblstage')->insertGetId(array_merge(
+                    request()->except(['_token', '_method', 'clientid', 'pid', 'alt_name', 'img_url']),
                     [
-                     'vdate'    => $request->input('vdate'), 
-                     'vtime'    => date("h:i:s"),
-                     'vnumber'  => uniqid(),
-                     'status'   => $request->input('status'),
-                     'comments' => !empty($request->input('comments')) ?  $request->input('comments') : '', 
-                    
-                     ]));
+                        'amtspent' => $request->input('amtspent'),
+                        'amtdetails' => $request->input('amtdetails'),
+                        'matpurchased' => $request->input('matpurchased'),
+                        'status_id' => $request->input('status_id'),
+                        'phase_id'  => $request->input('phase_id'),
+                        'stage_code' => uniqid(),
+                    ]
+                ));
 
-                $lastInsertedRowOnVisit =  DB::table('tblvisit')->latest('vid')->first();
-                $Id       = $lastInsertedRowOnVisit->vid;
-                $vId      = $lastInsertedRowOnVisit->vid;
-                $statusId = $lastInsertedRowOnVisit->status;
-                
-                $generateVnumber = ['vnumber' => static::generateUniqueCode($vId)];
-                $updateVnumber   = DB::table('tblvisit')->where('vid', $Id )->update($generateVnumber); 
-                
-                $projectImgSaveOnvisit = DB::table('tblprojectimage')->insertGetId(array_merge(
-                    request()->except(['_token', '_method','vdate', 'comments','status',]),
+                // print_r($save_projectStage); 
+              
+                $lastInsertedRow =  DB::table('tblstage')->latest('id')->first();
+                $stageId     = $lastInsertedRow->id;
+                $stageCodeId = $lastInsertedRow->id;
+                $phase_Id    = $lastInsertedRow->phase_id;
+
+                $generateStageCode = ['stage_code' => static::generateUniqueCode($stageCodeId)];
+                $updateStageCode   = DB::table('tblstage')->where('id', $stageId )->update($generateStageCode);
+
+                // print_r($updateStageCode);
+
+
+                $save_StageCompletion = DB::table('tblstage_image')->insertGetId(array_merge(
+                    request()->except(['_token', '_method', 'amtspent', 'status_id', 'matpurchased', 'amtdetails','stage_code']),
                     [
-                        'img_url' => realpath($image_Url), 
-                        'vid' => $save_visit,
-                        'status_id' => $statusId,
-                        ]));
-                    dd($projectImgSaveOnvisit);
-                return redirect()->route('projects.index')->with('success', 'Uploaded Image #' . "\n" . $projectImgSaveOnvisit . 'Created Sucessfully');
+                        'clientid'      =>  $request->input('clientid'),
+                        'pid'           =>  $request->input('pid'),
+                        'stage_id'      =>  $stageId,
+                        'phase_id'      =>  $phase_Id,
+                        'alt_name'      =>  $alternative_name,
+                        'img_url'       =>  realpath($image_Url),
+                        'uploaded_date' =>  date("Y-m-d"),
+                        'uploaded_time' =>  date("h:i:s"),
+                    ]
+                ));
+                print_r($save_StageCompletion);
+              
+                return redirect()->route('projects.index')->with('success', 'Stage  of Completion  #' . "\n" . $save_StageCompletion . 'Created Sucessfully');
             }
         }
 

@@ -62,7 +62,7 @@ class OnsiteVisitController extends Controller
         //code 
         if ($request->hasFile('img_url')) {
 
-            $destinationPath = public_path() . '/master/';
+            $destinationPath = public_path() . '/project_img/';
             $files  = $request->file('img_url');   // will get all files
 
             //this statement will loop through all files.

@@ -52,7 +52,7 @@
 
             <div class="card-body">
 
-            <form method="POST" action="{{ route('onsite-visit.store')}}" enctype="multipart/form-data" class="mt-5">
+            <form method="POST" action="{{ route('stage-of-completion.store')}}" enctype="multipart/form-data" class="mt-5">
                 {{ csrf_field() }}
                 <div class="form-row">
                     <div class="form-group col-md-4">
@@ -96,7 +96,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="phase">Project Phase</label>
-                                <select id="project_phase" name="project_phase" class="form-control custom-select" required>
+                                <select id="phase_id" name="phase_id" class="form-control custom-select" required>
                                     <option>-- select --</option>
                                     @foreach ($project_phase as $key => $phase) 
                                     <option value="{{ $phase }}" class="text-capitalize">{{ ucwords($key)  }}</option>

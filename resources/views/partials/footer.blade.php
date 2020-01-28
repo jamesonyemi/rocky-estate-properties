@@ -1,6 +1,5 @@
 <!-- Footer -->
-            <div class="flex-grow-1"></div>
-
+ <div class="flex-grow-1"></div>
 <!-- Start Footer -->
 <footer class="footer-area">
     <div class="row align-items-center">
