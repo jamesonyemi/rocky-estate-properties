@@ -28,13 +28,14 @@ class StageOfCompletionController extends Controller
         $regions  = DB::table('tblregion')->pluck('region', 'rid');
         $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
         $clients  = DB::table('tblclients')->get();
+        $data = DB::table('tblstage_image')->get();
    
         $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
         $project_status  = DB::table('tblstatus')->get()->pluck('id', 'status');
         $project_phase   = DB::table('tblproject_phase')->get()->pluck('id', 'phase');
         $project_visited = DB::table('tblproject')->get()->pluck('pid', 'title')->sort();
 
-        return view('stage_completion.index', compact('genders', 'townId','regions', 'regionId', 
+        return view('stage_completion.uploaded_images', compact('genders', 'data', 'townId','regions', 'regionId', 
                     'clients', 'project_status', 'project_visited', 'project_phase'));
     }
 
@@ -73,28 +74,33 @@ class StageOfCompletionController extends Controller
     public function store(Request $request)
     {
         //code 
-        if ($request->hasFile('img_url')) {
+        if ($request->hasFile('img_name')) {
 
             $destinationPath = public_path() . '/stage_of_completion_img/';
-            $files  = $request->file('img_url');   // will get all files
+            $files  = $request->file('img_name');   // will get all files
 
             //this statement will loop through all files.
             foreach ($files as $file) {
 
-                $file_name        =  $file->getClientOriginalName();               //Get file original name+extension
-                $alternative_name =  pathinfo($file_name, PATHINFO_FILENAME);      //Get file original name, without extension
-                $full_path        =  $file->move($destinationPath, $file_name);    //move files to destination folder
-                $image_Url        =  $full_path;
+                $file_name          =  date("Y-m-d h_i_s") . "_" . $file->getClientOriginalName();
+                $b64imageEncoded    =  base64_encode($file_name);                     
+                $full_path          =  $file->move($destinationPath, $file_name);    //move files to destination folder
+                $alternative_name[] =  date("Y-m-d h_i_s") . "_" . pathinfo($file_name, PATHINFO_FILENAME);    //Get file original name, without extension
+                $fileNamesInArray[] =  $file_name;
+                $base64img_encode[] =  $b64imageEncoded;
+     
+            }
+        }
             
                 $save_projectStage = DB::table('tblstage')->insertGetId(array_merge(
-                    request()->except(['_token', '_method', 'clientid', 'pid', 'alt_name', 'img_url']),
+                    request()->except(['_token', '_method', 'clientid', 'pid', 'alt_name', 'img_name']),
                     [
-                        'amtspent' => $request->input('amtspent'),
-                        'amtdetails' => $request->input('amtdetails'),
-                        'matpurchased' => $request->input('matpurchased'),
-                        'status_id' => $request->input('status_id'),
-                        'phase_id'  => $request->input('phase_id'),
-                        'stage_code' => uniqid(),
+                        'amtspent'     =>  $request->input('amtspent'),
+                        'amtdetails'   =>  $request->input('amtdetails'),
+                        'matpurchased' =>  $request->input('matpurchased'),
+                        'status_id'    =>  $request->input('status_id'),
+                        'phase_id'     =>  $request->input('phase_id'),
+                        'stage_code'   =>  uniqid(),
                     ]
                 ));
 
@@ -118,19 +124,16 @@ class StageOfCompletionController extends Controller
                         'pid'           =>  $request->input('pid'),
                         'stage_id'      =>  $stageId,
                         'phase_id'      =>  $phase_Id,
-                        'alt_name'      =>  $alternative_name,
-                        'img_url'       =>  realpath($image_Url),
+                        'alt_name'      =>  json_encode($alternative_name),
+                        'img_name'      =>  json_encode($fileNamesInArray),
                         'uploaded_date' =>  date("Y-m-d"),
                         'uploaded_time' =>  date("h:i:s"),
                     ]
                 ));
                 print_r($save_StageCompletion);
               
-                return redirect()->route('projects.index')->with('success', 'Stage  of Completion  #' . "\n" . $save_StageCompletion . 'Created Sucessfully');
-            }
-        }
+                return redirect()->route('projects.index')->with('success', 'Stage  of Completion  # ' . " \n " . $save_StageCompletion . ' Created Sucessfully');
 
-      
     }
 
     public static function generateUniqueCode($vnumber)

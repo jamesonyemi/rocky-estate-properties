@@ -105,8 +105,8 @@
                             </div>
                             <div class="form-group col-md-2"></div>
                             <div class="form-group col-md-4">
-                                <label for="img_url">Photos of Work Done</label>
-                                <input type="file" class="form-control" id="img_url" name="img_url[]" multiple required>
+                                <label for="img_name">Photos of Work Done</label>
+                                <input type="file" class="form-control" id="img_name" name="img_name[]" multiple required>
                             </div>
                         </div>
                         <br>

@@ -128,8 +128,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="img_url">Photos of Project on Visit</label>
-                            <input type="file" class="form-control" id="img_url" name="img_url[]" multiple required>
-
+                            <input type="file" class="form-control" id="img_name" name="img_name[]" multiple required>
+                        
                         </div>
                         <div class="form-group col-md-2">
 
@@ -138,6 +138,7 @@
                             <label for="visit_comment">Brief Comment</label>
                             <textarea name="comments" id="comments" cols="44" rows="6" required></textarea>
                         </div>
+
                         <!-- <div class="form-group col-md-4">
                             <label for="validate_phone_number">Other Project</label>
                             <input type="text" class="form-control" id="land_mark"

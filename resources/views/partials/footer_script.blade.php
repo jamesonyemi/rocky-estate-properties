@@ -45,6 +45,7 @@
 <script src="{{asset('assets/js/jquery-3.3.1.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/js/scrollable_datatable.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/js/region-town/dynamic_dropdown.js')}}" type="text/javascript"></script>
+<script src="{{asset('assets/js/image_preview.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/js/client-project/dynamic_dropdown.js')}}" type="text/javascript"></script>
 
 {{-- =======================custom-de-asseto================= --}}
@@ -71,6 +72,8 @@
 
 <!-- Datatable init js -->
 <script src=" {{ asset('custom_assets/js/pages/datatables.init.js') }}"></script>
+
+
 
 
 </body>
