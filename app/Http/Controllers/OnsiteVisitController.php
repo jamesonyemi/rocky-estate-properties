@@ -60,20 +60,24 @@ class OnsiteVisitController extends Controller
     public function store(Request $request)
     {
         //code 
-        if ($request->hasFile('img_url')) {
+        if ($request->hasFile('img_name')) {
 
-            $destinationPath = public_path() . '/master/';
-            $files  = $request->file('img_url');   // will get all files
+            $destinationPath = public_path() . '/project_img/';
+            $files  = $request->file('img_name');   // will get all files
 
             //this statement will loop through all files.
             foreach ($files as $file) {
 
-                $file_name  = $file->getClientOriginalName();               //Get file original name
-                $full_path  = $file->move($destinationPath, $file_name);    //move files to destination folder
-                $image_Url  = $full_path;
-            
+                $file_name       = date("Y-m-d h_i_s")."_".$file->getClientOriginalName();    
+                $b64imageEncoded = base64_encode($file_name);
+                $full_path       = $file->move($destinationPath, $file_name);    //move files to destination folder
+                $fileNamesInArray[]  = $file_name;
+                $base64img_encode[]  = $b64imageEncoded;
+              
+            }
+        }
                 $save_visit = DB::table('tblvisit')->insertGetId(array_merge(
-                    request()->except(['_token', '_method','img_url','clientid','pid']), 
+                    request()->except(['_token', '_method', 'img_name', 'base64img_encode', 'clientid','pid']), 
                     [
                      'vdate'    => $request->input('vdate'), 
                      'vtime'    => date("h:i:s"),
@@ -94,15 +98,14 @@ class OnsiteVisitController extends Controller
                 $projectImgSaveOnvisit = DB::table('tblprojectimage')->insertGetId(array_merge(
                     request()->except(['_token', '_method','vdate', 'comments','status',]),
                     [
-                        'img_url' => realpath($image_Url), 
-                        'vid' => $save_visit,
-                        'status_id' => $statusId,
+                        'img_name'         => json_encode($fileNamesInArray),
+                        'base64img_encode' => json_encode($base64img_encode), 
+                        'vid'              => $save_visit,
+                        'status_id'        => $statusId,
                         ]));
                     dd($projectImgSaveOnvisit);
-                return redirect()->route('projects.index')->with('success', 'Uploaded Image #' . "\n" . $projectImgSaveOnvisit . 'Created Sucessfully');
-            }
-        }
-
+                return redirect()->route('projects.index')->with('success', 'Project Image #' . "\n" . $projectImgSaveOnvisit . ' Created Sucessfully');
+            
       
     }
 

@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="{{ asset('assets/css/style.css') }} ">
 <!-- Responsive CSS -->
 <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }} ">
+<link rel="stylesheet" href="{{ asset('assets/css/image_preview.css') }} ">
 <title>{{ config('app.name', 'Laravel') }}</title>
 <link rel="icon" type="image/png" href=" {{asset('assets/img/favicon.png')}} ">
 
