@@ -28,14 +28,24 @@ class StageOfCompletionController extends Controller
         $regions  = DB::table('tblregion')->pluck('region', 'rid');
         $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
         $clients  = DB::table('tblclients')->get();
-        $data = DB::table('tblstage_image')->get();
+
+        if (request()->has('stageOfCompletionImg'))
+        {
+           return $stageOfCompletionImg = DB::table('tblstage_image')->get();
+            
+        }
+
+        if (request()->has('stageOfCompletion'))
+        {
+           return $stageOfCompletion    = DB::table('tblstage')->get();
+        }
    
         $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
         $project_status  = DB::table('tblstatus')->get()->pluck('id', 'status');
         $project_phase   = DB::table('tblproject_phase')->get()->pluck('id', 'phase');
         $project_visited = DB::table('tblproject')->get()->pluck('pid', 'title')->sort();
 
-        return view('stage_completion.uploaded_images', compact('genders', 'data', 'townId','regions', 'regionId', 
+        return view('stage_completion.index', compact('genders', 'stage$stageOfCompletionImg', 'stageOfCompletion','townId','regions', 'regionId', 
                     'clients', 'project_status', 'project_visited', 'project_phase'));
     }
 

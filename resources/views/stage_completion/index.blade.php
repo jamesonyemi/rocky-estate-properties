@@ -16,140 +16,246 @@
         <!-- Main Content Layout -->
         <!-- Breadcrumb Area -->
         @include('partials.breadcrumb')
+    <!-- Start -->
+    <div class="row">
+        <div class="col-lg-7 col-md-12">
+            <div class="card recent-orders-box mb-30">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3>Recent Orders</h3>
 
-        <!-- End Breadcrumb Area -->
-
-        <!-- Start -->
-
-        <div class="card mb-30">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h3>Stage of Completion  </h3>
-
-                <!-- <div class="dropdown">
-                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class='bx bx-dots-horizontal-rounded'></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-show'></i> View
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-edit-alt'></i> Edit
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-trash'></i> Delete
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-printer'></i> Print
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-download'></i> Download
-                        </a>
-                    </div>
-                </div> -->
-            </div>
-
-            <div class="card-body">
-
-            <form method="POST" action="{{ route('stage-of-completion.store')}}" enctype="multipart/form-data" class="mt-5">
-                {{ csrf_field() }}
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="client">Client</label>
-                        <select id="clientid" name="clientid" class="form-control custom-select" required>
-                            <option>-- select --</option>
-                            @foreach ($clients as $client_id => $client)
-                            
-                                @if ($client->clientid )
-                                <option value="{{ $client->clientid }}" class="text-capitalize">
-                                    {{ ucwords( $client->title . " " .$client->fname . " " . $client->lname)  }}
-                                </option>
-                                @endif
-                                
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2"></div>
-            
-                    <div class="form-group col-md-4">
-                        <label for="pid">Project:</label>
-                        <select id="pid" name="pid" class="form-control"></select>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class='bx bx-dots-horizontal-rounded' ></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class='bx bx-show'></i> View
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class='bx bx-edit-alt'></i> Edit
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class='bx bx-trash'></i> Delete
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class='bx bx-printer'></i> Print
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class='bx bx-download'></i> Download
+                            </a>
+                        </div>
                     </div>
                 </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="amount_spent">Amount Spent</label>
-                                <input type="number" step="0.1" class="form-control" id="amtspent"  name="amtspent" required>
-                            </div>
-                            <div class="form-group col-md-2">  </div>
-                            <div class="form-group col-md-4">
-                                <label for="status">Stage of Completion</label>
-                                <select id="status_id" name="status_id" class="form-control custom-select" required>
-                                    <option>-- select --</option>
-                                    @foreach ($project_status as $key => $status) 
-                                        <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
-                                        @endforeach
-                                    </select>  
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="phase">Project Phase</label>
-                                <select id="phase_id" name="phase_id" class="form-control custom-select" required>
-                                    <option>-- select --</option>
-                                    @foreach ($project_phase as $key => $phase) 
-                                    
-                                    <option value="{{ $phase }}" class="text-capitalize">{{ ucwords($key)  }}</option>
-                                    @endforeach
-                                </select> 
-                            </div>
-                            <div class="form-group col-md-2"></div>
-                            <div class="form-group col-md-4">
-                                <label for="img_name">Photos of Work Done</label>
-                                <input type="file" class="form-control" id="img_name" name="img_name[]" multiple required>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <fieldset class="rounded border p-2 col-md-10">
-                                    <legend class="w-auto"><span>More Information</span> </legend>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-1"></div>
-                                    <div class="form-group col-md-10">
-                                        <label for="comment">Materials Purchased</label>
-                                            <textarea name="matpurchased" id="matpurchased" class="summernote" required ></textarea>
-                                        </div> 
-                                        <div class="form-group col-md-1"></div>
-                                    </div>
-                                    <div class="dropdown-divider"></div>
-                                 <div class="form-row">
-                                    <div class="form-group col-md-1"></div>
-                                     <div class="form-group col-md-10">
-                                      <label for="comment">Details of Amount Spent</label>
-                                          <textarea name="amtdetails" id="amtdetails" cols="44" rows="6" class="summernote" required ></textarea>
-                                      </div>
-                                   <div class="form-group col-md-1"></div>
-                                </div>
-                                </fieldset>
-                            </div>
-                        </div>
-                    <hr style="background-color:fuchsia; opacity:0.1">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col text-center">
-                                <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
-                                  Save</button>
-                              </div>
-                              <div class="form-group col-md-2"></div>
-                      </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="display" id="">
+                            <thead>
+                                <tr>
+                                    <th>Invoice</th>
+                                    <th>Customer</th>
+                                    <th>Purchase On</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>#6791679</td>
+                                    <td class="name">
+                                        <img src="https://olaf-admin.envytheme.com/assets/img/user1.jpg" alt="image">
+                                        Atony Rony
+                                    </td>
+                                    <td>12 May 2019</td>
+                                    <td>$564</td>
+                                    <td><span class="badge badge-primary">Received</span></td>
+                                </tr>
+                                <tr>
+                                    <td>#6791674</td>
+                                    <td class="name">
+                                        <img src="https://olaf-admin.envytheme.com/assets/img/user2.jpg" alt="image">
+                                        Tom Hardy
+                                    </td>
+                                    <td>11 May 2019</td>
+                                    <td>$954</td>
+                                    <td><span class="badge badge-success">Pending</span></td>
+                                </tr>
+                                <tr>
+                                    <td>#6791654</td>
+                                    <td class="name">
+                                        <img src="https://olaf-admin.envytheme.com/assets/img/user3.jpg" alt="image">
+                                        Colin Firth
+                                    </td>
+                                    <td>10 May 2019</td>
+                                    <td>$214</td>
+                                    <td><span class="badge badge-danger">Declined</span></td>
+                                </tr>
+                                <tr>
+                                    <td>#6791699</td>
+                                    <td class="name">
+                                        <img src="https://olaf-admin.envytheme.com/assets/img/user4.jpg" alt="image">
+                                        Jude Law
+                                    </td>
+                                    <td>09 May 2019</td>
+                                    <td>$120</td>
+                                    <td><span class="badge badge-success">Pending</span></td>
+                                </tr>
+                                <tr>
+                                    <td>#6791647</td>
+                                    <td class="name">
+                                        <img src="https://olaf-admin.envytheme.com/assets/img/user5.jpg" alt="image">
+                                        Idris Elba
+                                    </td>
+                                    <td>08 May 2019</td>
+                                    <td>$999</td>
+                                    <td><span class="badge badge-primary">Received</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-     <!-- End -->
- 
-<!-- End Main Content Wrapper -->
+
+        <div class="col-lg-5 col-md-12">
+            <div class="card mb-30 new-customer-box">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3>New Customers</h3>
+
+                    <div class="dropdown">
+                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class='bx bx-dots-horizontal-rounded' ></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class='bx bx-show'></i>
+                                View
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class='bx bx-edit-alt'></i>
+                                Edit
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class='bx bx-trash'></i>
+                                Delete
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class='bx bx-printer'></i>
+                                Print
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class='bx bx-download'></i>
+                                Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                    <table class="display" id="" >
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="name">
+                                        <img src="https://olaf-admin.envytheme.com/assets/img/user1.jpg" alt="image">
+                                        Atony Rony
+                                    </td>
+                                    <td>
+                                        <a href="#" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="hello@tomhardy.com">
+                                            <i class='bx bx-envelope'></i>
+                                        </a>
+                                        <a href="#" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class='bx bx-edit'></i>
+                                        </a>
+                                        <a href="#" class="d-inline-block text-danger" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class='bx bx-trash'></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="name">
+                                        <img src="https://olaf-admin.envytheme.com/assets/img/user2.jpg" alt="image">
+                                        Tom Hardy
+                                    </td>
+                                    <td>
+                                        <a href="#" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="hello@tomhardy.com">
+                                            <i class='bx bx-envelope'></i
+                                            ></a>
+                                        <a href="#" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class='bx bx-edit'></i>
+                                        </a>
+                                        <a href="#" class="d-inline-block text-danger" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class='bx bx-trash'></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="name">
+                                        <img src="https://olaf-admin.envytheme.com/assets/img/user3.jpg" alt="image">
+                                        Colin Firth
+                                    </td>
+                                    <td>
+                                        <a href="#" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="hello@colinfirth.com">
+                                            <i class='bx bx-envelope'></i>
+                                        </a>
+                                        <a href="#" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class='bx bx-edit'></i>
+                                        </a>
+                                        <a href="#" class="d-inline-block text-danger" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class='bx bx-trash'></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="name">
+                                        <img src="https://olaf-admin.envytheme.com/assets/img/user4.jpg" alt="image">
+                                        Jude Law
+                                    </td>
+                                    <td>
+                                        <a href="#" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="hello@judelaw.com">
+                                            <i class='bx bx-envelope'></i>
+                                        </a>
+                                        <a href="#" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class='bx bx-edit'></i>
+                                        </a>
+                                        <a href="#" class="d-inline-block text-danger" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class='bx bx-trash'></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="name">
+                                        <img src="https://olaf-admin.envytheme.com/assets/img/user5.jpg" alt="image">
+                                        Idris Elba
+                                    </td>
+                                    <td>
+                                        <a href="#" class="d-inline-block text-warning mr-2" data-toggle="tooltip" data-placement="top" title="hello@idriselba.com">
+                                            <i class='bx bx-envelope'></i>
+                                        </a>
+                                        <a href="#" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class='bx bx-edit'></i>
+                                        </a>
+                                        <a href="#" class="d-inline-block text-danger" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class='bx bx-trash'></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- End -->
 
 @include('partials.footer')

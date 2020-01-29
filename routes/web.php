@@ -11,22 +11,31 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes();
+Route::get('/logout', function () { return redirect('login'); });
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/update-gender/{client_id}/update_gender', 'ClientController@genderStatus')->name('gender_status');
-Route::post('/update-gender/{client_id}', 'ClientController@updateGenderStatus')->name('gender_update');
-Route::resource('clients', 'ClientController');
-Route::resource('projects', 'ProjectController');
-Route::resource('onsite-visit', 'OnsiteVisitController');
-Route::resource('reports', 'ReportController');
-Route::resource('stage-of-completion', 'StageOfCompletionController');
 
-Route::get('/projects/create/{id}','ProjectController@getTowns');
-Route::get('/onsite-visit/create/{id}','OnsiteVisitController@clientToProject');
+Route::group( ['middleware' => 'auth'],  function() {
+
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/update-gender/{client_id}/update_gender', 'ClientController@genderStatus')->name('gender_status');
+    Route::post('/update-gender/{client_id}', 'ClientController@updateGenderStatus')->name('gender_update');
+
+    Route::resource('clients', 'ClientController');
+    Route::resource('projects', 'ProjectController');
+    Route::resource('onsite-visit', 'OnsiteVisitController');
+    Route::resource('reports', 'ReportController');
+    
+    Route::resource('stage-of-completion', 'StageOfCompletionController');
+    Route::get('/projects/create/{id}','ProjectController@getTowns');
+    Route::get('/onsite-visit/create/{id}','OnsiteVisitController@clientToProject');
+});
+
+
 

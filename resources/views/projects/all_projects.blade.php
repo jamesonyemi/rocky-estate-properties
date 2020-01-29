@@ -60,7 +60,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title"></h4>
                                     <div class="card-title-desc">  </div>   
-                                    <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <table id="" class="table table-bordered dt-responsive nowrap project" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>PID</th>

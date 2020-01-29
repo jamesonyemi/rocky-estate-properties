@@ -6,7 +6,7 @@
     </tr>
     </thead>
     <tbody>
-       @foreach($data as $image)
+@foreach($stageOfCompletionImg as $image)
        <tr><td>{{$image->id}}</td>
            <td> <?php foreach (json_decode($image->img_name) as $picture) { ?>
                  <img src="{{ asset('/stage_of_completion_img/'.$picture) }}" style="height:120px; width:200px"/>

@@ -50,7 +50,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title"></h4>
                                     <div class="card-title-desc divider">  </div    >   
-                                    <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <table id="" class="table table-bordered dt-responsive nowrap client" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -66,13 +66,13 @@
                                         <tbody>
                                             @foreach ($clientWithProjects as $item) 
                                             <tr>
-                                                <td style='text-align:left'></td>
+                                                <td id="client_id"></td>
                                                 <td style='text-align:left'>  {{ $item->full_name }} </td>
                                                 <td style='text-align:left'>{{ $item->client_email }}</td>
                                                 <td>{{ $item->client_prime_contact }}</td>
-                                                <td>{{ $item->region }}</span></td>
-                                                <td>{{ $item->location }}</span></td>
-                                                <td>{{ $item->project_title }}</span></td>
+                                                <td>{{ $item->region }}</td>
+                                                <td>{{ $item->location }}</td>
+                                                <td>{{ $item->project_title }}</td>
                                                 {{-- <td><span class="badge badge-primary">Received</span></td> --}}
                                                 <td>
                                                     <a href=" {{ route('clients.show', $item->clientid)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
