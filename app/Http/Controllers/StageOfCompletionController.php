@@ -28,24 +28,15 @@ class StageOfCompletionController extends Controller
         $regions  = DB::table('tblregion')->pluck('region', 'rid');
         $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
         $clients  = DB::table('tblclients')->get();
-
-        if (request()->has('stageOfCompletionImg'))
-        {
-           return $stageOfCompletionImg = DB::table('tblstage_image')->get();
-            
-        }
-
-        if (request()->has('stageOfCompletion'))
-        {
-           return $stageOfCompletion    = DB::table('tblstage')->get();
-        }
-   
+        $stageOfCompletionImg = DB::table('tblstage_image')->get();
+        $stageOfCompletion    = DB::table('tblstage')->get();
+        
         $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
         $project_status  = DB::table('tblstatus')->get()->pluck('id', 'status');
         $project_phase   = DB::table('tblproject_phase')->get()->pluck('id', 'phase');
         $project_visited = DB::table('tblproject')->get()->pluck('pid', 'title')->sort();
 
-        return view('stage_completion.index', compact('genders', 'stage$stageOfCompletionImg', 'stageOfCompletion','townId','regions', 'regionId', 
+        return view('stage_completion.index', compact('genders', 'stageOfCompletionImg', 'stageOfCompletion','townId','regions', 'regionId', 
                     'clients', 'project_status', 'project_visited', 'project_phase'));
     }
 
@@ -66,7 +57,7 @@ class StageOfCompletionController extends Controller
         $project_status  = DB::table('tblstatus')->get()->pluck('id', 'status');
         $project_visited = DB::table('tblproject')->get()->pluck('pid', 'title')->sort();
 
-        return view('onsite_visit.create', compact('genders', 'townId','regions', 'regionId', 'clients', 'project_status', 'project_visited'));
+        return view('stage_completion.create', compact('genders', 'townId','regions', 'regionId', 'clients', 'project_status', 'project_visited'));
     }
 
     public function clientToProject($id) 
@@ -168,9 +159,24 @@ class StageOfCompletionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($stageid)
     {
-        //  
+        //code
+        $projects   =  DB::table('tblproject')->get();
+        $genders    =  DB::table('tblgender')->get();
+        $regions    =  DB::table('tblregion')->get();
+        $countries  =  DB::table('tblcountry')->get();
+
+        $project_status = DB::table('tblstatus')->get()->pluck('id', 'status');
+        $townId         = DB::table('tbltown')->get()->pluck('town', 'tid');
+        $regionId       = DB::table('tblregion')->get()->pluck('region', 'rid');
+        $projectId      = DB::table('tblproject')->where('pid', $stageid)->get();
+        $countryId      = DB::table('tblcountry')->get()->pluck('region_name', 'id');
+        $project_status = DB::table('tblstatus')->get()->pluck('status', 'id');
+        
+
+        return view('stage_completion.edit', compact('projectId', 'projects', 'countries', 'townId', 
+                                            'regions', 'regionId','countryId', 'project_status')); 
     }
 
     /**
