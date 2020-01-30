@@ -115,12 +115,12 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="comment">Materials Purchased</label>
-                                <textarea name="matpurchased" id="matpurchased" cols="44" rows="6"  required ></textarea>
+                                <textarea name="matpurchased" id="matpurchased" cols="44" rows="6" dirname="matpurchased.dir" required ></textarea>
                             </div> 
                             <div class="form-group col-md-2"></div>
                             <div class="form-group col-md-4">
                                 <label for="comment">Details of Amount Spent</label>
-                                    <textarea name="amtdetails" id="amtdetails" cols="44" rows="6" required ></textarea>
+                                    <textarea name="amtdetails" id="amtdetails" cols="44" rows="6" dirname="amtspent.dir" required ></textarea>
                                 </div>
                         </div>
                     <hr style="background-color:fuchsia; opacity:0.1">

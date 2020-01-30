@@ -54,13 +54,10 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                {{-- <th>Full Name</th> --}}
+                                                <th>Project Owner</th>
+                                                <th>Project Budget</th>
                                                 <th>Amount Spent</th>
-                                                {{-- <th>Email</th> --}}
                                                 <th>Disbursed On</th>
-                                                {{-- <th>Phone</th> --}}
-                                                <th>Materials</th>
-                                                <th>Created On</th>
                                                 <th>Phase</th>
                                                 <th>Status</th>
                                                 <th>Action</th> 
@@ -70,13 +67,12 @@
                                             @foreach ($stageOfCompletion as $item) 
                                             <tr>
                                                 <td id="stage"></td>
-                                                {{-- <td style='text-align:left'>  {{ $item->full_name }} </td> --}}
+                                                <td style='text-align:left'>  {{ $item->full_name }} </td>
+                                                <td style='text-align:left'>  {!! $item->project_budget !!} </td>
                                                 <td style='text-align:left'>  {!! $item->amtspent !!} </td>
-                                                <td style='text-align:left'>{!! $item->amtdetails !!}</td>
-                                                <td>{!! $item->matpurchased !!}</td>
-                                                <td>{!! $item->created_at !!}</td>
-                                                <td>{!! $item->phase_id !!}</td>
-                                                <td>{!! $item->status_id !!}</td>
+                                                <td style='text-align:left'>{!! $item->matpurchased !!}</td>
+                                                <td>{!! $item->phase !!}</td>
+                                                <td>{!! $item->status !!}</td>
                                                 {{-- <td><span class="badge badge-primary">Received</span></td>  --}}
                                                 <td>
                                                     <a href=" {!! route('stage-of-completion.show', $item->id)!!}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
