@@ -111,38 +111,25 @@
                             </div>
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <fieldset class="rounded border p-2 col-md-10">
-                                    <legend class="w-auto"><span>More Information</span> </legend>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-1"></div>
-                                    <div class="form-group col-md-10">
-                                        <label for="comment">Materials Purchased</label>
-                                            <textarea name="matpurchased" id="matpurchased" class="summernote" required ></textarea>
-                                        </div> 
-                                        <div class="form-group col-md-1"></div>
-                                    </div>
-                                    <div class="dropdown-divider"></div>
-                                 <div class="form-row">
-                                    <div class="form-group col-md-1"></div>
-                                     <div class="form-group col-md-10">
-                                      <label for="comment">Details of Amount Spent</label>
-                                          <textarea name="amtdetails" id="amtdetails" cols="44" rows="6" class="summernote" required ></textarea>
-                                      </div>
-                                   <div class="form-group col-md-1"></div>
+                       
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="comment">Materials Purchased</label>
+                                <textarea name="matpurchased" id="matpurchased" cols="44" rows="6"  required ></textarea>
+                            </div> 
+                            <div class="form-group col-md-2"></div>
+                            <div class="form-group col-md-4">
+                                <label for="comment">Details of Amount Spent</label>
+                                    <textarea name="amtdetails" id="amtdetails" cols="44" rows="6" required ></textarea>
                                 </div>
-                                </fieldset>
-                            </div>
                         </div>
                     <hr style="background-color:fuchsia; opacity:0.1">
                     <div class="container">
                         <div class="row">
                             <div class="col text-center">
-                                <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
-                                  Save</button>
-                              </div>
-                              <div class="form-group col-md-2"></div>
+                                <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i> Save</button>
+                            </div>
+                        <div class="form-group col-md-2"></div>
                       </div>
                     </div>
                 </form>

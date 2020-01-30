@@ -30,14 +30,24 @@ class StageOfCompletionController extends Controller
         $clients  = DB::table('tblclients')->get();
         $stageOfCompletionImg = DB::table('tblstage_image')->get();
         $stageOfCompletion    = DB::table('tblstage')->get();
-        
+
         $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
         $project_status  = DB::table('tblstatus')->get()->pluck('id', 'status');
         $project_phase   = DB::table('tblproject_phase')->get()->pluck('id', 'phase');
         $project_visited = DB::table('tblproject')->get()->pluck('pid', 'title')->sort();
 
-        return view('stage_completion.index', compact('genders', 'stageOfCompletionImg', 'stageOfCompletion','townId','regions', 'regionId', 
-                    'clients', 'project_status', 'project_visited', 'project_phase'));
+        return view('stage_completion.index', compact(
+            'genders',
+            'stageOfCompletionImg',
+            'stageOfCompletion',
+            'townId',
+            'regions',
+            'regionId',
+            'clients',
+            'project_status',
+            'project_visited',
+            'project_phase'
+        ));
     }
 
        /**
@@ -52,12 +62,26 @@ class StageOfCompletionController extends Controller
         $regions  = DB::table('tblregion')->pluck('region', 'rid');
         $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
         $clients  = DB::table('tblclients')->get();
-   
+        $stageOfCompletionImg = DB::table('tblstage_image')->get();
+        $stageOfCompletion    = DB::table('tblstage')->get();
+
         $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
         $project_status  = DB::table('tblstatus')->get()->pluck('id', 'status');
+        $project_phase   = DB::table('tblproject_phase')->get()->pluck('id', 'phase');
         $project_visited = DB::table('tblproject')->get()->pluck('pid', 'title')->sort();
 
-        return view('onsite_visit.create', compact('genders', 'townId','regions', 'regionId', 'clients', 'project_status', 'project_visited'));
+        return view('stage_completion.create', compact(
+            'genders',
+            'stageOfCompletionImg',
+            'stageOfCompletion',
+            'townId',
+            'regions',
+            'regionId',
+            'clients',
+            'project_status',
+            'project_visited',
+            'project_phase'
+        ));
     }
 
     public function clientToProject($id) 

@@ -34,7 +34,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">All Clients</h4>
+                                <h4 class="mb-0 font-size-18">Summary of Project Phase</h4>
                                 <div class="page-title-right">
                                 <a href="{{ route('stage-of-completion.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
                                     Add Project Phase</a> 
