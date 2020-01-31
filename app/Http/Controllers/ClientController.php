@@ -181,13 +181,25 @@ class ClientController extends Controller
 
     public function updateGenderStatus(Request $request, $id)
     {
-
-
         # code...
         $flag_as     =  ['gender' => "1"];
-        $genders               =  DB::table('tblgender')->pluck('id', 'id');
-        // $gender_modified       =  $request->input('gender');
-        $client_gender         =  DB::table('tblclients')->where('clientid', $id)->update($flag_as);
+        $genders     =  DB::table('tblgender')->pluck('id', 'id');
+        $client_gender  =  DB::table('tblclients')->where('clientid', $id)->update($flag_as);
         return redirect()->route('clients.edit');
+    }
+
+    public  static function clientFullName()
+    {
+        # code...
+        $clients    = DB::table('tblclients')->get();
+            foreach ($clients as $key => $client)
+            {
+                $title         = $client->title;
+                $first_name    = $client->fname;
+                $last_name     = $client->lname;
+                $concated_name = $title . "\n" . $first_name . "\n". $last_name;
+                $full_name     = $concated_name;
+                return $full_name;
+            }
     }
 }
