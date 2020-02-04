@@ -211,8 +211,7 @@ class StageOfCompletionController extends Controller
         $regions   = DB::table('tblregion')->pluck('region', 'rid');
         $regionId  = DB::table('tblregion')->get()->pluck('rid', 'region');
         $clients   = DB::table('tblclients')->get();
-        // $full_name = ClientController::clientFullName();
-
+       
         $track_stage       = static::trackPhaseOfCompletion();
         $stageOfCompletion = DB::table('tblstage_image')->where('id', $id)->get();
 
@@ -231,7 +230,7 @@ class StageOfCompletionController extends Controller
                 }
             
             }
-
+        // dd($track_stage);
 
         $townId   = DB::table('tbltown')->get()->pluck('id', 'town');
         $stage1  = DB::table('tblstage_image')->get()->pluck('id', 'id');
@@ -291,11 +290,11 @@ class StageOfCompletionController extends Controller
             }
 
 
-        $townId   = DB::table('tbltown')->get()->pluck('id', 'town');
-        $stage1  = DB::table('tblstage_image')->get()->pluck('id', 'id');
-        $project_status  = DB::table('tblstatus')->get()->pluck('id', 'status');
-        $project_phase   = DB::table('tblproject_phase')->get()->pluck('id', 'phase');
-        $project_visited = DB::table('tblproject')->get()->where('clientid', $id)->pluck('pid', 'title')->sort();
+        $townId          =  DB::table('tbltown')->get()->pluck('id', 'town');
+        $stage1          =  DB::table('tblstage_image')->get()->pluck('id', 'id');
+        $project_status  =  DB::table('tblstatus')->get()->where('id', $id)->pluck('id', 'status')->sort();
+        $project_phase   =  DB::table('tblproject_phase')->get()->pluck('id', 'phase');
+        $project_visited =  DB::table('tblproject')->get()->where('clientid', $id)->pluck('pid', 'title')->sort();
 
         return view('stage_completion.edit', compact(
             'genders',

@@ -102,14 +102,14 @@
                             </div>
                             <div class="form-group col-md-2">  </div>
                             <div class="form-group col-md-4">
-                                <label for="status">Stage of Completion</label>
+                                <label for="status">Status of Completion</label>
                                 <select id="status_id" name="status_id" class="form-control custom-select" required>
                                     @if ( empty($r->status_id) )
                                         <option>-- select --</option>
                                     @endif
                                     @foreach ($project_status as $key => $status) 
                                         @if ( !empty($r->status_id) )
-                                            <option value="{{ $status }}" {{ old('phase_id', in_array($r,[$key]) ? $r->status_id : 'null') === $key ? 
+                                            <option value="{{ $status }}" {{ old('status_id', in_array($r,[$key]) ? $r->status_id : 'null') === $key ? 
                                             'selected' : '' }}> {{ ucwords($key) }} </option>    
                                         @else
                                     @endif
@@ -136,7 +136,8 @@
                             <div class="form-group col-md-2"></div>
                             <div class="form-group col-md-4">
                                 <label for="img_name">Photos of Work Done</label>
-                                <input type="file" class="form-control" id="img_name" name="img_name[]" multiple required>
+                                <input type="file" class="form-control" id="img_name" name="img_name[]" multiple >
+                                <br>
                                 <td> 
                                 @foreach (json_decode($r->img_name) as $picture) 
                                     <img src="{{ asset('/stage_of_completion_img/'.$picture) }}" style="height:50px; width:50px"/>

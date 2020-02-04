@@ -99,7 +99,6 @@
                                 <select id="phase_id" name="phase_id" class="form-control custom-select" required>
                                     <option>-- select --</option>
                                     @foreach ($project_phase as $key => $phase) 
-                                    
                                     <option value="{{ $phase }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                     @endforeach
                                 </select> 
