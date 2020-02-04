@@ -11,14 +11,15 @@
 |
 */
 
+use App\Http\Controllers\TownController;
+
 Auth::routes();
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('auth.login');  
 });
 
 Route::get('/logout', function () { return redirect('login'); });
-
 
 Route::group( ['middleware' => 'auth'],  function() {
 
@@ -31,12 +32,28 @@ Route::group( ['middleware' => 'auth'],  function() {
     Route::resource('projects', 'ProjectController');
     Route::resource('onsite-visit', 'OnsiteVisitController');
     Route::resource('reports', 'ReportController');
+    Route::resource('project-document', 'ProjectDocumentController');
+    Route::resource('payment-mode', 'PaymentModeController');
     
     Route::resource('stage-of-completion', 'StageOfCompletionController');
     Route::get('/projects/create/{id}','ProjectController@getTowns');
     Route::any('/stage-of-completion/{image}/delete', 'StageOfCompletionController@deleteImage');
     Route::get('/onsite-visit/create/{id}','OnsiteVisitController@clientToProject');
+
+    Route::prefix('system-setup')->group(function () {
+        Route::resource('towns', 'TownController');
+        Route::resource('nationality', 'NationalityController');
+        Route::resource('title', 'TitleController');
+        Route::resource('currency', 'CurrencyController');
+        Route::resource('role', 'UserRoleController');
+        Route::resource('branches', 'CompanyBranchController'); 
+        Route::resource('status', 'StatusController');
+        Route::resource('regions', 'RegionController');
+        Route::resource('gender', 'GenderController');
+    });
+
 });
+
 
 
 

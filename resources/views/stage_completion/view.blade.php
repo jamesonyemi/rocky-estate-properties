@@ -69,19 +69,9 @@
                             </div>
                             <div class="form-group col-md-2">  </div>
                             <div class="form-group col-md-4">
-                                <label for="status">Stage of Completion</label>
-                                <select id="status_id" name="status_id" class="form-control custom-select" disabled required>
-                                    @if ( empty($r->status_id) )
-                                        <option>-- select --</option>
-                                    @endif
-                                    @foreach ($project_status as $key => $status) 
-                                        @if ( !empty($r->status_id) )
-                                            <option value="{{ $status }}" {{ old('phase_id', in_array($r,[$key]) ? $r->status_id : 'null') === $key ? 
-                                            'selected' : '' }}> {{ ucwords($key) }} </option>    
-                                        @else
-                                    @endif
-                                    @endforeach
-                                </select>  
+                                <label for="status">Status of Completion</label>
+                            <input type="text" id="status_id" value="{{ ucfirst(strip_tags($r->status)) }}" name="status_id" 
+                                class="form-control" disabled>
                             </div>
                         </div>
                         <div class="form-row">
@@ -98,36 +88,21 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                             <label for="phase">Project Phase</label>
-                            <select id="phase_id" name="phase_id" class="form-control custom-select" disabled required>
-                                @if ( empty($r->phase_id) )
-                                    <option>-- select --</option>
-                                @endif
-                                @foreach ($project_phase as $key => $phase) 
-                                    @if ( !empty($r->phase_id) )
-                                        <option value="{{ $phase }}" {{ old('phase_id', in_array($r,[$key]) ? $r->phase_id : 'null') === $key ? 
-                                        'selected' : '' }}> {{ ucwords($key) }} </option>    
-                                    @else
-                                @endif
-                                @endforeach
-                            </select> 
+                            <input type="text" class="form-control" disabled  value="{{ $r->phase }}">
                             </div>
                             <div class="form-group col-md-2"></div>
                             <div class="form-group col-md-4">
-                                <label for="img_name">Photos of Work Done</label><br>
                                 <td> 
-                                    {{-- @php
-                                        $i = 0; --}}
-                                   {{-- Create an image counter --}}
-                                          @foreach (json_decode($r->img_name) as $picture) 
-                                    '<img src="{{ asset('/stage_of_completion_img/'.$picture) }}" style="height:50px; width:50px"/><br>'
-                                   '<a href="#" name=""><i class="bx bx-trash" id="'..'">song</i></a>'
-                                    {{-- $i++; --}}
-                                 @endforeach 
- {{-- @endphp --}}
-                              </td>
+                                    <hr style="background-color:darkgray">
+                                    <label for="img_name">Photos of Work Done</label><br>
+                                    @foreach (json_decode($r->img_name) as $picture) 
+                                        <img id="db-images" src="{{ asset('/stage_of_completion_img/'.$picture) }}" style="height:50px; width:50px"/>
+                                        {{-- <i class="bx bx-trash" id="removes" ></i> --}}
+                                     @endforeach
+                                  </td>
                             </div>
                         </div>
-                        <br>
+                 <br>
             </div>
         </div>
      <!-- End -->
@@ -135,3 +110,19 @@
 <!-- End Main Content Wrapper -->
 
 @include('partials.footer')
+
+{{-- <script>
+   let images =  document.querySelectorAll("#db-images");
+   let trashIcon =  document.querySelectorAll("#removes");
+   images.forEach(element => {
+    // console.log(element);
+       trashIcon.addEventListener("click", function(){
+           let imgs = document.querySelector("#db-images").remove();
+           let removeIcon = document.querySelector("#removes").remove();
+           console.log(element.values = 120);
+        });
+       
+   });
+
+</script> --}}
+

@@ -98,9 +98,9 @@
                             <div class="form-group col-md-4">
                                 <label for="img_name">Photos of Work Done</label>
                                 <input type="file" class="form-control" id="img_name" name="img_name[]" multiple >
-                                <hr style="background-color:darkgray">
-                                <h6>UPLOADED IMAGE</h6>
                                 <td> 
+                                    <hr style="background-color:darkgray">
+                                    <h6><i>UPLOADED IMAGE</i> </h6>
                                 @foreach (json_decode($r->img_name) as $picture) 
                                     <img src="{{ asset('/stage_of_completion_img/'.$picture) }}" style="height:50px; width:50px"/>
                                  @endforeach

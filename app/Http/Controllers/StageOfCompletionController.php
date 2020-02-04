@@ -35,12 +35,11 @@ class StageOfCompletionController extends Controller
         $clients  = DB::table('tblclients')->get();
         $stageOfCompletionImg = DB::table('tblstage_image')->get();
         $stageOfCompletion    = static::trackPhaseOfCompletion();
-
-
+        
         return view('stage_completion.index', compact(
             'stageOfCompletionImg',
             'stageOfCompletion',
-            'clients',
+            'clients'
             // 'genders',
             // 'townId',
             // 'regions',
@@ -206,12 +205,10 @@ class StageOfCompletionController extends Controller
     public function show(Request $request, $id)
     {
         //code  
-     
         $genders   = DB::table('tblgender')->pluck('id', 'type');
         $regions   = DB::table('tblregion')->pluck('region', 'rid');
         $regionId  = DB::table('tblregion')->get()->pluck('rid', 'region');
         $clients   = DB::table('tblclients')->get();
-        // $full_name = ClientController::clientFullName();
 
         $track_stage       = static::trackPhaseOfCompletion();
         $stageOfCompletion = DB::table('tblstage_image')->where('id', $id)->get();
@@ -252,6 +249,52 @@ class StageOfCompletionController extends Controller
             'r',
             'stageOfCompletion'
         ));
+    }
+
+    /**
+     * The following function gets recursively all the directories, 
+     * sub directories so deep as you want and the content of them
+     * This function lets you scan the directories structure ($directory_depth) 
+     * so deep as you want as well get rid of all the boring hidden files (e.g. '.','..')
+     *
+     * @param String $source_dir Source Directory
+     * @param Int $directory_depth Specify Direcotry Depth
+     * @param Boolean $hidden  get rid of all the boring hidden files (e.g. '.','..')
+     * @return String
+     * @throws conditon
+     **/
+  
+    public static function assetsMap($source_dir, $directory_depth = 0, $hidden = FALSE)
+    {
+        if ($fp = @opendir($source_dir))
+        {
+            $filedata   = array();
+            $new_depth  = $directory_depth - 1;
+            $source_dir = rtrim($source_dir, '/').'/';
+
+            while (FALSE !== ($file = readdir($fp)))
+            {
+                // Remove '.', '..', and hidden files [optional]
+                if ( ! trim($file, '.') OR ($hidden == FALSE && $file[0] == '.'))
+                {
+                    continue;
+                }
+
+                if (($directory_depth < 1 OR $new_depth > 0) && @is_dir($source_dir.$file))
+                {
+                    $filedata[$file] = static::assetsMap($source_dir.$file.'/', $new_depth, $hidden);
+                }
+                else
+                {
+                    $filedata[] = $file;
+                }
+            }
+
+            closedir($fp);
+            return $filedata;
+        }
+        echo 'can not open dir';
+        return FALSE;
     }
 
     /**
@@ -387,35 +430,17 @@ class StageOfCompletionController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
+     *  
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //code
-        // $imagePath = asset('/stage_of_completion_img/' . $id);
-        //   $getImage =  '<img src="'.$imagePath.'" />';
-
-        //     $imageUrl =  $getImage;
-        //     return $imageUrl;
-
-
-        $imagePath = asset('/stage_of_completion_img/' . $id);
-        $directory = public_path().'/stage_of_completion_img/';
-        // dd($directory);
-        $getImage =  '<img src="' . $imagePath . '" />';
-
-        $images = DB::table('tblstage_image')->get();
         
-        $image = DB::table('tblstage_image')->where('id', $id)->get();
-        foreach ($image as $key => $value) {
-            $files = Storage::allFiles($directory);
-            // $del = unlink(public_path().('/stage_of_completion_img/'. '2020-01-28 04_51_11_Ad.jpg'));
-            // dd($del);
-            // dd(json_decode($value->img_name));
-             # code...
-         }
+        //code
+        // $flag_as_deleted     =  ['isdeleted' => 0 ];
+        // $update_clientInfo   =  DB::table('tblproject')->where('pid', $id)->update($flag_as_deleted);
+        return redirect('stage-of-completion')->with('success', 'Data will Soon Self Delete ');   
         
     }
 

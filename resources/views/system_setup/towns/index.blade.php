@@ -34,67 +34,71 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">Summary of Project Phase</h4>
+                                <h4 class="mb-0 font-size-18">All Towns</h4>
                                 <div class="page-title-right">
-                                <a href="{{ route('stage-of-completion.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
-                                    Add Project Phase</a> 
+                                <a href="{{ route('towns.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
+                                    New Town</a> 
                                 </div>
                             </div>
                         </div>
-                    </div><br>
+                    </div>
+                    <br>
                     <!-- end page title -->
 
+                    <!-- FILTERING BY PROJECT STATUS  -->
+                    {{-- <div><span id="filter_status"></span></div> --}}
+                    <!-- END OF FILTERING BY PROJECT STATUS-->
+                   
                     <div class="row">
-                        <div class="col-12">    
+                        <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title"></h4>
-                                    <div class="card-title-desc divider">  </div    >   
-                                    <table id="" class="table table-bordered dt-responsive nowrap stage" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <div class="card-title-desc">  </div>   
+                                    <table id="" class="table table-bordered dt-responsive nowrap client" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Project Owner</th>
-                                                <th>Project Name</th>
-                                                <th>Project Budget</th>
-                                                <th>Amount Spent</th>
-                                                <th>Disbursed For</th>
-                                                <th>Phase</th>
-                                                <th>Status</th>
-                                                <th>Action</th> 
+                                                <th>Town</th>
+                                                <th>Region</th>
+                                                {{-- <th>Project Title</th>
+                                                <th>Town</th> --}}
+                                                {{-- <th>Status</th> --}}
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
+
                                         <tbody>
-                                            @foreach ($stageOfCompletion as $item) 
+
+                                            @foreach ($towns as $town)
+                                                {{-- @if ( $town->isdeleted === "no" ) --}}
                                             <tr>
-                                                <td id="stage"></td>
-                                                <td style='text-align:left'>  {{ $item->full_name }} </td>
-                                                <td style='text-align:left'>  {{ $item->title }} </td>
-                                                <td style='text-align:left'>  {!! $item->project_budget !!} </td>
-                                                <td style='text-align:left'>  {!! $item->amtspent !!} </td>
-                                                <td style='text-align:left'>{!! $item->matpurchased !!}</td>
-                                                <td>{!! $item->phase !!}</td>
-                                                <td>{!! $item->status !!}</td>
-                                                {{-- <td><span class="badge badge-primary">Received</span></td>  --}}
+                                                <td id="project_id"></td>
+                                                <td >{{ $town->town}}</span></td>
+                                                <td>{{ $town->rid }}</span></td>
+                                                {{-- <td > {{ $town->town_title}} </td>
+                                                <td>{{ $town->location }}</td>    --}}
+                                                {{-- <td id="status"> {{ ucfirst($project->client_project_status) }} </td>  --}}
                                                 <td>
-                                                    <a href=" {!! route('stage-of-completion.show', $item->id)!!}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <a href=" {{ route('towns.show', $town->tid)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{!! route('stage-of-completion.edit', $item->id) !!}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                    <a href="{{ route('towns.edit', $town->tid) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                                             <i class="bx bx-edit"></i>
                                                         </a>
-                                                    <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                                 <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
                                                         onclick="event.preventDefault();
-                                                                 document.getElementById('delete_client').submit();">
+                                                                 document.getElementById('delete').submit();">
                                                    
-                                                    <form id="delete_client" action="{!! route('stage-of-completion.destroy', $item->id) !!}" method="post" >
+                                                    <form id="delete" action="{{ route('towns.destroy', $town->tid) }}" method="post" >
                                                         {{ csrf_field() }}
                                                         <input name="_method" type="hidden" value="DELETE">
                                                         <i class="bx bx-trash"></i>
                                                     </form> 
-                                                </a>
+                                                </a>   
                                                 </td>
                                             </tr>
+                                            {{-- @endif --}}
                                           
                                             @endforeach
                                         </tbody>
