@@ -94,14 +94,15 @@ class TownController extends Controller
         $towns    = DB::table('tbltown')->where('tid', $id)->get();
 
         // I have join and a loop to do here
-
+        $regionTownMap = static::regionTownMap();
+        // dd($regionTownMap)
 
         return view('system_setup.towns.show', compact(
             'towns',
             'townId',
             'regions',
-            'regionId'
-            // 'project_status',
+            'regionId',
+            'regionTownMap'
             // 'project_visited',
             // 'project_phase',
             // 'genders',
@@ -159,5 +160,16 @@ class TownController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public static function regionTownMap() 
+    {
+         # code...
+         $regionTown  = DB::table('tblregion as a')
+         ->join('tbltown as b', 'b.rid', '=', 'a.rid')
+         ->select('a.rid as id', 'b.tid', 'b.town')
+         ->orderBy('a.rid')->get()->toArray();
+         
+         return $regionTown;
     }
 }

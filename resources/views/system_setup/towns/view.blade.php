@@ -58,6 +58,7 @@
                         </div>
                     </div>
                 </form> -->
+                {{ dd($regionTownMap) }}
                 @foreach ($towns as $town)
                 <form class="mt-5">
                     {{ csrf_field() }}
