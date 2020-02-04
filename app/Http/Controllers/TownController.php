@@ -86,7 +86,27 @@ class TownController extends Controller
      */
     public function show($id)
     {
-        //
+        //code
+        $genders  = DB::table('tblgender')->pluck('id', 'type');
+        $regions  = DB::table('tblregion')->pluck('region', 'rid');
+        $regionId = DB::table('tblregion')->get()->pluck('region', 'rid');
+        $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
+        $towns    = DB::table('tbltown')->where('tid', $id)->get();
+
+        // I have join and a loop to do here
+
+
+        return view('system_setup.towns.show', compact(
+            'towns',
+            'townId',
+            'regions',
+            'regionId'
+            // 'project_status',
+            // 'project_visited',
+            // 'project_phase',
+            // 'genders',
+            // 'id'
+        ));
     }
 
     /**
@@ -97,7 +117,25 @@ class TownController extends Controller
      */
     public function edit($id)
     {
-        //
+        //code
+        $genders  = DB::table('tblgender')->pluck('id', 'type');
+        $regions  = DB::table('tblregion')->pluck('region', 'rid');
+        $regionId = DB::table('tblregion')->get()->pluck('region', 'rid');
+        $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
+        $towns    = DB::table('tbltown')->where('tid', $id)->get();
+
+
+        return view('system_setup.towns.edit', compact(
+            'towns',
+            'townId',
+            'regions',
+            'regionId'
+            // 'project_status',
+            // 'project_visited',
+            // 'project_phase',
+            // 'genders',
+            // 'id'
+        ));
     }
 
     /**
