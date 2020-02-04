@@ -54,47 +54,8 @@
             <div class="card-body">
             <form method="POST" action="{{ route('stage-of-completion.update', $r->id)}}" enctype="multipart/form-data" class="mt-5">
                 {{ csrf_field() }}
-                {{-- <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="client">Client</label>
-                        <select id="clientid" name="clientid" class="form-control custom-select" required>
-                            @if ( empty($r->clientid) )
-                            <option>-- select --</option>
-                            @endif
-                            @foreach ($clients as $key => $client)
-                                @if ($client->clientid )
-                                @php
-                                    $title         = $client->title;
-                                    $first_name    = $client->fname;
-                                    $last_name     = $client->lname;
-                                    $concated_name = $title . "\n" . $first_name . "\n". $last_name;
-                                    $full_name     = $concated_name;
-                                @endphp
-                                <option value="{{ $client->clientid }}" {{ old('clientid', in_array($r,[$client]) ? $client->clientid : 'null') == $key ? 'selected' : '' }}>
-                                    {{ ucwords( $full_name ) }}
-                                </option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2"></div>
-            
-                    <div class="form-group col-md-4">
-                        <label for="pid">Project:</label>
-                        <select id="pid" name="pid" class="form-control">
-                        @if ( empty($r->pid) )
-                            <option>-- select --</option>
-                        @endif
-                        @foreach ($project_visited as $key => $value) 
-                        @if ( !empty($r->pid) )
-                            <option value="{{ $value }}" {{ old('pid', in_array($r,[$key]) ? $r->pid : 'null') == $key ? 
-                            'selected' : '' }}> {{ ucwords($key) }} </option>    
-                        @endif
-                        @endforeach
-                    </select>
-
-                    </div>
-                </div> --}}
+                <input name="_method" type="hidden" value="PUT">
+              
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="amount_spent">Amount Spent</label>
@@ -109,7 +70,7 @@
                                     @endif
                                     @foreach ($project_status as $key => $status) 
                                         @if ( !empty($r->status_id) )
-                                            <option value="{{ $status }}" {{ old('status_id', in_array($r,[$key]) ? $r->status_id : 'null') === $key ? 
+                                            <option value="{{ $status }}" {{ old('phase_id', in_array($r,[$key]) ? $r->status_id : 'null') === $key ? 
                                             'selected' : '' }}> {{ ucwords($key) }} </option>    
                                         @else
                                     @endif
@@ -137,12 +98,16 @@
                             <div class="form-group col-md-4">
                                 <label for="img_name">Photos of Work Done</label>
                                 <input type="file" class="form-control" id="img_name" name="img_name[]" multiple >
-                                <br>
+                                <hr style="background-color:darkgray">
+                                <h6>UPLOADED IMAGE</h6>
                                 <td> 
                                 @foreach (json_decode($r->img_name) as $picture) 
                                     <img src="{{ asset('/stage_of_completion_img/'.$picture) }}" style="height:50px; width:50px"/>
                                  @endforeach
                               </td>
+                    
+                              {{-- WORK-TO-DO for, DELETE SPECIFIC IMAGE FROM ARRAY LIST AND DATABASE ON CLICK --}}
+                              
                             </div>
                         </div>
                         <br>
@@ -150,7 +115,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="comment">Materials Purchased</label>
-                                <textarea name="matpurchased" id="matpurchased"  cols="50" rows="6"  dirname="matpurchased.dir" required > 
+                                <textarea name="matpurchased" id="matpurchased"  cols="50" rows="6"   required > 
                                     {{ strip_tags($r->matpurchased) }}</textarea>
                             </div> 
                             <div class="form-group col-md-2"></div>
