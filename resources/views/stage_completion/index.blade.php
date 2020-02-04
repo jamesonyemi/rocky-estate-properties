@@ -57,7 +57,7 @@
                                                 <th>Project Owner</th>
                                                 <th>Project Budget</th>
                                                 <th>Amount Spent</th>
-                                                <th>Disbursed On</th>
+                                                <th>Disbursed For</th>
                                                 <th>Phase</th>
                                                 <th>Status</th>
                                                 <th>Action</th> 

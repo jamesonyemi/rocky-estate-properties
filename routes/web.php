@@ -34,6 +34,7 @@ Route::group( ['middleware' => 'auth'],  function() {
     
     Route::resource('stage-of-completion', 'StageOfCompletionController');
     Route::get('/projects/create/{id}','ProjectController@getTowns');
+    Route::any('/stage-of-completion/{image}/delete', 'StageOfCompletionController@deleteImage');
     Route::get('/onsite-visit/create/{id}','OnsiteVisitController@clientToProject');
 });
 

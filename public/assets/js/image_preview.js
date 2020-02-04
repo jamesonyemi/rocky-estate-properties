@@ -12,7 +12,7 @@ $(document).ready(function () {
                 fileReader.onload = (function (e) {
                     $("<span class=\"pip\">" +
                         "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + f.name + "\"/>" +
-                        "<br/><span class=\"remove\"><small>Remove Image</small></span>" +
+                        "<br/><span class=\"remove\"><small>X</small></span>" +
                         "</span>").insertAfter("#img_name");
                     $(".remove").click(function () {
                         $(this).parent(".pip").remove();
