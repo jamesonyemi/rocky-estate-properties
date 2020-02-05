@@ -6988,7 +6988,7 @@ Login CSS
 }
 
 .login-area.bg-image {
-  background-image: url(../img/login-bg.jpg);
+  background-image: url('../img/building.png');
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;

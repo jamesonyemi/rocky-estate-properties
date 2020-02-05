@@ -34,10 +34,10 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">All Towns</h4>
+                                <h4 class="mb-0 font-size-18">All Personal Title</h4>
                                 <div class="page-title-right">
-                                <a href="{{ route('towns.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
-                                    New Town</a> 
+                                <a href="{{ route('title.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
+                                    Create Title</a> 
                                 </div>
                             </div>
                         </div>
@@ -58,39 +58,33 @@
                                     <table id="" class="table table-bordered dt-responsive nowrap client" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Town</th>
-                                                <th>Region</th>
-                                                {{-- <th>Project Title</th>
-                                                <th>Town</th> --}}
-                                                {{-- <th>Status</th> --}}
+                                                <th>#</th>
+                                                <th>Salutation</th> 
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
 
-                                            @foreach ($regionTownMap as $town)
-                                                {{-- @if ( $town->isdeleted === "no" ) --}}
+                                            @foreach ($personal_title as $p_title)
+                                                @if ( $p_title->active !== "" )
                                             <tr>
                                                 <td id="project_id"></td>
-                                                <td >{{ $town->town}}</span></td>
-                                                <td>{{ $town->region }}</span></td>
-                                                {{-- <td > {{ $town->town_title}} </td>
-                                                <td>{{ $town->location }}</td>    --}}
-                                                {{-- <td id="status"> {{ ucfirst($project->client_project_status) }} </td>  --}}
+                                                <td >{{ $p_title->salutation}}</span></td>
+                                                <td >{{ $p_title->active}}</span></td>
                                                 <td>
-                                                    <a href=" {{ route('towns.show', $town->tid)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <a href=" {{ route('title.show', $p_title->tid)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('towns.edit', $town->tid) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                    <a href="{{ route('title.edit', $p_title->tid) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                                             <i class="bx bx-edit"></i>
                                                         </a>
                                                  <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
                                                         onclick="event.preventDefault();
-                                                                 document.getElementById('delete').submit();">
+                                                                 document.getElementById('delete'+ {{ $p_title->id }} ).submit();">
                                                    
-                                                    <form id="delete" action="{{ route('towns.destroy', $town->tid) }}" method="post" >
+                                                    <form id="{{'delete'.$p_title->id }}" action="{{ route('title.destroy', $p_title->tid) }}" method="post" >
                                                         {{ csrf_field() }}
                                                         <input name="_method" type="hidden" value="DELETE">
                                                         <i class="bx bx-trash"></i>
@@ -98,8 +92,7 @@
                                                 </a>   
                                                 </td>
                                             </tr>
-                                            {{-- @endif --}}
-                                          
+                                            @endif
                                             @endforeach
                                         </tbody>
                                     </table>

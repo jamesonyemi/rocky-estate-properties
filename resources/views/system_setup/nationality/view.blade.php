@@ -20,34 +20,29 @@
 
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3>Create Town</h3>
+                <h3>View Country</h3>
             </div>
-            @foreach ($nationality as $nation)
+
             <div class="card-body">
-                <form class="mt-5">
+        @foreach ($nationality as $nation)
+                <form class="mt-5" action="{{ route('nationality.update', $nation->id) }}" method="POST">
                     {{ csrf_field() }}
-                    
+                    <input type="hidden" name="_method" id="" value="PUT">
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_region">Country Name</label>
-                        <input type="text" id="country_name" value="{{ old('country_name', $nation->country_name) }}"  
-                            name="country_name" class="form-control" disabled>
-                            {{-- <select id="rid" name="rid" class="form-control custom-select" required>
-                                <option>-- select --</option>
-                            @foreach ($nationality as $id => $nation)
-                                    <option value="{{ $id }}" class="text-capitalize">{{ ucwords($nation->country_name)  }}</option>
-                                    @endforeach
-                            </select> --}}
+                            <input type="text" id="country_name" name="country_name" class="form-control" 
+                                value="{{ old('country_name', $nation->country_name) }}" disabled>
                         </div>
                         <div class="form-group col-md-2"></div>
                 
                         <div class="form-group col-md-4">
-                            <label for="title">Country Code:</label>
-                            <input type="text" id="country_code" value="{{ old('country_name', $nation->country_code) }}"
-                             name="country_code" class="form-control" disabled>
+                            <label for="title">Country Code (e.g GH):</label>
+                            <input type="text" id="country_code" name="country_code" class="form-control"
+                                value="{{ old('country_code', $nation->country_code) }}" disabled>
                         </div>
                     </div>
-                    @endforeach
+                      @endforeach
                 </form>
             </div>
         </div>

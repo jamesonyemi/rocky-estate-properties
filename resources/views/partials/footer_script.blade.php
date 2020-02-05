@@ -74,7 +74,12 @@
 <script src=" {{ asset('custom_assets/js/pages/datatables.init.js') }}"></script>
 
 
-
+<script>
+  let alertSucess = document.querySelector("#alert-success");
+    setTimeout(() => {
+      $(alertSucess).hide();
+    }, 10000);
+  </script>
 
 </body>
 </html>

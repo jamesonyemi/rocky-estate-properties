@@ -79,56 +79,56 @@
                     </li>
 
                     <li class="nav-item ">
-                        <a href=" {{ url('system-setup.nationality') }}" class="nav-link">
+                        <a href=" {{ url('system-setup/nationality') }}" class="nav-link">
                             <span class="icon"><i class='bx bxs-log-in'></i></span>
                             <span class="menu-title">Nationality</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="{{ url('system-setup.title') }}" class="nav-link">
+                        <a href="{{ url('system-setup/title') }}" class="nav-link">
                             <span class="icon"><i class='bx bx-log-in-circle'></i></span>
                             <span class="menu-title">Title</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href=" {{ url('system-setup.currency') }}" class="nav-link">
+                        <a href=" {{ url('system-setup/currency') }}" class="nav-link">
                             <span class="icon"><i class='bx bxs-log-in-circle'></i></span>
                             <span class="menu-title">Currency</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href=" {{ url('system-setup.role') }}" class="nav-link">
+                        <a href=" {{ url('system-setup/role') }}" class="nav-link">
                             <span class="icon"><i class='bx bx-lock'></i></span>
                             <span class="menu-title">Assign Role to User</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="{{ url('system-setup.branch') }}" class="nav-link">
+                        <a href="{{ url('system-setup/branch') }}" class="nav-link">
                             <span class="icon"><i class='bx bx-lock'></i></span>
                             <span class="menu-title">Branches</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href=" {{ url('system-setup.status') }}" class="nav-link">
+                        <a href=" {{ url('system-setup/status') }}" class="nav-link">
                             <span class="icon"><i class='bx bx-lock-alt'></i></span>
                             <span class="menu-title">Status</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="{{ url('system-setup.region') }}" class="nav-link">
+                        <a href="{{ url('system-setup/region') }}" class="nav-link">
                             <span class="icon"><i class='bx bx-log-out'></i></span>
                             <span class="menu-title">Regions</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="{{ url('system-setup.gender') }}" class="nav-link">
+                        <a href="{{ url('system-setup/gender') }}" class="nav-link">
                             <span class="icon"><i class='bx bx-log-out-circle'></i></span>
                             <span class="menu-title">Gender</span>
                         </a>

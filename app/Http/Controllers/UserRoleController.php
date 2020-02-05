@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Faker\UniqueGenerator;
+use Illuminate\Support\Facades\Input;
 
 class UserRoleController extends Controller
 {
@@ -13,7 +17,11 @@ class UserRoleController extends Controller
      */
     public function index()
     {
-        //
+        //code
+        $currency  = DB::table('tblcurrency')->get();
+        return view('system_setup.currency.index', compact( 'currency' ));
+    
+           
     }
 
     /**
@@ -23,7 +31,8 @@ class UserRoleController extends Controller
      */
     public function create()
     {
-        //
+        $currency  = DB::table('tblcurrency')->get();
+        return view('system_setup.currency.create', compact( 'currency' ));
     }
 
     /**
@@ -34,7 +43,17 @@ class UserRoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       //code
+       $postData        = ClientController::allExcept();
+       $create_currency = DB::table('tblcurrency')->insert( array_merge(
+           $postData, [
+            'short_name' => strtoupper($request->short_name),
+            'long_name'  => ucfirst($request->long_name)
+           ]
+         ));
+    
+       dd($create_currency);
+       return redirect()->route('currency.index')->with('success', 'New Currency Created Sucessfully');
     }
 
     /**
@@ -45,7 +64,10 @@ class UserRoleController extends Controller
      */
     public function show($id)
     {
-        //
+        //code
+        $currency = DB::table('tblcurrency')->where('id', $id)->get();
+        return view('system_setup.currency.show', compact('currency' ));
+            
     }
 
     /**
@@ -56,7 +78,9 @@ class UserRoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        //code
+        $currency = DB::table('tblcurrency')->where('id', $id)->get();
+        return view('system_setup.currency.edit', compact('currency' ));
     }
 
     /**
@@ -68,7 +92,9 @@ class UserRoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $updateData = ClientController::allExcept();
+        $update     = DB::table('tblcurrency')->where('id', $id)->update($updateData);
+        return redirect()->route('currency.index')->with('success', 'Currency #  ' .$id. '   Info Updated');
     }
 
     /**
@@ -79,6 +105,8 @@ class UserRoleController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $flaged_as_deleted     =  ['isdeleted' => true ];
+        $deleted = DB::table('tblcurrency')->where('id', $id)->update($flaged_as_deleted);
+        return redirect()->route('currency.index')->with('success', 'Currency #  ' .$id. '   Info Deleted');
+    }   
 }
