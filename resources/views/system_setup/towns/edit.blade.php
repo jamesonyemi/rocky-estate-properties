@@ -20,7 +20,7 @@
 
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3>Project Details</h3>
+                <h3>Edit Town</h3>
 
                 <!-- <div class="dropdown">
                     <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"

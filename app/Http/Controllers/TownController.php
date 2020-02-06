@@ -70,15 +70,15 @@ class TownController extends Controller
     {
         //code
         $postData = ClientController::allExcept();
-        $create_town = DB::table('tbltown')->insert(array_merge(
+        $create_town = DB::table('tbltown')->insertGetId(array_merge(
             $postData,
             [   
-                'rid'     =>  $request->input('rid')
+                'rid'     =>  $request->input('rid'),
+                'active'  =>  $request->input('active')
             ]
         ));
-        
-        dd($create_town);
-        return redirect()->route('towns.index')->with('success', 'New Town Created Sucessfully');
+    
+        return redirect()->route('towns.index')->with('success', 'Town #  ' .$create_town. ' Created Sucessfully');
     }
 
     /**
@@ -121,8 +121,7 @@ class TownController extends Controller
             'regions',
             'regionId',
             'regionTownMap',
-            'keyMap',
-            'regionTownMap'
+            'keyMap'
             // 'project_visited',
             // 'project_phase',
             // 'genders',
@@ -166,12 +165,13 @@ class TownController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function update(Request $request, $id)
     {
         // code;
+        $isActive   = ['active' => $request->active ];    
         $updateData = ClientController::allExcept();
-        $update     = DB::table('tbltown')->where('rid', $id)->update($updateData);
+        $update     = DB::table('tbltown')->where('rid', $id)->update( array_merge($updateData, $isActive) );
         return redirect()->route('system_setup.towns.index')->with('success', 'Town # " ' .$id. ' "  Info Updated');
     }
 
@@ -184,7 +184,7 @@ class TownController extends Controller
     public function destroy($id)
     {
       // code;
-      $isActive = ['isdeleted' => 'yes' ];    
+      $isActive = ['active' => 'no' ];    
       $deleted  = DB::table('tbltown')->where('rid', $id)->update($isActive);
       return redirect()->route('system_setup.towns.index')->with('success', 'Town # " ' .$id. ' "  Info Deleted');
     }

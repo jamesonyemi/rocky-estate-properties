@@ -45,6 +45,17 @@
                             <input type="text" id="country_code" name="country_code" class="form-control">
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="project_state">Active</label>
+                            <select id="active" name="active" class="form-control custom-select" required>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-8"></div>
+
+                    </div>
                     {{-- <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="other_landmark">Other Land Marks Close to Project</label>

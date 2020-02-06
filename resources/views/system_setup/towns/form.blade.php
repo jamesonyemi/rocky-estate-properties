@@ -63,23 +63,17 @@
                             <input type="text" id="town" name="town" class="form-control">
                         </div>
                     </div>
-                    {{-- <div class="form-row">
+                    <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="other_landmark">Other Land Marks Close to Project</label>
-                            <input type="text" class="form-control" id="landmark"
-                                name="landmark" required>
-                        </div>
-                        <div class="form-group col-md-2"></div>
-                        <div class="form-group col-md-4">
-                            <label for="project_state">Current State of Project</label>
-                            <select id="statusid" name="statusid" class="form-control custom-select" required>
-                                <option>-- select --</option>
-                                @foreach ($project_status as $key => $status) 
-                                <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
-                                @endforeach
+                            <label for="project_state">Active</label>
+                            <select id="active" name="active" class="form-control custom-select" required>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
                             </select>
                         </div>
-                    </div> --}}
+                        <div class="form-group col-md-8"></div>
+
+                    </div>
                     {{-- <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_phone_number">Total Cost of Project</label>

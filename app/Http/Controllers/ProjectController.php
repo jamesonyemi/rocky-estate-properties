@@ -56,7 +56,7 @@ class ProjectController extends Controller
 
     public function getTowns($id) 
     {
-        $towns =  DB::table("tbltown")->where("rid",$id)->pluck("town","rid");
+        $towns =  DB::table("tbltown")->where("rid",$id)->where("active", '=', 'yes')->pluck("town","tid");
         return json_encode($towns);
     }
 

@@ -20,29 +20,29 @@
 
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3>View Town</h3>
+                <h3>View Payment</h3>
             </div>
-            {{-- {{dd($keyMap)}} --}}
-            {{-- @foreach ($nationality as $nation) --}}
+
             <div class="card-body">
-                <form class="mt-5">
+        @foreach ($get_payments as $payment)
+                <form class="mt-5" >
                     {{ csrf_field() }}
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="validate_region">Region</label>
-                        <input type="text" id="region" value="{{ old('region', $keyMap->region) }}"  
-                            name="region" class="form-control" disabled>
+                            <label for="amt">Amount Received</label>
+                            <input type="text" id="amt_received" name="amt_received" class="form-control" 
+                                value="{{ old('amt_received', $payment->amt_received) }}" disabled>
                         </div>
                         <div class="form-group col-md-2"></div>
                 
                         <div class="form-group col-md-4">
-                            <label for="title">Town:</label>
-                            <input type="text" id="town" value="{{ old('town', $keyMap->town) }}"
-                             name="town" class="form-control" disabled>
+                            <label for="title">Payment Mode</label>
+                            <input type="text" id="paymentmode" name="paymentmode" class="form-control"
+                                value="{{ old('paymentmode', $payment->paymentmode) }}" disabled>
                         </div>
                     </div>
+                      @endforeach
                 </form>
-                <br>
             </div>
         </div>
 

@@ -59,9 +59,15 @@
             </li>
 
             <li class="nav-item ">
-                <a href="{{ url('users.index') }}" class="nav-link">
+                <a href="{{ url('users') }}" class="nav-link">
                     <span class="icon"><i class=' bx bxs-user-detail'></i></span>
                     <span class="menu-title">Users</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="{{ url('payments') }}" class="nav-link">
+                    <span class="icon"><i class='bx bx-dollar'></i></span>
+                    <span class="menu-title">Payments</span>
                 </a>
             </li>
              <li class="nav-item">

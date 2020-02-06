@@ -33,9 +33,12 @@ Route::group( ['middleware' => 'auth'],  function() {
     Route::resource('onsite-visit', 'OnsiteVisitController');
     Route::resource('reports', 'ReportController');
     Route::resource('project-document', 'ProjectDocumentController');
-    Route::resource('payment-mode', 'PaymentModeController');
-    
     Route::resource('stage-of-completion', 'StageOfCompletionController');
+    Route::resource('payment-mode', 'PaymentModeController');
+    Route::resource('payments', 'PaymentController');
+    Route::any('/additional-cost', 'PaymentController@additionalCost')->name('additional-cost');
+    Route::any('/budget-review', 'PaymentController@budgetReview')->name('budget-review');
+    
     Route::get('/projects/create/{id}','ProjectController@getTowns');
     Route::any('/stage-of-completion/{image}/delete', 'StageOfCompletionController@deleteImage');
     Route::get('/onsite-visit/create/{id}','OnsiteVisitController@clientToProject');
