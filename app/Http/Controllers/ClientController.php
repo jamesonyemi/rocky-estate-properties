@@ -37,9 +37,9 @@ class ClientController extends Controller
             ->select('tblproject.rid as region_id', 'tblregion.region', 'tbltown.tid as location_id',
                         'tbltown.town as location', 'tblproject.title as project_title','tblclients.phone1 as client_prime_contact',
                         'tblclients.phone2 as client_second_contact','tblclients.email as client_email','tblproject.pid',   
-                        'tblclients.clientid',( DB::raw('Concat(tblclients.fname, " ", tblclients.lname) as full_name') ),  
+                        'tblclients.clientid',( DB::raw('Concat(tblclients.title, " ",tblclients.fname, " ", tblclients.lname) as full_name') ),  
                         'tblstatus.status as client_project_status', 'tblstatus.id as client_project_status_id')
-            ->orderBy('tblproject.pid')->get()->toArray();
+            ->orderBy('tblproject.pid')->where('tblclients.active', '=', 'yes')->get()->toArray();
             
             return $clientWithProjects;
     }

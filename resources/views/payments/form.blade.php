@@ -1,28 +1,9 @@
-@include('partials.header')
-@include('partials.side_menu')
-
-<!-- End Sidemenu Area -->
-
-<!-- Main Content Wrapper -->
-<div class="main-content d-flex flex-column">
-    <!-- Top Navbar -->
-    <!-- Top Navbar Area -->
-    @include('partials.topnav')
-    <!-- End Top Navbar Area -->
-
-    <!-- Main Content Layout -->
-    <!-- Breadcrumb Area -->
-    @include('partials.breadcrumb')
-    <!-- End Breadcrumb Area -->
-
-
+@include('partials.master_header')
         <!-- Start -->
-
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3>New Payment</h3>
             </div>
-
             <div class="card-body">
                 <form class="mt-5" action="{{route('payments.store') }}"  method="POST">
                     {{ csrf_field() }}
@@ -31,13 +12,10 @@
                             <label for="client">Client</label>
                             <select id="clientid" name="clientid" class="form-control custom-select" required>
                                 <option value="">-- select --</option>
-                                @foreach ($all_clients as $client_id => $client)
-                                    @if ($client->clientid )
-                                    <option value="{{ $client->clientid }}" class="text-capitalize">
-                                        {{ ucwords( $client->title . " " .$client->fname . " " . $client->lname)  }}
-                                    </option>
-                                    @endif
-                                    
+                                 @foreach ($clientWithProjects as $item)
+                                 <option value="{{ $item->clientid }}" class="text-capitalize">
+                                     {{ ucwords( $item->full_name)  }}
+                                 </option>
                                 @endforeach
                             </select>
                         </div>
@@ -63,7 +41,12 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_region">Payment Mode:</label>
-                            <input type="text" id="paymentmode" name="paymentmode" class="form-control" required>
+                            <select id="paymentmode" name="paymentmode" class="form-control custom-select" required>
+                                <option value="">--select--</option>
+                                @foreach ($paymode as $key => $item)
+                                <option value="{{ $key }}"> {{ $item }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group col-md-2"></div>
                 
@@ -85,7 +68,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="validate_region">Received From:</label>
+                            <label for="rfrom">Received From:</label>
                             <input type="text"  id="receivedfrom" name="receivedfrom" class="form-control" required>
                         </div>
                         <div class="form-group col-md-2"></div>
@@ -106,10 +89,10 @@
                         </div>
                       </div>
                 </form>
-                <br><br>
+               
             </div>
         </div>
-
+ <br><br>
         <!-- End -->
  @include('partials.footer')
         

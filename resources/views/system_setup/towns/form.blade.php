@@ -72,20 +72,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-8"></div>
-
                     </div>
-                    {{-- <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="validate_phone_number">Total Cost of Project</label>
-                            <input type="number" step="0.1" class="form-control" id="totalcost"
-                                name="totalcost" required>
-                        </div>
-                        <div class="form-group col-md-2"></div>
-                        <div class="form-group col-md-4">
-                            <label for="validate_othername">Project Description</label>
-                            <textarea name="description" id="description" cols="43" rows="6" required></textarea>
-                        </div>
-                    </div> --}}
                      <hr style="background-color:fuchsia; opacity:0.1">
                       <div class="container">
                           <div class="row">

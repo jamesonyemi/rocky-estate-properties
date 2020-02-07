@@ -144,7 +144,6 @@ class ProjectController extends Controller
         $countryId      = DB::table('tblcountry')->get()->pluck('region_name', 'id');
         $project_status = DB::table('tblstatus')->get()->pluck('status', 'id');
         
-
         return view('projects.edit', compact('projectId', 'projects', 'countries', 'townId', 
                                             'regions', 'regionId','countryId', 'project_status'));
     }

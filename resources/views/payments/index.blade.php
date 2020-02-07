@@ -1,27 +1,7 @@
-@include('partials.header')
-        <!-- Side Menu -->
-        <!-- Start Sidemenu Area -->
-@include('partials.side_menu')
-<!-- End Sidemenu Area -->
-
-        <!-- Main Content Wrapper -->
-        <div class="main-content d-flex flex-column">
-            <!-- Top Navbar -->
-            <!-- Top Navbar Area -->
-@include('partials.topnav')
-<!-- End Top Navbar Area -->
-
-            <!-- Main Content Layout -->
-                <!-- Breadcrumb Area -->
-    @include('partials.breadcrumb')
-    <!-- End Breadcrumb Area -->
-
-   @include('partials.success_alert')
-
+@include('partials.master_header')
+@include('partials.success_alert')
     <!-- Begin page -->
-    <div id="layout-wrapper">
-
-           
+    <div id="layout-wrapper">   
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
@@ -80,22 +60,13 @@
                                                 <td >{{ $payment->amt_received}}</span></td>
                                                 <td>{{  $payment->paymentmode }}</span></td>
                                                 <td>
-                                                    <a href=" {{ route('payments.show', $payment->id)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <?php $encryptId = Crypt::encrypt($payment->id) ?>
+                                                    <a href=" {{ route('payments.show', $encryptId)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('payments.edit', $payment->id) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                    <a href="{{ route('payments.edit', $encryptId) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                                             <i class="bx bx-edit"></i>
-                                                        </a>
-                                                 <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
-                                                        onclick="event.preventDefault();
-                                                                 document.getElementById('delete'+ {{ $payment->id }} ).submit();">
-                                                   
-                                                    <form id="{{'delete' .$payment->id}}" action="{{ route('payments.destroy', $payment->id) }}" method="post" >
-                                                        {{ csrf_field() }}
-                                                        <input name="_method" type="hidden" value="DELETE">
-                                                        <i class="bx bx-trash"></i>
-                                                    </form> 
-                                                </a>   
+                                                    </a>
                                                 </td>
                                             </tr>
                                             {{-- @endif --}}

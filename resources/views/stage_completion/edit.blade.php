@@ -1,56 +1,10 @@
-@include('partials.header')
-
-    <!-- Side Menu -->
-    <!-- Start Sidemenu Area -->
-    @include('partials.side_menu')
-
-    <!-- End Sidemenu Area -->
-
-    <!-- Main Content Wrapper -->
-    <div class="main-content d-flex flex-column">
-        <!-- Top Navbar -->
-        <!-- Top Navbar Area -->
-        @include('partials.topnav')
-        <!-- End Top Navbar Area -->
-
-        <!-- Main Content Layout -->
-        <!-- Breadcrumb Area -->
-        @include('partials.breadcrumb')
-
-        <!-- End Breadcrumb Area -->
-
+@include('partials.master_header')
         <!-- Start -->
-
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3>Stage of Completion  </h3>
-                <span><i><b>Project Owner:</b>   {{$r->full_name}} </i></span>
-                
-                <!-- <div class="dropdown">
-                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class='bx bx-dots-horizontal-rounded'></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-show'></i> View
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-edit-alt'></i> Edit
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-trash'></i> Delete
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-printer'></i> Print
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-download'></i> Download
-                        </a>
-                    </div>
-                </div> -->
+                <span><i><b>Project Owner:</b>{{$r->full_name}}</i></span>
             </div>
-
             <div class="card-body">
             <form method="POST" action="{{ route('stage-of-completion.update', $r->id)}}" enctype="multipart/form-data" class="mt-5">
                 {{ csrf_field() }}

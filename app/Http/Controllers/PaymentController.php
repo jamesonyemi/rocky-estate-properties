@@ -13,6 +13,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProjectController;
 use Faker\UniqueGenerator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 
 class PaymentController extends Controller
@@ -46,9 +47,12 @@ class PaymentController extends Controller
     {
         //code
         $regions        =  DB::table('tblregion')->pluck('rid', 'region');
-        $paymode        =  DB::table('tblpaymentmode')->pluck('mode', 'mode');
+        $paymode        =  DB::table('tblpaymentmode')->where('active','=', 'yes')->pluck('mode', 'mode');
         $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
         $all_clients    =  DB::table('tblclients')->get();
+        $payments       =  DB::table("tblpayment");
+        $get_payments   =  $payments->get();
+        $clientWithProjects = ClientController::clientWithProjects();
         return view('payments.create', compact('get_payments', 'paymode', 'regions', 'project_status', 'all_clients', 'clientWithProjects'));
 
     }
@@ -83,17 +87,17 @@ class PaymentController extends Controller
     public function show($id)
     {
          //code 
+       $id             =  static::decryptedId($id);
        $regions        =  DB::table('tblregion')->pluck('rid', 'region');
        $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
        $paymode        =  DB::table('tblpaymentmode')->pluck('mode', 'mode');
        $all_clients    =  DB::table('tblclients')->get();
        $payments       =  DB::table("tblpayment");
        $get_payments   =  $payments->where('id',$id)->get();
-   
+       $payId          =  $payments->pluck('id');
        $clientWithProjects = ClientController::clientWithProjects();
 
-
-       return view('payments.show', compact('get_payments', 'regions', 'paymode', 'project_status', 'all_clients', 'clientWithProjects'));
+       return view('payments.show', compact('get_payments', 'payId', 'regions', 'paymode', 'project_status', 'all_clients', 'clientWithProjects'));
     }
 
     /**
@@ -105,17 +109,16 @@ class PaymentController extends Controller
     public function edit($id)
     {
         //code 
+        $id             =  static::decryptedId($id);
         $regions        =  DB::table('tblregion')->pluck('rid', 'region');
         $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
         $paymode        =  DB::table('tblpaymentmode')->pluck('mode', 'mode');
         $all_clients    =  DB::table('tblclients')->get();
         $payments       =  DB::table("tblpayment");
         $get_payments   =  $payments->where('id',$id)->get();
-    
         $clientWithProjects = ClientController::clientWithProjects();
  
- 
-        return view('payments.edit', compact('get_payments', 'paymode', 'regions', 'project_status', 'all_clients', 'clientWithProjects'));
+        return view('payments.edit', compact('get_payments', 'paymode', 'encrypted_id', 'regions', 'project_status', 'all_clients', 'clientWithProjects'));
     }
 
     /**
@@ -127,11 +130,10 @@ class PaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // // code;
-        // $updateData = ClientController::allExcept();
-        // $update     = DB::table('tblpayment')->where('id', $id)->update($updateData);
-        // return redirect()->route('payments.index')->with('success', 'Payment #   ' .$id. ' Updated');
-        return 'Men at Work';
+        $id         = static::decryptedId($id);;
+        $updateData = ClientController::allExcept(); 
+        $update     = DB::table('tblpayment')->where('id', $id)->update($updateData);
+        return redirect()->route('payments.index')->with('success', 'Payment #   ' .$id. ' Updated');
     }
 
     /**
@@ -142,7 +144,7 @@ class PaymentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Silence is Gold
     }
 
     public static function additionalCost()     
@@ -158,7 +160,18 @@ class PaymentController extends Controller
     public function clientToProject($clientid) 
     {
         $clientProject =  DB::table("tblproject")->where("clientid",$clientid)->pluck("title","pid");
-        // dd($clientProject);
         return json_encode($clientProject);
+    }
+
+    public static function encryptedId($id)
+    {
+        $encrypted = Crypt::encrypt($id);
+        return $encrypted;
+    }
+
+    public static function decryptedId($id)
+    {
+        $decrypted = Crypt::decrypt($id);
+        return $decrypted;
     }
 }
