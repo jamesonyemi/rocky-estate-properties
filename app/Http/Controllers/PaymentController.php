@@ -149,12 +149,29 @@ class PaymentController extends Controller
 
     public static function additionalCost()     
     {
-        return view('payments.additional_cost');
+        $regions        =  DB::table('tblregion')->pluck('rid', 'region');
+        $paymode        =  DB::table('tblpaymentmode')->where('active','=', 'yes')->pluck('mode', 'mode');
+        $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
+        $all_clients    =  DB::table('tblclients')->get();
+        $payments       =  DB::table("tblpayment");
+        $get_payments   =  $payments->get();
+        $clientWithProjects = ClientController::clientWithProjects();
+
+        return view('payments.additional_cost', compact('get_payments', 'paymode', 'regions', 'project_status', 'all_clients', 'clientWithProjects'));
     }
 
     public static function budgetReview() 
     {
-        return view('payments.budget_review');
+        $regions        =  DB::table('tblregion')->pluck('rid', 'region');
+        $paymode        =  DB::table('tblpaymentmode')->where('active','=', 'yes')->get()->pluck('mode', 'mode');
+        $currency       =  DB::table('tblcurrency')->get()->where('active','=', 'yes')->pluck('short_name', 'short_name');
+        $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
+        $all_clients    =  DB::table('tblclients')->get();
+        $payments       =  DB::table("tblpayment");
+        $get_payments   =  $payments->get();
+        $clientWithProjects = ClientController::clientWithProjects();
+
+        return view('payments.budget_review', compact('get_payments', 'paymode', 'currency', 'regions', 'project_status', 'all_clients', 'clientWithProjects'));
     }
 
     public function clientToProject($clientid) 
