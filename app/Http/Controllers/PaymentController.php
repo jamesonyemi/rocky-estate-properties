@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Input;
 
 class PaymentController extends Controller
 {
+    public static $targetTable = 'tbltotalbalances';
+
+    public function __construct() {
+         static::$targetTable;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +30,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-       //code 
+       
        $regions        =  DB::table('tblregion')->pluck('rid', 'region');
        $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
        $all_clients    =  DB::table('tblclients')->get();
@@ -65,17 +70,40 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-       //code
-       $postData = ClientController::allExcept();
-       $newPayment = DB::table('tblpayment')->insertGetId(array_merge(
-           $postData,
-           [   
-               'receivedby'     =>  Auth::id(),
-           ]
-       ));
-       
+     
+       $isProjectId      =  $request->Input('pid');
+       $amt_received     =  $request->input('amt_received');
+       $targetTable      =  static::$targetTable;
+    
+       $getProjectId     =  DB::table('tblproject')->where('pid',  $isProjectId)->get();
+       $projectId        =  $getProjectId[0]->pid;
+       $totalcost        =  $getProjectId[0]->totalcost;
+       $createdBy        =  Auth::id();
+      
+       $conditon         =  [ 'projectid' => $isProjectId ];
+       $data             =  [ 'projectid' => $projectId, 'initial_totalcost' => $totalcost, 'total_payment_made' => $amt_received,'created_by' => $createdBy, ];
+       $postData         =  ClientController::allExcept();
+       $newPayment       =  DB::table('tblpayment')->insertGetId( array_merge( $postData,[ 'receivedby' => Auth::id(), ]  ));
+
+       $lastPaymentMade  =  DB::table('tblpayment')->where('id',  $newPayment)->get()->pluck('amt_received');
+       $findId           =  DB::table($targetTable)->get();
+       $projectIdExist   =  $findId;
+       $keyExist         =  array_key_exists( "total_payment_made", $projectIdExist[0]) && !empty($projectIdExist[0]->total_payment_made);
+       $previousTotal    =  ['total_payment_made' => $projectIdExist[0]->total_payment_made ]; 
+       $currentTotal     =  ['total_payment_made' => $projectIdExist[0]->total_payment_made + $lastPaymentMade[0]];
+       $retVal           =  ( $keyExist ) ? $currentTotal  :  $previousTotal;
+                    
+       $processBalance   = static::totalBalances($targetTable, $conditon, array_merge($data,$retVal));
+   
        return redirect()->route('payments.index')->with('success', 'Payment #  ' .$newPayment. ' Recorded Sucessfully');
     
+    }
+
+    public static function totalBalances($table = '', $conditon = [], $arrayValue = [])
+    {
+        
+        $processBalance = DB::table($table)->updateOrInsert($conditon, $arrayValue);
+        return $processBalance;
     }
 
     /**
@@ -86,7 +114,7 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-         //code 
+         
        $id             =  static::decryptedId($id);
        $regions        =  DB::table('tblregion')->pluck('rid', 'region');
        $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
@@ -98,6 +126,7 @@ class PaymentController extends Controller
        $clientWithProjects = ClientController::clientWithProjects();
 
        return view('payments.show', compact('get_payments', 'payId', 'regions', 'paymode', 'project_status', 'all_clients', 'clientWithProjects'));
+
     }
 
     /**
@@ -108,7 +137,7 @@ class PaymentController extends Controller
      */
     public function edit($id)
     {
-        //code 
+        
         $id             =  static::decryptedId($id);
         $regions        =  DB::table('tblregion')->pluck('rid', 'region');
         $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
@@ -130,10 +159,20 @@ class PaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $id         = static::decryptedId($id);;
-        $updateData = ClientController::allExcept(); 
-        $update     = DB::table('tblpayment')->where('id', $id)->update($updateData);
-        return redirect()->route('payments.index')->with('success', 'Payment #   ' .$id. ' Updated');
+        $id               =  static::decryptedId($id);
+        $createdBy        =  Auth::id();
+        $updateData       =  ClientController::allExcept(); 
+        $update           =  DB::table('tblpayment')->where('id', $id)->update( array_merge($updateData, ['receivedby' => $createdBy] ));
+
+        if ($update) 
+        {
+            return redirect()->route('payments.index')->with('success', 'Payment #   ' .$id. ' Updated');
+        }
+        else 
+        {
+            return redirect()->route('payments.index')->with('success', 'No Update Yet');
+        }
+
     }
 
     /**
@@ -149,15 +188,53 @@ class PaymentController extends Controller
 
     public static function additionalCost()     
     {
-        $regions        =  DB::table('tblregion')->pluck('rid', 'region');
-        $paymode        =  DB::table('tblpaymentmode')->where('active','=', 'yes')->pluck('mode', 'mode');
-        $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
-        $all_clients    =  DB::table('tblclients')->get();
+        
+        $costType       =  DB::table('tblcost_type')->pluck('cost_type', 'id');
         $payments       =  DB::table("tblpayment");
         $get_payments   =  $payments->get();
         $clientWithProjects = ClientController::clientWithProjects();
+        return view('payments.additional_cost', compact('get_payments', 'costType', 'clientWithProjects'));
 
-        return view('payments.additional_cost', compact('get_payments', 'paymode', 'regions', 'project_status', 'all_clients', 'clientWithProjects'));
+    }
+    
+    public function processAdditionalCost(Request $request)
+    {
+        # code...
+        $isProjectId      =  $request->Input('pid');
+        $getProjectId     =  DB::table('tblproject')->where('pid',  $isProjectId)->get();
+        $totalcost        =  $getProjectId[0]->totalcost;
+
+        $postData         =  ClientController::allExcept();
+        $newPayment       =  DB::table('tbladditionalcost')->insertGetId( array_merge( $postData ));
+        $amtAddedOn       =  DB::table('tbladditionalcost')->where('id',  $newPayment)->get()->first();
+        $conditon         =  [ 'projectid' => $amtAddedOn->pid ];
+        
+        
+        $projectIdLookUp  =  DB::table(static::$targetTable)->get();
+        $projectIdExist   =  $projectIdLookUp;
+        $keyExist         =  array_key_exists( "total_payment_made", $projectIdExist[0]) && !empty($amtAddedOn->amt_add_on);
+        
+        if ( $keyExist )
+        {
+            $except         =  request()->except(['_token', '_method', 'clientid', 'pid', 'amt_add_on', 'reason','cost_type_id']);
+            $totalPay       =  round($projectIdExist[0]->total_payment_made, 2) + round($amtAddedOn->amt_add_on, 2);
+            $currentTotal   =  ['total_payment_made' => $totalPay ];              
+            $projectId      =  ['projectid' => $amtAddedOn->pid ];              
+            $projectBudget  =  ['initial_totalcost' => $totalcost ];              
+
+            $computeBalance =  DB::table(static::$targetTable)->where( 'projectid', $conditon['projectid'])
+                                    ->update( array_merge( $except, $currentTotal, $projectId, $projectBudget ));
+            dd($computeBalance);
+            if ( $computeBalance )
+            {
+                return redirect()->route('payments.index')->with('success', 'Total Payments Updated');
+            }
+            else 
+            {
+                return false;
+            }
+        }
+    
     }
 
     public static function budgetReview() 

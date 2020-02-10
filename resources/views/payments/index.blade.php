@@ -18,8 +18,6 @@
                                 <div class="page-title-right">
                                 <a href="{{ route('payments.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
                                     New Payment</a> 
-                                    <a href="{{ route('budget-review') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
-                                        Budget Review</a> 
                                     <a href="{{ route('additional-cost') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
                                         Addition Cost</a> 
                                 </div>

@@ -29,7 +29,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_region">Amount Received:</label>
-                            <input type="number" step="2" id="amt_received" name="amt_received" class="form-control" required>
+                            <input type="number" step="0.1" id="amt_received" name="amt_received" class="form-control" required>
                         </div>
                         <div class="form-group col-md-2"></div>
                 

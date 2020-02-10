@@ -14,8 +14,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="amt">Amount Received</label>
-                            <input type="text" id="amt_received" name="amt_received" class="form-control" 
-                                value="{{ old('amt_received', $payment->amt_received) }}" >
+                            <input type="number" step="0.1" id="amt_received" name="amt_received" class="form-control" 
+                                value="{{ old('amt_received', $payment->amt_received) }}" readonly >
                         </div>
                         <div class="form-group col-md-2"></div>
                 
@@ -29,7 +29,7 @@
                         <div class="form-group col-md-4">
                             <label for="title">Bank Name</label>
                             <input type="text" id="bankname" name="bankname" class="form-control"
-                            value="{{ old('amt_received', $payment->bankname) }}"  >
+                            value="{{ old('bankname', $payment->bankname) }}"  >
                         </div>
                         <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-4">

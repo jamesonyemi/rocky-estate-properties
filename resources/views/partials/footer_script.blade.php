@@ -76,9 +76,11 @@
 
 <script>
   let alertSucess = document.querySelector("#alert-success");
-    setTimeout(() => {
+    setTimeout((e) => {
       $(alertSucess).hide();
+      e.preventDefault();
     }, 10000);
+    
   </script>
 
 </body>
