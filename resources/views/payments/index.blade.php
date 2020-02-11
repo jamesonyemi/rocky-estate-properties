@@ -16,7 +16,7 @@
                             <div class="page-title-box d-flex align-items-center justify-content-between">
                                 <h4 class="mb-0 font-size-18">All Payments</h4>
                                 <div class="page-title-right">
-                                <a href="{{ route('payments.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
+                                <a href="{{ route('payments.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-lightD" > 
                                     New Payment</a> 
                                     <a href="{{ route('additional-cost') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
                                         Addition Cost</a> 

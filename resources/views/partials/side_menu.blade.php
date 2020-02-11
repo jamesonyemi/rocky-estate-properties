@@ -37,7 +37,12 @@
                     <span class="menu-title">Projects</span>
                 </a>
             </li>
-
+            <li class="nav-item ">
+                <a href="{{ url('project-docs') }}" class="nav-link">
+                    <span class="icon"><i class='bx bx-briefcase-alt-2'></i></span>
+                    <span class="menu-title">Documents</span>
+                </a>
+            </li>
             <li class="nav-item ">
                 <a href="{{ url('onsite-visit/create') }}" class="nav-link">
                     <span class="icon"><i class=' bx bx-building-house'></i></span>

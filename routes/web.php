@@ -30,9 +30,9 @@ Route::group( ['middleware' => 'auth'],  function() {
 
     Route::resource('clients', 'ClientController');
     Route::resource('projects', 'ProjectController');
+    Route::resource('project-docs', 'ProjectDocumentController');
     Route::resource('onsite-visit', 'OnsiteVisitController');
     Route::resource('reports', 'ReportController');
-    Route::resource('project-document', 'ProjectDocumentController');
     Route::resource('stage-of-completion', 'StageOfCompletionController');
     Route::resource('payment-mode', 'PaymentModeController');
     Route::resource('payments', 'PaymentController');

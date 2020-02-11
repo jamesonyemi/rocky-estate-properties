@@ -1,12 +1,10 @@
 <div class="breadcrumb-area">
-        <h1>Dashboard</h1>
-        {{-- <ol class="breadcrumb">
-            <li class="item">
-                <a href="index.html">
-                    <i class='bx bx-home-alt'></i>
-                </a>
-            </li>
-            <li class="item">Dashboard</li>
-            <li class="item">Analytics</li>
-        </ol> --}}
+    <h1>
+        <a href="{{url("/home")}}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Dashboard">
+            <i class='bx bx-home-alt'></i>
+        </a>
+    </h1>
+        <ol class="breadcrumb">
+            {{-- <li class="item"> {{ ucfirst(substr(strrchr(url()->current(),"/"),1)) }} </li> --}}
+        </ol>
     </div>

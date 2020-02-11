@@ -21,44 +21,8 @@
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3>Project Details</h3>
-
-                <!-- <div class="dropdown">
-                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class='bx bx-dots-horizontal-rounded'></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-show'></i> View
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-edit-alt'></i> Edit
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-trash'></i> Delete
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-printer'></i> Print
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-download'></i> Download
-                        </a>
-                    </div>
-                </div> -->
             </div>
-
             <div class="card-body">
-                <!-- <form>
-                    <div class="row">
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="First name">
-                        </div>
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="Last name">
-                        </div>
-                    </div>
-                </form> -->
-
                 <form class="mt-5" action="{{route('projects.store') }}"  method="POST">
                     {{ csrf_field() }}
                     <div class="form-row">

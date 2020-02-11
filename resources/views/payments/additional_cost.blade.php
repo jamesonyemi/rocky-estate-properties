@@ -2,7 +2,7 @@
         <!-- Start -->
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3>Budget Review</h3>
+                <h3>Additonal Cost</h3>
             </div>
             <div class="card-body">
                 <form class="mt-5" action="{{route('processAdditionalCost') }}"  method="POST">
@@ -34,7 +34,7 @@
                         <div class="form-group col-md-2"></div>
                 
                         <div class="form-group col-md-4">
-                            <label for="cheque-no">Cheque Number:</label>
+                            <label for="cheque-no">Type of Cost:</label>
                            <select name="cost_type_id" id="cost_type_id" class=" form-control custom-select">
                             <option value="">-- select --</option>
                                @foreach ($costType as $key => $type)
