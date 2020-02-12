@@ -37,7 +37,7 @@ Route::group( ['middleware' => 'auth'],  function() {
     Route::resource('payment-mode', 'PaymentModeController');
     Route::resource('payments', 'PaymentController');
     Route::any('/additional-cost', 'PaymentController@additionalCost')->name('additional-cost');
-    Route::any('/processAdditionalCost', 'PaymentController@processAdditionalCost')->name('processAdditionalCost');
+    Route::any('/process-additional-cost', 'PaymentController@processAdditionalCost')->name('process-additional-cost');
     Route::any('/budget-review', 'PaymentController@budgetReview')->name('budget-review');
     
     Route::get('/projects/create/{id}','ProjectController@getTowns');

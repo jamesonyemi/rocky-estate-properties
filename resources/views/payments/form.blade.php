@@ -32,15 +32,14 @@
                             <input type="number" step="0.1" id="amt_received" name="amt_received" class="form-control" required>
                         </div>
                         <div class="form-group col-md-2"></div>
-                
                         <div class="form-group col-md-4">
-                            <label for="cheque-no">Cheque Number:</label>
-                            <input type="text" id="chequeno" name="chequeno" class="form-control" required>
+                            <label for="title">Payment Date:</label>
+                        <input type="date" id="paymentdate" name="paymentdate" value="{{ date('Y-m-d') }}" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="validate_region">Payment Mode:</label>
+                            <label for="paymode">Payment Mode:</label>
                             <select id="paymentmode" name="paymentmode" class="form-control custom-select" required>
                                 <option value="">--select--</option>
                                 @foreach ($paymode as $key => $item)
@@ -48,16 +47,15 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-2"></div>
-                
-                        <div class="form-group col-md-4">
-                            <label for="title">Payment Date:</label>
-                            <input type="date" id="paymentdate" name="paymentdate" class="form-control" required>
+                        <div class="form-group col-md-2 hide-me"></div>
+                        <div class="form-group col-md-4" id="cheque">
+                            <label for="cheque-no">Cheque Number:</label>
+                            <input type="text" id="chequeno" name="chequeno" class="form-control" required>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="title">Bank Name:</label>
+                    <div class="form-row" id="bank">
+                        <div class="form-group col-md-4" >
+                            <label for="bank-name">Bank Name:</label>
                             <input type="text" id="bankname" name="bankname" class="form-control" required>
                         </div>
                         <div class="form-group col-md-2"></div>
@@ -95,6 +93,10 @@
  <br><br>
         <!-- End -->
  @include('partials.footer')
+
+ <script>
+     ( ()  => { $('#paymentmode').on('change',  () => { let hiding = $('#bank, #cheque, .hide-me').slideToggle(); }); })();  
+ </script>
         
 
       

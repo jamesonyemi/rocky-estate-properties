@@ -84,18 +84,32 @@ class PaymentController extends Controller
        $data             =  [ 'projectid' => $projectId, 'initial_totalcost' => $totalcost, 'total_payment_made' => $amt_received,'created_by' => $createdBy, ];
        $postData         =  ClientController::allExcept();
        $newPayment       =  DB::table('tblpayment')->insertGetId( array_merge( $postData,[ 'receivedby' => Auth::id(), ]  ));
-
-       $lastPaymentMade  =  DB::table('tblpayment')->where('id',  $newPayment)->get()->pluck('amt_received');
-       $findId           =  DB::table($targetTable)->get();
+       
+       $lastPaymentMade  =  DB::table('tblpayment')->where('id',  $newPayment)->get()->pluck('amt_received')->first();
+       $amtReceived      =  ['total_payment_made' => $lastPaymentMade ]; 
+       $pid              =  DB::table('tblpayment')->where('id',  $newPayment)->get()->pluck('pid')->first();
+       $findId           =  DB::table($targetTable)->where('projectid', $pid )->get()->first();
        $projectIdExist   =  $findId;
-       $keyExist         =  array_key_exists( "total_payment_made", $projectIdExist[0]) && !empty($projectIdExist[0]->total_payment_made);
-       $previousTotal    =  ['total_payment_made' => $projectIdExist[0]->total_payment_made ]; 
-       $currentTotal     =  ['total_payment_made' => $projectIdExist[0]->total_payment_made + $lastPaymentMade[0]];
-       $retVal           =  ( $keyExist ) ? $currentTotal  :  $previousTotal;
-                    
-       $processBalance   = static::totalBalances($targetTable, $conditon, array_merge($data,$retVal));
+       $isNull           =  is_null($projectIdExist);
    
-       return redirect()->route('payments.index')->with('success', 'Payment #  ' .$newPayment. ' Recorded Sucessfully');
+       if ( ($isNull) ) 
+       {
+           $firstPaymentMade = static::totalBalances($targetTable, $conditon, array_merge($data, $amtReceived));
+       } 
+       else 
+       {
+           $keyExist         =  array_key_exists( "total_payment_made", [ "total_payment_made" => $projectIdExist->total_payment_made]) && !empty( $lastPaymentMade );
+           $computeBudget    =  round($projectIdExist->total_payment_made, 2) + round($lastPaymentMade, 2);
+           $newTotalComputed =  ['total_payment_made' => $computeBudget ];
+
+           if ( ($keyExist) )
+            {   
+                $totalPaymentMade = static::totalBalances($targetTable, $conditon, array_merge($data, $newTotalComputed));
+            } 
+    
+            
+        }
+        return redirect()->route('payments.index')->with('success', 'Payment #  ' .$newPayment. ' Recorded Sucessfully');
     
     }
 
@@ -208,26 +222,29 @@ class PaymentController extends Controller
         $newPayment       =  DB::table('tbladditionalcost')->insertGetId( array_merge( $postData ));
         $amtAddedOn       =  DB::table('tbladditionalcost')->where('id',  $newPayment)->get()->first();
         $conditon         =  [ 'projectid' => $amtAddedOn->pid ];
+        $createdBy        =  [ 'created_by' => Auth::id()];
         
         
         $projectIdLookUp  =  DB::table(static::$targetTable)->get();
         $projectIdExist   =  $projectIdLookUp;
-        $keyExist         =  array_key_exists( "total_payment_made", $projectIdExist[0]) && !empty($amtAddedOn->amt_add_on);
+        $keyExist         =  array_key_exists( "initial_totalcost", $projectIdExist[0]) && !empty($amtAddedOn->amt_add_on);
         
         if ( $keyExist )
         {
-            $except         =  request()->except(['_token', '_method', 'clientid', 'pid', 'amt_add_on', 'reason','cost_type_id']);
-            $totalPay       =  round($projectIdExist[0]->total_payment_made, 2) + round($amtAddedOn->amt_add_on, 2);
-            $currentTotal   =  ['total_payment_made' => $totalPay ];              
+            $except         =  request()->except(['_token', '_method', 'clientid', 'pid', 'amt_add_on', 'total_payment_made', 'reason','cost_type_id']);
+            $computeBudget  =  round($projectIdExist[0]->initial_totalcost, 2) + round($amtAddedOn->amt_add_on, 2);             
             $projectId      =  ['projectid' => $amtAddedOn->pid ];              
-            $projectBudget  =  ['initial_totalcost' => $totalcost ];              
+            $projectBudget  =  ['initial_totalcost' =>  $computeBudget ];              
 
-            $computeBalance =  DB::table(static::$targetTable)->where( 'projectid', $conditon['projectid'])
-                                    ->update( array_merge( $except, $currentTotal, $projectId, $projectBudget ));
-            dd($computeBalance);
-            if ( $computeBalance )
+            // $updateBudget   =  DB::table(static::$targetTable)->where( 'projectid', $conditon['projectid'])
+            //                         ->update( array_merge( $except, $projectId, $projectBudget ));
+            $updateBudget   =   static::totalBalances(static::$targetTable, $conditon, array_merge( $except, $projectId, $projectBudget, $createdBy ));
+
+            dd($updateBudget);
+            if ( $updateBudget )
             {
-                return redirect()->route('payments.index')->with('success', 'Total Payments Updated');
+                return redirect()->route('payments.index')->with('success', 
+                    'Initial Budget of ' .$totalcost. ' Increased to ' .$computeBudget. ' for Project # ' .$projectId);
             }
             else 
             {

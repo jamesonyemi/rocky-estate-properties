@@ -5,7 +5,7 @@
                 <h3>Additonal Cost</h3>
             </div>
             <div class="card-body">
-                <form class="mt-5" action="{{route('processAdditionalCost') }}"  method="POST">
+                <form class="mt-5" action="{{route('process-additional-cost') }}"  method="POST">
                     {{ csrf_field() }}
                     <div class="form-row">
                         <div class="form-group col-md-4">
