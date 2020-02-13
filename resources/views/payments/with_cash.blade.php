@@ -65,14 +65,14 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-4 cheque-no">
-                            <label for="cheque-no">Cheque Number:</label>
-                            <input type="text" id="chequeno" name="chequeno" class="form-control" required>
-                        </div>
-                        <div class="form-group col-md-2 hide-me"></div>
                         <div class="form-group col-md-4">
                             <label for="cheque-no">Comment:</label>
                             <textarea name="comments" id="comments" cols="30" rows="4" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group col-md-2 hide-me"></div>
+                        <div class="form-group col-md-4" id="cheque">
+                            <label for="cheque-no">Cheque Number:</label>
+                            <input type="text" id="chequeno" name="chequeno" class="form-control" required>
                         </div>
                     </div>
                      <hr style="background-color:fuchsia; opacity:0.1">
@@ -94,74 +94,8 @@
  @include('partials.footer')
 
  <script>
- ( (e)  => { 
-     let payMode = $('#paymentmode');
-     let targets = $('#bank, .cheque-no, .hide-me');
-     let mode = payMode.on('change',  () => { 
-        switch (payMode.select().val()) {
-            case 'cash':
-            case 'mobile-money':
-                targets.remove();
-            break;
-            
-            case 'cheque':
-            case 'cheque + cash':
-                window.location.reload();
-                break;
-        }
-      
-         });
-    })();  
+     ( ()  => { $('#paymentmode').on('change',  () => { let hiding = $('#bank, #cheque, .hide-me').slideToggle(); }); })();  
  </script>
-
-<script>
-    'use strict';
-    jQuery(document).ready(function ()
-    {
-        jQuery('select[name="clientid"]').on('change', function(){
-            var clientID = jQuery(this).val();
-            if(clientID)
-            {
-                jQuery.ajax({
-                    url : '/payments/create/'+clientID,
-                    type : "GET",
-                    dataType : "json",
-                    success:function(data)
-                    {
-                    console.log(data);
-                    jQuery('input[name="receivedfrom"]').empty();
-                    jQuery.each(data, function(key,value){
-                        let fulName     = value.title+ ' '+ value.fname+ ' '+ value.lname;
-                        let targetInput = $('input[name="receivedfrom"].form-control');
-                        let clientName  = targetInput.val(fulName);
-                        console.log((fulName));
-                    });
-                    }
-                });
-            }
-            else
-            {
-                $('input[name="receivedfrom"]').empty();
-            }
-        });
-    });
-    </script>
-
-    <script>
-        ( function () {
-            let paymentdate = $('input[type="date"]');
-            console.log(paymentdate);
-            let isDate = new Date();
-            let today  = isDate.toLocaleDateString();
-            // console.log(today);
-            paymentdate.on( 'change', () => {
-                let showDate = paymentdate.select().val();
-                 if ( showDate) {
-                        console.log(showDate);
-                 }
-            });
-        })();
-    </script>
         
 
       

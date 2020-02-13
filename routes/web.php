@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('auth.login');  
 });
 
-Route::get('/logout', function () { return redirect('login'); });
+Route::get('/logout', function () { return redirect('/'); });
 
 Route::group( ['middleware' => 'auth'],  function() {
 
@@ -36,6 +36,7 @@ Route::group( ['middleware' => 'auth'],  function() {
     Route::resource('stage-of-completion', 'StageOfCompletionController');
     Route::resource('payment-mode', 'PaymentModeController');
     Route::resource('payments', 'PaymentController');
+    Route::get('/payments/create/{id}','PaymentController@client');
     Route::any('/additional-cost', 'PaymentController@additionalCost')->name('additional-cost');
     Route::any('/process-additional-cost', 'PaymentController@processAdditionalCost')->name('process-additional-cost');
     Route::any('/budget-review', 'PaymentController@budgetReview')->name('budget-review');

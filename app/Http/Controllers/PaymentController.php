@@ -62,6 +62,12 @@ class PaymentController extends Controller
 
     }
 
+    public function client($id) 
+    {
+        $clients =  DB::table("tblclients")->where("clientid",$id)->get();
+        return json_encode($clients);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
