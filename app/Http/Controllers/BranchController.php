@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class CompanyBranchController extends Controller
+class BranchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,9 @@ class CompanyBranchController extends Controller
      */
     public function index()
     {
-        //
+        $branches    = DB::table('tblbranches');
+        $getBranches = $branches->get();
+        return view('system_setup.branches.index', compact('getBranches'));
     }
 
     /**
@@ -23,7 +26,9 @@ class CompanyBranchController extends Controller
      */
     public function create()
     {
-        //
+        $branches    = DB::table('tblbranches');
+        $getBranches = $branches->get();
+        return view('system_setup.branches.create', compact('getBranches'));
     }
 
     /**

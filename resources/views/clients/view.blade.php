@@ -134,13 +134,12 @@
                       @endforeach
             </div>
         </div>
+        @include('partials.footer')
     </div>
         <!-- End -->
-  <!-- Footer -->
   <div class="flex-grow-1"></div>
 </div>
 <!-- End Main Content Wrapper -->
-@include('partials.footer_script')
 
 <script type="text/javascript">
 'use strict';

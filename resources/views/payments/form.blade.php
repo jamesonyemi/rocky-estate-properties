@@ -20,7 +20,6 @@
                             </select>
                         </div>
                         <div class="form-group col-md-2"></div>
-                
                         <div class="form-group col-md-4">
                             <label for="pid">Project:</label>
                             <select id="pid" name="pid" class="required form-control" required></select>
@@ -49,9 +48,11 @@
                         </div>
                         <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-4">
-                            <label for="title">Payment Date:</label>
-                        <input type="date" id="paymentdate" name="paymentdate" value="{{ date('Y-m-d') }}" class="form-control" required>
-                        </div>
+                            <label for="title">Payment Date (format-- dd/mm/yy):</label>
+                            <input type="date" id="paymentdate" name="paymentdate" value="{{ date('Y-m-d') }}" class="form-control" required>
+                            <span class="badge badge-pill badge-danger" id="error-msg" style="display:none; float:right; margin-top: 2.5px;" value="" ></span>
+                            <span class="badge badge-pill badge-success" id="success-msg" style="display:none; float:right; margin-top: 2.5px;" value="" ></span>
+                    </div>
                     </div>  
                     <div class="form-row" id="bank">
                         <div class="form-group col-md-4" >
@@ -149,19 +150,67 @@
 
     <script>
         ( function () {
-            let paymentdate = $('input[type="date"]');
-            console.log(paymentdate);
+            let paymentdate = $('input[type="date"].form-control');
+            console.log(paymentdate.val());
+            
             let isDate = new Date();
-            let today  = isDate.toLocaleDateString();
-            // console.log(today);
+            let day = isDate.getDate()
+            let month = ( '0'+(isDate.getTimezoneOffset()+isDate.getMonth() + 1) ).toString();
+            let today  = isDate.getFullYear()+'-'+month+'-'+isDate.getUTCDate();
+                console.log(today);
+                
             paymentdate.on( 'change', () => {
-                let showDate = paymentdate.select().val();
-                 if ( showDate) {
-                        console.log(showDate);
-                 }
+                let showDate     = paymentdate.select().val();
+                let formatedDate = $('#date');
+                let error        = $('#error-msg');
+                let success      = $('#success-msg');
+                let saveButton   = $('button[type="submit"]');
+                
+                if ( showDate === today || showDate <= today ) {
+                    AlertMsg(success, "\n"+ "Correct");    
+                    success.show();
+                    error.hide();
+                    saveButton.show();
+                    saveButton.removeAttr("disabled","disabled")
+                    paymentdate.fadeOut();
+                    formatedDate.val(showDate).show();
+                    console.log("Awesome Today: "+showDate); 
+
+                } else if ( showDate >= today ) {
+                    AlertMsg(error, "Payment Date can not be in the Future");    
+                    error.show();
+                    success.hide();
+                    saveButton.attr("disabled","disabled")
+                    paymentdate.fadeOut();
+                    formatedDate.val(showDate).show();
+                    console.log("Future Today: "+showDate);  
+                } 
             });
         })();
     </script>
+
+
+<script>
+    ( function () {
+        let paymentdate = $('input[type="date"].form-control');
+        console.log(paymentdate);
+        paymentdate.on('change', function() {
+            let formatedDate = $('#date');
+            formatedDate.hide();
+            paymentdate.fadeIn();
+        });
+       
+    })();
+</script>
+
+<script>
+     function AlertMsg(params, msg) {
+        let targetElement = params;
+        let msgContent    = targetElement.textContent;
+        let msgText       = targetElement.val(targetElement.text(msg));
+        msgContent        = msgText;
+    };
+</script>
         
 
       

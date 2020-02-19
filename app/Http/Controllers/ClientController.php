@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Expr\AssignOp\Concat;
+use App\Http\Controllers\PaymentController;
 
 class ClientController extends Controller
 {
@@ -19,11 +20,12 @@ class ClientController extends Controller
     {
         //code 
         $regions        =  DB::table('tblregion')->pluck('rid', 'region');
+        $corporate      =  DB::table('tblcorporate_client')->get();
         $clients        =  DB::table("tblclients");
         $all_clients    =  $clients->get();
         $clientWithProjects = static::clientWithProjects();
             // dd($clientWithProjects); 
-        return view('clients.index', compact('all_clients', 'regions','clientWithProjects'));
+        return view('clients.index', compact('all_clients', 'corporate', 'regions','clientWithProjects'));
     }
 
     public static function clientWithProjects()
@@ -79,6 +81,14 @@ class ClientController extends Controller
         return redirect()->route('clients.index')->with('success', 'New Client Created Sucessfully');
     }
 
+    public function corporateClient(Request $request)
+    {
+        //code 
+        $postData        = static::allExcept();
+        $corporateClient = DB::table('tblcorporate_client')->insertGetId(array_merge($postData));
+        return redirect()->route('clients.index')->with('success', 'Corporate Client Created Sucessfully');
+    }
+
     // /**
     //  * Get a validator for an incoming registration request.
     //  *
@@ -103,6 +113,7 @@ class ClientController extends Controller
     public function show($id)
     {
         //code
+        $id         = PaymentController::decryptedId($id);
         $clients    = DB::table('tblclients')->get();
         $genders    = DB::table('tblgender')->get();
         $countries  = DB::table('tblcountry')->get();
@@ -113,6 +124,13 @@ class ClientController extends Controller
         $format_date = static::textualDate();
 
         return view('clients.show', compact('clientId', 'clients', 'genders', 'genId', 'countries', 'countryId', 'formate_date' ));
+    }
+
+    public function viewCorporateClient($id)
+    {
+        $id         = PaymentController::decryptedId($id);
+        $corporate  = DB::table('tblcorporate_client')->where('id', $id)->get();
+        return view('clients.view_corporate', compact('corporate'));
     }
 
     public static function textualDate( $date_field = '')
@@ -130,6 +148,7 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
+        $id         = PaymentController::decryptedId($id);
         $clients    = DB::table('tblclients')->get();
         $genders    = DB::table('tblgender')->get();
         $countries  = DB::table('tblcountry')->get();
@@ -139,6 +158,14 @@ class ClientController extends Controller
         $clientId   = DB::table('tblclients')->where('clientid', $id)->get();
 
         return view('clients.edit', compact('clientId', 'clients', 'genders', 'genId', 'countries', 'countryId' ));
+    }
+
+    public function editCorporateClient($id)
+    {
+        $id         = PaymentController::decryptedId($id);
+        $corporate  = DB::table('tblcorporate_client')->where('id', $id)->get();
+        return view('clients.edit_corporate', compact('corporate', 'id'));
+
     }
 
     /**
@@ -151,9 +178,19 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         // dd($_POST);
+        $id         = PaymentController::decryptedId($id);
         $updateData = static::allExcept();
         $update_clientInfo = DB::table('tblclients')->where('clientid', $id)->update($updateData);
         return redirect()->route('clients.index')->with('success', 'Client Info Updated');
+    }
+
+     public function updateCorporateClient(Request $request, $id)
+    {
+        // dd($_POST);
+        $id         = PaymentController::decryptedId($id);
+        $updateData = static::allExcept();
+        $update_clientInfo = DB::table('tblcorporate_client')->where('id', $id)->update($updateData);
+        return redirect()->route('clients.index')->with('success', 'Corporate Client Info Updated');
     }
 
 
@@ -166,9 +203,20 @@ class ClientController extends Controller
     public function destroy($id)
     {
         //code
+        $id                  =  PaymentController::decryptedId($id);
         $flag_as_deleted     =  ['isdeleted' => "yes"];
         $update_clientInfo   =  DB::table('tblclients')->where('clientid', $id)->update($flag_as_deleted);
         return redirect('/clients')->with('success', 'Client Info Deleted');
+    }
+
+    public function destroyCorporateClient($id)
+    {
+        //code
+        // implode()
+        $id                  = PaymentController::decryptedId($id);
+        $flag_as_deleted     =  ['isdeleted' => "yes"];
+        $update_clientInfo   =  DB::table('tblcorporate_client')->where('id', $id)->update($flag_as_deleted);
+        return redirect('/clients')->with('success', 'Corporate Client Info Deleted');
     }
 
     public function genderStatus($id)

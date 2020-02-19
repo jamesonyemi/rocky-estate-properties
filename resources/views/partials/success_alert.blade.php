@@ -7,13 +7,14 @@
     </div>
 @endif
 
-
 <script>
-  ( () => {
-    let alertSucess = document.querySelector("#success-mgs");
-      setTimeout(() => {
-        $(alertSucess).fadeOut('slow');
-        $(this).parent('#success-mgs').remove();
-      }, 500);
-  })();
-  </script>
+( (jQuery) => {
+  let cancelAlert = document.querySelector('button[type="button"]');
+  cancelAlert.addEventListener('click', () => {
+    $(this).parent('#success-mgs').remove();
+    window.location.href = '{!! url("/home") !!}';
+
+  })
+
+})();
+</script>

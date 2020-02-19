@@ -78,6 +78,32 @@ $(document).ready(function() {
 
 // =======================Client Pages======================================
 
+// =======================Corporate-Client Pages======================================
+
+  
+$(document).ready(function() {
+  let cTable = $('table.corporate').DataTable({
+        "scrollY": "200px",
+        "scrollCollapse": true,
+        "paging": true,
+        "info": false,
+        "columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": $('td#corporate_ids')
+        } ],
+        "order": [[ 1, 'asc' ]],
+  });
+
+  cTable.on( 'order.dt search.dt', function () {
+    cTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+        cell.innerHTML = i+1;
+    } );
+} ).draw();
+  
+} );
+
+// =======================Corporate-Client Pages======================================
 
 
 // ======================= Stage-Of-Completion Pages======================================

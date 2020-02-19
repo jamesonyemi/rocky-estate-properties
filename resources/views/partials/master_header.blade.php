@@ -12,5 +12,5 @@
 
     <!-- Main Content Layout -->
     <!-- Breadcrumb Area -->
-    @include('partials.breadcrumb')
+    {{-- @include('partials.breadcrumb') --}}
     <!-- End Breadcrumb Area -->

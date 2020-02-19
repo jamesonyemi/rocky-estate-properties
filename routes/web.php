@@ -11,8 +11,6 @@
 |
 */
 
-use App\Http\Controllers\TownController;
-
 Auth::routes();
 
 Route::get('/', function () {
@@ -29,11 +27,18 @@ Route::group( ['middleware' => 'auth'],  function() {
     Route::post('/update-gender/{client_id}', 'ClientController@updateGenderStatus')->name('gender_update');
 
     Route::resource('clients', 'ClientController');
+    Route::any('/corporate-client', 'ClientController@corporateClient')->name('corporate-client');
+    Route::any('/edit-corporate-client/{id}/edit_corporate', 'ClientController@editCorporateClient')->name('edit-corporate-client');
+    Route::any('/update-corporate-client/{id}', 'ClientController@updateCorporateClient')->name('update-corporate-client');
+    Route::any('/corporate-client/{id}', 'ClientController@viewCorporateClient')->name('view-corporate-client');
+    Route::any('/corporate-client/{id}', 'ClientController@destroyCorporateClient')->name('delete-corporate-client');
+
     Route::resource('projects', 'ProjectController');
     Route::resource('project-docs', 'ProjectDocumentController');
     Route::resource('onsite-visit', 'OnsiteVisitController');
     Route::resource('reports', 'ReportController');
     Route::resource('stage-of-completion', 'StageOfCompletionController');
+    
     Route::resource('payment-mode', 'PaymentModeController');
     Route::resource('payments', 'PaymentController');
     Route::get('/payments/create/{id}','PaymentController@client');
@@ -51,7 +56,9 @@ Route::group( ['middleware' => 'auth'],  function() {
         Route::resource('title', 'TitleController');
         Route::resource('currency', 'CurrencyController');
         Route::resource('role', 'UserRoleController');
-        Route::resource('branches', 'CompanyBranchController'); 
+        Route::any('/assign-role-to-user', 'UserRoleController@assignUserRole')->name('assign-role-to-user');
+        Route::any('/assign-role', 'UserRoleController@userRole')->name('assign-role');
+        Route::resource('branches', 'BranchController'); 
         Route::resource('status', 'StatusController');
         Route::resource('regions', 'RegionController');
         Route::resource('gender', 'GenderController');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Faker\UniqueGenerator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
 class UserRoleController extends Controller
@@ -18,8 +19,8 @@ class UserRoleController extends Controller
     public function index()
     {
         //code
-        $currency  = DB::table('tblcurrency')->get();
-        return view('system_setup.currency.index', compact( 'currency' ));
+        $roles  = DB::table('tblrole')->get();
+        return view('system_setup.role.index', compact( 'roles' ));
     
            
     }
@@ -31,9 +32,17 @@ class UserRoleController extends Controller
      */
     public function create()
     {
-        $currency  = DB::table('tblcurrency')->get();
-        return view('system_setup.currency.create', compact( 'currency' ));
+        $roles  = DB::table('tblrole')->get();
+        return view('system_setup.role.create', compact( 'roles' ));
     }
+
+    public function userRole()
+    {
+        $roles  = DB::table('tblrole')->get();
+        $users  = DB::table('users')->get();
+        return view('system_setup.role.user_role', compact( 'roles', 'users' ));
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -45,15 +54,61 @@ class UserRoleController extends Controller
     {
        //code
        $postData        = ClientController::allExcept();
-       $create_currency = DB::table('tblcurrency')->insert( array_merge(
+       $create_role = DB::table('tblrole')->insertGetId( array_merge(
            $postData, [
-            'short_name' => strtoupper($request->short_name),
-            'long_name'  => ucfirst($request->long_name)
+            'type'      => ucfirst($request->type),
+            'isdeleted' => false,
+            'active'    => "yes",
            ]
          ));
+
+       return redirect()->route('role.index')->with('success', 'New role # ' .$create_role. ' Created');
+    }
+
+    public function assignUserRole(Request $request)
+    {
+       
+       $user_id         =  $request->input('user_id');
+       $role_id         =  $request->input('role_id');
+       $postData        =  ClientController::allExcept();
+       $updateUserRole  =  DB::table('users')->where('id', $user_id)->update( array_merge( [ 'role_id' => $role_id ]) );
     
-       dd($create_currency);
-       return redirect()->route('currency.index')->with('success', 'New Currency Created Sucessfully');
+       $currentRoleId   =  DB::table('users')->where('id', $user_id)->get();
+       $getUserId       =  $currentRoleId->pluck('id')->first();
+   
+       $userRole        =  DB::table('tbluser_role'); 
+       $userHasRole     =  $userRole->where('user_id', $getUserId)->get()->first();
+      
+        if ( is_null( $userHasRole ) ) 
+        {
+            
+            $create_role = DB::table('tbluser_role')->InsertGetId( array_merge(
+                    $postData, [
+                    'isdeleted' => "no",
+                    'created_by'=> Auth::id(),
+                ]            
+            ));    
+            return redirect()->route('role.index')->with('success', 'Role ID #  ' .$role_id. ' Assigned to User #  ' .$user_id);
+
+        }
+        else
+        {
+            if ( !is_null( $userHasRole ) ) 
+            {
+                $updateRole =  $userRole->where('user_id', $getUserId)->update( array_merge( [ 'role_id' => $role_id, 'created_by'=> Auth::id(), ]) );
+                
+                if ( intval(true) === $updateRole ) 
+                {
+                    return redirect()->route('role.index')->with('success', ' USER ID #  ' .$user_id. ', has been granted a new ROLE ID # '.$role_id );              
+                }
+                else
+                {
+                    return redirect()->route('role.index')->with('success', ' USER ID #  ' .$user_id. '  Role Unchanged ' );              
+
+                }
+            }
+        }
+   
     }
 
     /**
@@ -65,8 +120,8 @@ class UserRoleController extends Controller
     public function show($id)
     {
         //code
-        $currency = DB::table('tblcurrency')->where('id', $id)->get();
-        return view('system_setup.currency.show', compact('currency' ));
+        $roles = DB::table('tblrole')->where('id', $id)->get();
+        return view('system_setup.role.show', compact('roles' ));
             
     }
 
@@ -79,8 +134,8 @@ class UserRoleController extends Controller
     public function edit($id)
     {
         //code
-        $currency = DB::table('tblcurrency')->where('id', $id)->get();
-        return view('system_setup.currency.edit', compact('currency' ));
+        $roles = DB::table('tblrole')->where('id', $id)->get();
+        return view('system_setup.role.edit', compact('roles' ));
     }
 
     /**
@@ -93,8 +148,8 @@ class UserRoleController extends Controller
     public function update(Request $request, $id)
     {
         $updateData = ClientController::allExcept();
-        $update     = DB::table('tblcurrency')->where('id', $id)->update($updateData);
-        return redirect()->route('currency.index')->with('success', 'Currency #  ' .$id. '   Info Updated');
+        $update     = DB::table('tblrole')->where('id', $id)->update($updateData);
+        return redirect()->route('role.index')->with('success', 'Role #  ' .$id. '   Info Updated');
     }
 
     /**
@@ -105,8 +160,8 @@ class UserRoleController extends Controller
      */
     public function destroy($id)
     {
-        $flaged_as_deleted     =  ['isdeleted' => true ];
-        $deleted = DB::table('tblcurrency')->where('id', $id)->update($flaged_as_deleted);
-        return redirect()->route('currency.index')->with('success', 'Currency #  ' .$id. '   Info Deleted');
+        $flaged_as_deleted     =  ['isdeleted' => true,  'active' => "no", ];
+        $deleted = DB::table('tblrole')->where('id', $id)->update($flaged_as_deleted);
+        return redirect()->route('role.index')->with('success', 'Role #  ' .$id. '   Info Deleted');
     }   
 }

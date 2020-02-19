@@ -64,7 +64,7 @@
     <div class="col col-4" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="You can attach one or more documents">
         <div class="custom-control custom-radio mb-3">
             <label for="document">Attach Documents</label>
-            <input type="file" class="form-control" accept=".pdf,.doc,.docx" max="50000" id="docname" name="docname[]" multiple="" required="">
+            <input type="file" class="form-control" accept=".pdf,.doc,.docx,.xl,.xlx" max="50000" id="docname" name="docname[]" multiple="" required="">
             <div class="invalid-feedback"></div>
         </div>
     </div>

@@ -239,18 +239,14 @@ class PaymentController extends Controller
         {
             $except         =  request()->except(['_token', '_method', 'clientid', 'pid', 'amt_add_on', 'total_payment_made', 'reason','cost_type_id']);
             $computeBudget  =  round($projectIdExist[0]->initial_totalcost, 2) + round($amtAddedOn->amt_add_on, 2);             
-            $projectId      =  ['projectid' => $amtAddedOn->pid ];              
+            $projectId      =  ['projectid' => $amtAddedOn->pid ];             
             $projectBudget  =  ['initial_totalcost' =>  $computeBudget ];              
-
-            // $updateBudget   =  DB::table(static::$targetTable)->where( 'projectid', $conditon['projectid'])
-            //                         ->update( array_merge( $except, $projectId, $projectBudget ));
             $updateBudget   =   static::totalBalances(static::$targetTable, $conditon, array_merge( $except, $projectId, $projectBudget, $createdBy ));
 
-            dd($updateBudget);
             if ( $updateBudget )
             {
                 return redirect()->route('payments.index')->with('success', 
-                    'Initial Budget of ' .$totalcost. ' Increased to ' .$computeBudget. ' for Project # ' .$projectId);
+                    'Initial Budget of ' .$totalcost. ' Increased to ' .$computeBudget. ' for Project # ' .$projectId['projectid']);
             }
             else 
             {

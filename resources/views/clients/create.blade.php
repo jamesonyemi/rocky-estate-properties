@@ -1,1 +1,1 @@
-@include('clients.form')
+@include('clients.tablist')

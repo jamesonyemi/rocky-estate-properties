@@ -1,20 +1,13 @@
 @include('partials.master_header')
-            <!-- Main Content Layout -->
-                <!-- Breadcrumb Area -->
-    @include('partials.breadcrumb')
-    <!-- End Breadcrumb Area -->
-
-   @include('partials.success_alert')
-
-    <!-- Begin page -->
-    <div id="layout-wrapper">
-
-           
-        <!-- ============================================================== -->
-        <!-- Start right Content here -->
-        <!-- ============================================================== -->
+@include('partials.breadcrumb')
+<!-- Begin page -->
+<br><br>
+<div id="layout-wrapper">   
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    @include('partials.success_alert')
         <div >
-
             <div class="page-content">
                 <div class="container-fluid">
 
@@ -22,10 +15,10 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">All Personal Title</h4>
+                                <h4 class="mb-0 font-size-18">All Onsite Visits</h4>
                                 <div class="page-title-right">
-                                <a href="{{ route('title.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
-                                    Create Title</a> 
+                                <a href="{{ route('onsite-visit.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-lightD" > 
+                                    New Visit</a> 
                                 </div>
                             </div>
                         </div>
@@ -47,40 +40,33 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Salutation</th> 
-                                                <th>Status</th>
+                                                <th>Visit Date</th>
+                                                <th>Project</th>
+                                                <th>Comments</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
 
-                                            @foreach ($personal_title as $p_title)
-                                                @if ( $p_title->active !== "" )
+                                            @foreach ($getAllVisit as $visit)
+                                                {{-- @if ( $visit->isdeleted !== "" ) --}}
                                             <tr>
                                                 <td id="project_id"></td>
-                                                <td >{{ $p_title->salutation}}</span></td>
-                                                <td >{{ $p_title->active}}</span></td>
+                                                <td >{{ $visit->vdate}}</span></td>
+                                                <td >{{ $visit->title}}</span></td>
+                                                <td>{{  $visit->comments }}</span></td>
                                                 <td>
-                                                    <a href=" {{ route('title.show', $p_title->tid)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <?php $encryptId = Crypt::encrypt($visit->vid) ?>
+                                                    <a href=" {{ route('onsite-visit.show', $encryptId)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('title.edit', $p_title->tid) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                    <a href="{{ route('onsite-visit.edit', $encryptId) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                                             <i class="bx bx-edit"></i>
-                                                        </a>
-                                                 <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
-                                                        onclick="event.preventDefault();
-                                                                 document.getElementById('delete'+ {{ $p_title->tid }} ).submit();">
-                                                   
-                                                    <form id="{{'delete'.$p_title->tid }}" action="{{ route('title.destroy', $p_title->tid) }}" method="post" >
-                                                        {{ csrf_field() }}
-                                                        <input name="_method" type="hidden" value="DELETE">
-                                                        <i class="bx bx-trash"></i>
-                                                    </form> 
-                                                </a>   
+                                                    </a>
                                                 </td>
                                             </tr>
-                                            @endif
+                                            {{-- @endif --}}
                                             @endforeach
                                         </tbody>
                                     </table>

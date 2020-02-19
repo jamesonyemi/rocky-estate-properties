@@ -1,1 +1,1 @@
-@include('payments.form')
+@include('system_setup.currency.form')

@@ -22,7 +22,10 @@ class OnsiteVisitController extends Controller
      */
     public function index()
     {
-        //
+        $onsiteVisit = DB::table('vw_onsite_visit');
+        $getAllVisit = $onsiteVisit->get();
+
+        return view('onsite_visit.index', compact('getAllVisit'));
     }
 
     /**
@@ -103,10 +106,9 @@ class OnsiteVisitController extends Controller
                         'vid'              => $save_visit,
                         'status_id'        => $statusId,
                         ]));
-                    dd($projectImgSaveOnvisit);
+                        
                 return redirect()->route('projects.index')->with('success', 'Project Image #' . "\n" . $projectImgSaveOnvisit . ' Created Sucessfully');
-            
-      
+
     }
 
     public static function generateUniqueCode($vnumber)
@@ -122,7 +124,11 @@ class OnsiteVisitController extends Controller
      */
     public function show($id)
     {
-        //
+        $id                 = PaymentController::decryptedId($id);
+        $onsiteVisit        = DB::table('vw_onsite_visit');
+        $getAllVisit        = $onsiteVisit->where('vid', $id)->get();
+        $clientWithProjects = ClientController::clientWithProjects();
+        return view('onsite_visit.view', compact('getAllVisit', 'clientWithProjects'));
     }
 
     /**
@@ -133,7 +139,11 @@ class OnsiteVisitController extends Controller
      */
     public function edit($id)
     {
-        //
+        $id                 = PaymentController::decryptedId($id);
+        $onsiteVisit        = DB::table('vw_onsite_visit');
+        $getAllVisit        = $onsiteVisit->where('vid', $id)->get();
+        $clientWithProjects = ClientController::clientWithProjects();
+        return view('onsite_visit.edit', compact('getAllVisit', 'clientWithProjects'));
     }
 
     /**
@@ -145,7 +155,22 @@ class OnsiteVisitController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $id          = PaymentController::decryptedId($id);
+        $comments    = $request->input('comments');
+        $updateData  = ClientController::allExcept();
+        $onsiteVisit = DB::table('tblvisit');
+        $update      = $onsiteVisit->where('vid', $id)->update( array_merge($updateData, ['comments' => $comments ]) ); 
+
+        if ($update) 
+        {
+            return redirect()->route('onsite-visit.index')->with('success', 'Onsite Visit #   ' .$id. ' Updated');
+        }
+        else 
+        {
+            return redirect()->route('onsite-visit.index')->with('success', 'No Update Yet');
+        }
+
     }
 
     /**
