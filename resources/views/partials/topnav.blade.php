@@ -280,7 +280,7 @@
             <li class="nav-item dropdown profile-nav-item">
                 <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="menu-profile">
-                        <span class="name">Hi {{ Auth::user()->name }}</span>
+                        <span class="name">Hi {{ Auth::user()->first_name . ' '. Auth::user()->last_name }}</span>
                         <img src="{{ asset('assets/img/user1.jpg') }}" class="rounded-circle" alt="user image">
                     </div>
                 </a>
@@ -291,7 +291,7 @@
                             <img src="{{ asset('assets/img/user1.jpg') }}" class="rounded-circle" alt="image">
                         </div>
                         <div class="info text-center">
-                            <span class="name">{{ Auth::user()->name }}</span>
+                            <span class="name">{{ Auth::user()->first_name . ' '. Auth::user()->last_name }}</span>
                             <p class="mb-3 email">{{ Auth::user()->email }}</p>
                         </div>
                     </div>

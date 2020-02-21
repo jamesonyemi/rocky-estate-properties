@@ -85,17 +85,18 @@
                                                 <td>{{ $project->location }}</td>   
                                                 <td id="status"> {{ ucfirst($project->client_project_status) }} </td> 
                                                 <td>
-                                                    <a href=" {{ route('projects.show', $project->pid)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <?php $encryptId = Crypt::encrypt($project->pid) ?>
+                                                    <a href=" {{ route('projects.show',  $encryptId)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('projects.edit', $project->pid) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                    <a href="{{ route('projects.edit',  $encryptId) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                                             <i class="bx bx-edit"></i>
                                                         </a>
                                                     <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
                                                         onclick="event.preventDefault();
-                                                                 document.getElementById('delete_project').submit();">
+                                                                 document.getElementById('delete_project'+ {{ $encryptId }}).submit();">
                                                    
-                                                    <form id="delete_project" action="{{ route('projects.destroy', $project->pid) }}" method="post" >
+                                                    <form id="{{'delete_project' .$encryptId}} action="{{ route('projects.destroy',  $encryptId) }}" method="post" >
                                                         {{ csrf_field() }}
                                                         <input name="_method" type="hidden" value="DELETE">
                                                         <i class="bx bx-trash"></i>

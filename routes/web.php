@@ -38,6 +38,7 @@ Route::group( ['middleware' => 'auth'],  function() {
     Route::resource('onsite-visit', 'OnsiteVisitController');
     Route::resource('reports', 'ReportController');
     Route::resource('stage-of-completion', 'StageOfCompletionController');
+    Route::resource('verified-users', 'VerifiedUserController');
     
     Route::resource('payment-mode', 'PaymentModeController');
     Route::resource('payments', 'PaymentController');

@@ -57,9 +57,9 @@
                                                         </a>
                                                     <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
                                                         onclick="event.preventDefault();
-                                                                 document.getElementById('delete_client').submit();">
+                                                                 document.getElementById('delete_client'+ {{ $encryptId }}).submit();">
                                                    
-                                                    <form id="delete_client" action="{{ route('delete-corporate-client',$encryptId) }}" method="post" >
+                                                    <form id="{{'delete_client' .$encryptId}}" action="{{ route('delete-corporate-client',$encryptId) }}" method="post" >
                                                         {{ csrf_field() }}
                                                         <input name="_method" type="hidden" value="DELETE">
                                                         <i class="bx bx-trash"></i>

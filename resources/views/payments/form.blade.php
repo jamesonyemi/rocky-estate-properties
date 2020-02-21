@@ -49,7 +49,7 @@
                         <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-4">
                             <label for="title">Payment Date (format-- dd/mm/yy):</label>
-                            <input type="date" id="paymentdate" name="paymentdate" value="{{ date('Y-m-d') }}" class="form-control" required>
+                        <input type="date" id="paymentdate" name="paymentdate" value="{{ date('Y-m-d') }}" max="{{date('Y-m-d') }}" class="form-control" required>
                             <span class="badge badge-pill badge-danger" id="error-msg" style="display:none; float:right; margin-top: 2.5px;" value="" ></span>
                             <span class="badge badge-pill badge-success" id="success-msg" style="display:none; float:right; margin-top: 2.5px;" value="" ></span>
                     </div>
@@ -148,15 +148,16 @@
     });
     </script>
 
-    <script>
+    {{-- <script>
         ( function () {
             let paymentdate = $('input[type="date"].form-control');
             console.log(paymentdate.val());
             
             let isDate = new Date();
+            console.log(isDate.getMonth());
             let day = isDate.getDate()
-            let month = ( '0'+(isDate.getTimezoneOffset()+isDate.getMonth() + 1) ).toString();
-            let today  = isDate.getFullYear()+'-'+month+'-'+isDate.getUTCDate();
+            let month = ( '0'+(isDate.getMonth() + 1) ).toString();
+            let today  = isDate.getFullYear()+'-'+month+'-'+isDate.getDate();
                 console.log(today);
                 
             paymentdate.on( 'change', () => {
@@ -187,7 +188,7 @@
                 } 
             });
         })();
-    </script>
+    </script> --}}
 
 
 <script>

@@ -64,7 +64,7 @@
             </li>
 
             <li class="nav-item ">
-                <a href="{{ url('users') }}" class="nav-link">
+                <a href="{{ url('verified-users') }}" class="nav-link">
                     <span class="icon"><i class=' bx bxs-user-detail'></i></span>
                     <span class="menu-title">Users</span>
                 </a>

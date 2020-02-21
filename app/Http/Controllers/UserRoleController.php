@@ -71,44 +71,21 @@ class UserRoleController extends Controller
        $user_id         =  $request->input('user_id');
        $role_id         =  $request->input('role_id');
        $postData        =  ClientController::allExcept();
-       $updateUserRole  =  DB::table('users')->where('id', $user_id)->update( array_merge( [ 'role_id' => $role_id ]) );
-    
-       $currentRoleId   =  DB::table('users')->where('id', $user_id)->get();
-       $getUserId       =  $currentRoleId->pluck('id')->first();
-   
-       $userRole        =  DB::table('tbluser_role'); 
-       $userHasRole     =  $userRole->where('user_id', $getUserId)->get()->first();
-      
-        if ( is_null( $userHasRole ) ) 
+       
+        foreach ($user_id as $value) 
         {
             
-            $create_role = DB::table('tbluser_role')->InsertGetId( array_merge(
-                    $postData, [
-                    'isdeleted' => "no",
-                    'created_by'=> Auth::id(),
-                ]            
-            ));    
-            return redirect()->route('role.index')->with('success', 'Role ID #  ' .$role_id. ' Assigned to User #  ' .$user_id);
+            $ids             =  $value;
+            $updateRoleId    =  [ 'role_id' => $role_id ];
+            $insertData      =  [ 'role_id' => $role_id, 'user_id' => $ids, 'isdeleted' => "no",  'created_by'=> Auth::id(),  ]; 
 
-        }
-        else
-        {
-            if ( !is_null( $userHasRole ) ) 
-            {
-                $updateRole =  $userRole->where('user_id', $getUserId)->update( array_merge( [ 'role_id' => $role_id, 'created_by'=> Auth::id(), ]) );
+            $updateUserRole  =  DB::table('users')->where('id', $ids)->update( array_merge( $updateRoleId ) );
+            $create_role     =  DB::table('tbluser_role')->insertGetId( array_merge( $insertData ));
                 
-                if ( intval(true) === $updateRole ) 
-                {
-                    return redirect()->route('role.index')->with('success', ' USER ID #  ' .$user_id. ', has been granted a new ROLE ID # '.$role_id );              
-                }
-                else
-                {
-                    return redirect()->route('role.index')->with('success', ' USER ID #  ' .$user_id. '  Role Unchanged ' );              
-
-                }
-            }
         }
-   
+        
+        return redirect()->route('role.index')->with('success', 'Role Assigned Successfully');
+    
     }
 
     /**

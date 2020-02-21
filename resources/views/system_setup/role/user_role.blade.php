@@ -12,22 +12,23 @@
                         <div class="form-group col-md-1"> </div>
                         <div class="form-group col-md-4">
                             <label for="role">Role</label>
-                            <select name="role_id" id="role_id" class="form-control custom-select" required>
-                                <option value=" ">--select--</option>
+                            <select name="role_id" id="role_id" class="form-control custom-select" required >
+                                <option value="">--select--</option>
                                 @foreach ($roles as $role)
-                                <option value="{!! $role->id !!}">{!! $role->type !!}</option>
+                                <option class="text-capitalize" value="{!! $role->id !!}">{!! $role->type !!}</option>
                                 @endforeach
                             </select>    
                         </div>
                         <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4"> 
                             <label for="role">Users</label>
-                            <select name="user_id" id="user_id" class="form-control custom-select" required>
-                                <option value=" ">--select--</option>
                                 @foreach ($users as $user)
-                                    <option value="{!! $user->id !!}">{!! $user->name !!}</option>
+                                    @if ( empty($user->role_id) )
+                                    <br>
+                                    <input type="checkbox" name="user_id[]" id="user_id" value="{!! $user->id !!}" class="" >
+                                        {!! ucfirst($user->first_name . ' ' . $user->last_name) !!}
+                                    @endif
                                 @endforeach
-                            </select>
                         </div>
                     </div>
                     <hr style="background-color:fuchsia; opacity:0.1">

@@ -63,7 +63,6 @@ class ProjectController extends Controller
     public function clientToProject($clientid) 
     {
         $clientProject =  DB::table("tblproject")->where("clientid",$clientid)->pluck("title","pid");
-        // dd($clientProject);
         return json_encode($clientProject);
     }
 
@@ -77,7 +76,6 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //code 
-        // dd($request->input());
         $postData      = ClientController::allExcept();
         $createProject = DB::table('tblproject')->insertGetId($postData);
         return redirect()->route('projects.index')->with('success', 'Project #' . "\n" . $createProject . 'Created Sucessfully');
@@ -107,6 +105,7 @@ class ProjectController extends Controller
     public function show($id)
     {
         //code
+        $id         = PaymentController::decryptedId($id);
         $projects   =  DB::table('tblproject')->get();
         $genders    =  DB::table('tblgender')->get();
         $regions    =  DB::table('tblregion')->get();
@@ -132,6 +131,7 @@ class ProjectController extends Controller
      */
     public function edit($projectid)
     {
+        $id         = PaymentController::decryptedId($projectid);
         $projects   =  DB::table('tblproject')->get();
         $genders    =  DB::table('tblgender')->get();
         $regions    =  DB::table('tblregion')->get();
@@ -140,7 +140,7 @@ class ProjectController extends Controller
         $project_status = DB::table('tblstatus')->get()->pluck('id', 'status');
         $townId         = DB::table('tbltown')->get()->pluck('town', 'tid');
         $regionId       = DB::table('tblregion')->get()->pluck('region', 'rid');
-        $projectId      = DB::table('tblproject')->where('pid', $projectid)->get();
+        $projectId      = DB::table('tblproject')->where('pid', $id)->get();
         $countryId      = DB::table('tblcountry')->get()->pluck('region_name', 'id');
         $project_status = DB::table('tblstatus')->get()->pluck('status', 'id');
         
@@ -157,10 +157,11 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $projectid)
     {
-        // dd($_POST);
+
+        $id         = PaymentController::decryptedId($projectid);
         $updateData = ClientController::allExcept();
-        $update_project = DB::table('tblproject')->where('pid', $projectid)->update($updateData);
-        return redirect()->route('projects.index')->with('success', 'Project # '.$projectid.' Updated');
+        $update_project = DB::table('tblproject')->where('pid', $id)->update($updateData);
+        return redirect()->route('projects.index')->with('success', 'Project # '.$id.' Updated');
     }
 
 
@@ -173,8 +174,9 @@ class ProjectController extends Controller
     public function destroy($projectid)
     {
         //code
+        $id                 =  PaymentController::decryptedId($projectid);
         $flag_as_deleted    =  ['isdeleted' => "yes"];
-        $update_clientInfo  =  DB::table('tblproject')->where('clientid', $projectid)->update($flag_as_deleted);
+        $update_clientInfo  =  DB::table('tblproject')->where('clientid', $id)->update($flag_as_deleted);
         return redirect('/project')->with('success', 'Client Info Deleted');
     }
 
@@ -193,7 +195,6 @@ class ProjectController extends Controller
         # code...
         $flag_as  =  ['gender' => "1"];
         $genders  =  DB::table('tblgender')->pluck('id', 'id');
-        // $gender_modified       =  $request->input('gender');
         $client_gender   =  DB::table('tblproject')->where('clientid', $projectid)->update($flag_as);
         return redirect()->route('project.edit');
     }

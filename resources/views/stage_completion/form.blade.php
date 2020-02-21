@@ -84,7 +84,7 @@
                             </div>
                             <div class="form-group col-md-2">  </div>
                             <div class="form-group col-md-4">
-                                <label for="status">Stage of Completion</label>
+                                <label for="status">Status of Project</label>
                                 <select id="status_id" name="status_id" class="form-control custom-select" required>
                                     <option>-- select --</option>
                                     @foreach ($project_status as $key => $status) 
@@ -95,7 +95,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <label for="phase">Project Phase</label>
+                                <label for="phase">Stage of Completion</label>
                                 <select id="phase_id" name="phase_id" class="form-control custom-select" required>
                                     <option>-- select --</option>
                                     @foreach ($project_phase as $key => $phase) 
