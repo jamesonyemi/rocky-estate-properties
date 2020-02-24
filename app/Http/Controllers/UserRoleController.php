@@ -142,3 +142,4 @@ class UserRoleController extends Controller
         return redirect()->route('role.index')->with('success', 'Role #  ' .$id. '   Info Deleted');
     }   
 }
+    

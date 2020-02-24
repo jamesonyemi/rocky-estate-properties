@@ -1,30 +1,6 @@
-<!doctype html>
-<html lang="en">
 
-<!-- Mirrored from olaf-admin.envytheme.com/pages/reset-password-with-image by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Jan 2020 14:35:26 GMT -->
-<!-- Added by HTTrack -->
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Vendors Min CSS -->
-    <link rel="stylesheet" href="../../assets/css/vendors.min.css">
-    <!-- Style CSS -->
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <!-- Responsive CSS -->
-    <link rel="stylesheet" href="../../assets/css/responsive.css">
-
-    <title>Olaf - Laravel + Bootstrap 4 Admin Dashboard Template</title>
-
-    <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
-</head>
-
-<body>
-    <!-- Main Content Layout -->
-    <!-- Start Reset Password Area -->
+@include('partials.header')
+            <!-- Start Reset Password Area -->
     <div class="reset-password-area bg-image">
         <div class="d-table">
             <div class="d-table-cell">
@@ -32,26 +8,46 @@
                     <div class="row m-0">
                         <div class="col-lg-5 p-0">
                             <div class="image">
-                                <img src="../../assets/img/computer.png" alt="image">
+                                <img src="{{ asset('assets/img/computer.png') }}" alt="image">
                             </div>
                         </div>
-
                         <div class="col-lg-7 p-0">
                             <div class="reset-password-form">
                                 <h2>Reset Your Password</h2>
-
-                                <form>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" name="name"
-                                            placeholder="Enter a new password">
-                                        <span class="label-title">
-                                            <i class='bx bx-lock'></i>
-                                        </span>
+                                <form method="POST" action="{{ route('password.request') }}">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="token" value="{{ $token }}">
+                                    <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+                                        <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
+                                            @if ($errors->has('email'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                            @endif
+                                            <span class="label-title">
+                                                <i class='bx bx-envelope'></i>
+                                            </span>
+                                    </div>
+                                    <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+                                        <input id="password" type="password" class="form-control" id="password" name="password"  placeholder="Enter a new password" required>
+                                            @if ($errors->has('password'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('password') }}</strong>
+                                                </span>
+                                            @endif
+                                            <span class="label-title">
+                                                <i class='bx bx-lock'></i>
+                                            </span>
                                     </div>
 
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" name="email"
-                                            placeholder="Confirm your new password">
+                                    <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                                        <input id="password-confirm" type="password" class="form-control" placeholder="Confirm your new password" name="password_confirmation" required>
+
+                                            @if ($errors->has('password_confirmation'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                                </span>
+                                            @endif
                                         <span class="label-title">
                                             <i class='bx bx-lock-alt'></i>
                                         </span>
@@ -67,53 +63,4 @@
         </div>
     </div>
     <!-- End Reset Password Area -->
-
-    <!-- Footer Scripts -->
-    <!-- Vendors Min JS -->
-    <script src="../../assets/js/vendors.min.js"></script>
-
-    <!-- ApexCharts JS -->
-    <script src="../../assets/js/apexcharts/apexcharts.min.js"></script>
-    <script src="../../assets/js/apexcharts/apexcharts-stock-prices.js"></script>
-    <script src="../../assets/js/apexcharts/apexcharts-irregular-data-series.js"></script>
-    <script src="../../assets/js/apexcharts/apex-custom-line-chart.js"></script>
-    <script src="../../assets/js/apexcharts/apex-custom-pie-donut-chart.js"></script>
-    <script src="../../assets/js/apexcharts/apex-custom-area-charts.js"></script>
-    <script src="../../assets/js/apexcharts/apex-custom-column-chart.js"></script>
-    <script src="../../assets/js/apexcharts/apex-custom-bar-charts.js"></script>
-    <script src="../../assets/js/apexcharts/apex-custom-mixed-charts.js"></script>
-    <script src="../../assets/js/apexcharts/apex-custom-radialbar-charts.js"></script>
-    <script src="../../assets/js/apexcharts/apex-custom-radar-chart.js"></script>
-
-    <!-- ChartJS -->
-    <script src="../../assets/js/chartjs/chartjs.min.js"></script>
-    <!-- When the url is charts/chartjs then load the library -->
-
-    <!-- To use template colors with Javascript -->
-    <div class="chartjs-colors">
-        <div class="bg-primary"></div>
-        <div class="bg-primary-light"></div>
-        <div class="bg-secondary"></div>
-        <div class="bg-info"></div>
-        <div class="bg-success"></div>
-        <div class="bg-success-light"></div>
-        <div class="bg-danger"></div>
-        <div class="bg-warning"></div>
-        <div class="bg-purple"></div>
-        <div class="bg-pink"></div>
-    </div>
-
-    <!-- jvectormap Min JS -->
-    <script src="../../assets/js/jvectormap-1.2.2.min.js"></script>
-    <!-- jvectormap World Mill JS -->
-    <script src="../../assets/js/jvectormap-world-mill-en.js"></script>
-
-    <!-- When the url is pages/maps then load the library -->
-
-    <!-- Custom JS -->
-    <script src="../../assets/js/custom.js"></script>
-</body>
-
-<!-- Mirrored from olaf-admin.envytheme.com/pages/reset-password-with-image by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Jan 2020 14:35:26 GMT -->
-
-</html>
+@include('partials.login_footer')

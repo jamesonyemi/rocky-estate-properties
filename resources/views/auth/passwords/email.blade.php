@@ -1,47 +1,47 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
-
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+@include('partials.header')
+    <div class="forgot-password-area bg-image">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="forgot-password-content">
+                    <div class="row m-0">
+                        <div class="col-lg-5 p-0">
+                            <div class="image">
+                                <img src="{{ asset("assets/img/computer.png")}}" alt="image">
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
+                        <div class="col-lg-7 p-0">
+                            <div class="forgot-password-form">
+                                <h2>Recover your password</h2>
+                                <p class="mb-0">Please provide the email address that you used when you signed up for
+                                    your {!! config('app.name') !!} account.</p>
+
+                                    @if (session('status'))
+                                        <div class="alert alert-success">
+                                            {{ session('status') }}
+                                        </div>
+                                     @endif
+                                <form method="POST" action="{{ route('password.email') }}">
+                                    {{ csrf_field() }}
+                                    <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+                                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                        @if ($errors->has('email'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
+                                        <span class="label-title">
+                                            <i class='bx bx-envelope'></i>
+                                        </span>
+                                    </div>
+                                    <button type="submit" class="forgot-password-btn">Send Password</button>
+                                </form>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@endsection
+    <!-- End Forgot Password Area -->
+@include('partials.login_footer')

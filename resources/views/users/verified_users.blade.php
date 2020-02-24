@@ -10,25 +10,35 @@
             <div class="page-content">
                 <div class="container-fluid">
 
-                    <!-- start page title -->
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">Verified Users</h4>
-                                <div class="page-title-right">
-                                <a href="{{ route('verified-users.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-lightD" > 
-                                    New User</a> 
+                                <div class="page-title-right" style="margin-bottom:15px;">
+                                    <h4 class="mb-0 font-size-18">Verified Users</h4>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <br>
+                    <!-- start page title -->
+                    <div class="card mb-30 button-card-box" style="margin-bottom:20px;">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h6 style="margin-bottom:-5px;">Action Buttons</h6>
+                        </div>
+                        <div class="card-body">
+                            <a href="{{ route('verified-users.create') }}" 
+                            class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
+                                Create User
+                            </a> 
+                            <a href="#" class="btn btn-outline-primary btn-sm waves-effect waves-light" 
+                                data-toggle="modal" data-target=".basicModalSM" >Import Users</a> 
+                        </div>
+                    </div>
                     <!-- end page title -->
 
                     <!-- FILTERING BY PROJECT STATUS  -->
                     {{-- <div><span id="filter_status"></span></div> --}}
                     <!-- END OF FILTERING BY PROJECT STATUS-->
-                   
+                
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -88,4 +98,5 @@
 
     </div>
     <!-- END layout-wrapper -->
+@include('users.import_users')
 @include('partials.footer')

@@ -17,6 +17,7 @@ return [
     */
 
     'driver' => env('MAIL_DRIVER', 'smtp'),
+    // 'driver' => env('MAIL_DRIVER', 'mailjet'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.mailtrap.io'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +43,8 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 
+),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +58,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@eatechnologies.tech'),
+        'name' => env('MAIL_FROM_NAME', 'Rocky Estate Properties'),
     ],
 
     /*
@@ -84,9 +86,11 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME'),
+    // 'username' => env('MAIL_USERNAME'),
+    'username' => env('090c4d9ba89305'),
 
-    'password' => env('MAIL_PASSWORD'),
+    // 'password' => env('MAIL_PASSWORD'),
+    'password' => env('8224a17b8c2f15'),
 
     /*
     |--------------------------------------------------------------------------
@@ -100,6 +104,14 @@ return [
     */
 
     'sendmail' => '/usr/sbin/sendmail -bs',
+
+    'stream' => [
+        'ssl' => [
+            'allow_self_signed' => true,
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
