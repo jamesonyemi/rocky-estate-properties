@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailtrap.io'),
+    'host' => env('MAIL_HOST', 'smtp.googlemail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -43,8 +43,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 
-),
+    'port' => env('MAIL_PORT', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -87,10 +86,10 @@ return [
     */
 
     // 'username' => env('MAIL_USERNAME'),
-    'username' => env('090c4d9ba89305'),
+    'username' => env('dev.skype2020@gmail.com'),
 
     // 'password' => env('MAIL_PASSWORD'),
-    'password' => env('8224a17b8c2f15'),
+    'password' => env('dvkgydoxijrxzfpl'),
 
     /*
     |--------------------------------------------------------------------------
@@ -105,13 +104,13 @@ return [
 
     'sendmail' => '/usr/sbin/sendmail -bs',
 
-    'stream' => [
-        'ssl' => [
-            'allow_self_signed' => true,
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-        ],
-    ],
+    // 'stream' => [
+    //     'ssl' => [
+    //         'allow_self_signed' => true,
+    //         'verify_peer' => false,
+    //         'verify_peer_name' => false,
+    //     ],
+    // ],
 
     /*
     |--------------------------------------------------------------------------

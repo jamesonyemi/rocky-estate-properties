@@ -9,13 +9,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" class="mt-2">
+            <form action="{{ route('import-users') }}" method="post" class="mt-2" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="file" name="import-users" id="import-users" class="form-control">
                     <br>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
             </div>

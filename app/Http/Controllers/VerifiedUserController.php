@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VerifiedUserController extends Controller
 {
@@ -127,5 +131,20 @@ class VerifiedUserController extends Controller
     public function destroy($id)
     {
         $id  = PaymentController::decryptedId($id);    
+    }
+
+    public function import() 
+    {
+        // dd(User::all());
+        $file_name = request()->file("import-users");
+        Excel::import(new UsersImport, $file_name);
+        
+        return redirect('verified-users')->with('success', 'All good!');
+    }
+
+    public function export() 
+    {
+        $name = request()->input("export-users");
+        return Excel::download(new UsersExport, $name.'.xlsx');
     }
 }

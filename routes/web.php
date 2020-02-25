@@ -17,6 +17,20 @@ Route::get('/', function () {
     return view('auth.login');  
 });
 
+Route::group(['prefix' => 'admin','namespace' => 'Auth'],function(){
+    // Authentication Routes...
+    Route::get('login', 'LoginController@showLoginForm')->name('login');
+    Route::post('login', 'LoginController@login');
+    Route::post('logout', 'LoginController@logout')->name('logout');
+
+    // Password Reset Routes...
+    Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+    Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('forgot-password');
+    Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset.token');
+    Route::post('password/reset', 'ResetPasswordController@reset');
+});
+
+
 Route::get('/logout', function () { return redirect('/'); });
 
 Route::group( ['middleware' => 'auth'],  function() {
@@ -39,6 +53,8 @@ Route::group( ['middleware' => 'auth'],  function() {
     Route::resource('reports', 'ReportController');
     Route::resource('stage-of-completion', 'StageOfCompletionController');
     Route::resource('verified-users', 'VerifiedUserController');
+    Route::any('/import-users', 'VerifiedUserController@import')->name('import-users');
+    Route::any('/export-users', 'VerifiedUserController@export')->name('export-users');
     
     Route::resource('payment-mode', 'PaymentModeController');
     Route::resource('payments', 'PaymentController');

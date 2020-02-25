@@ -12,7 +12,7 @@
   let cancelAlert = document.querySelector('button[type="button"]');
   cancelAlert.addEventListener('click', () => {
     $(this).parent('#success-mgs').remove();
-    window.location.href = '{!! url("/home") !!}';
+    window.location.reload();
 
   })
 

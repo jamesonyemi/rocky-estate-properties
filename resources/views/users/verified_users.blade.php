@@ -29,6 +29,8 @@
                             class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
                                 Create User
                             </a> 
+                            <a href="#" class="btn  btn-outline-primary btn-sm waves-effect waves-light"
+                                data-toggle="modal" data-target=".export-modal" > Export Users</a> 
                             <a href="#" class="btn btn-outline-primary btn-sm waves-effect waves-light" 
                                 data-toggle="modal" data-target=".basicModalSM" >Import Users</a> 
                         </div>
@@ -63,9 +65,9 @@
                                                 {{-- @if ( $user->isdeleted !== "" ) --}}
                                             <tr>
                                                 <td id="project_id"></td>
-                                                <td >{{ $user->first_name}}</span></td>
-                                                <td >{{ $user->last_name}}</span></td>
-                                                <td >{{ $user->active}}</span></td>
+                                                <td >{{ $user->first_name }}</span></td>
+                                                <td >{{ $user->last_name }}</span></td>
+                                                <td >{{ $user->active }}</span></td>
                                                 <td>{{  $user->created_at }}</span></td>
                                                 <td>
                                                     <?php $encryptId = Crypt::encrypt($user->id) ?>
@@ -98,5 +100,6 @@
 
     </div>
     <!-- END layout-wrapper -->
-@include('users.import_users')
+@include('users.import_users_modal')
+@include('users.export_users_modal')
 @include('partials.footer')
