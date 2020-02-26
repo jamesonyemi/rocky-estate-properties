@@ -1,23 +1,23 @@
 <?php
-
 namespace App\Exports;
 
 use App\User;
-// use Maatwebsite\Excel\Concerns\FromCollection;
-use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromView;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
-class UsersExport implements FromView
+class UsersExport implements FromCollection
 {
-    // public function collection()
-    // {
-    //     return User::all();
-    // }
-
-    public function view(): View
+    public function collection()
     {
-        return view('users.verified_users', [
-            'verifiedUsers' => User::all()
-        ]);
+        
+        $data   =   [ 'first_name','middle_name','last_name','full_name','email','password',  ];     
+       
+        $exportableData     =   DB::table('users')->select($data)->get();
+
+            foreach ($exportableData as $key => $value) 
+            {
+                $value->password = "please enter password";
+            }
+            return $exportableData;
     }
 }

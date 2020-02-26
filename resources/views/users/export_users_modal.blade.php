@@ -11,7 +11,7 @@
             <div class="modal-body">
             <form action="{{ route('export-users') }}" method="post" class="mt-2" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="text" name="export-users" id="export-users" class="form-control" placeholder="Enter Suitable Name">
+                    <input type="text" name="export-users" id="export-users" class="form-control" placeholder="Enter File Name">
                     <br>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

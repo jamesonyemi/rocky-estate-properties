@@ -82,7 +82,7 @@ class VerifiedUserController extends Controller
 
              if ($save_user) 
              {
-                return redirect()->route('verified-user.index')->with('success', 'User ID #' . "\n" . $save_user . ' Created Sucessfully');
+                return redirect('verified-users')->with('success', 'User ID #' . "\n" . $save_user . ' Created Sucessfully');
              }
 
     }
@@ -147,4 +147,5 @@ class VerifiedUserController extends Controller
         $name = request()->input("export-users");
         return Excel::download(new UsersExport, $name.'.xlsx');
     }
+    
 }

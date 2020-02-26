@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -10,6 +11,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 
 Auth::routes();
 
@@ -33,9 +35,9 @@ Route::group(['prefix' => 'admin','namespace' => 'Auth'],function(){
 
 Route::get('/logout', function () { return redirect('/'); });
 
-Route::group( ['middleware' => 'auth'],  function() {
 
-    Route::get('/home', 'HomeController@index')->name('home');
+Route::group( ['middleware' => 'auth', 'prefix' => 'admin-portal'],  function() {
+
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/update-gender/{client_id}/update_gender', 'ClientController@genderStatus')->name('gender_status');
     Route::post('/update-gender/{client_id}', 'ClientController@updateGenderStatus')->name('gender_update');
@@ -83,6 +85,13 @@ Route::group( ['middleware' => 'auth'],  function() {
 
 });
 
+
+    Route::group( ['middleware' => 'auth', 'prefix' => 'client-portal'], function () {
+        Route::get('/dashboard', function() { 
+            return view('client_portal.dashboard.index');
+         })->name('client-dashboard');
+        Route::resource('personal-details', 'ClientPersonalDetailsController');
+    });
 
 
 
