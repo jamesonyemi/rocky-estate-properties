@@ -21,7 +21,7 @@
                                             {{ session('status') }}
                                         </div>
                                      @endif
-                                <form method="POST" action="{{ route('forgot-password') }}">
+                                <form method="POST" action="{{ route('password.email') }}">
                                     {{ csrf_field() }}
                                     <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                                         <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>

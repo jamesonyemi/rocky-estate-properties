@@ -18,7 +18,7 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="token" value="{{ $token }}">
                         <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                            <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
+                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email', $email) }}" required autofocus>
                                 @if ($errors->has('email'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('email') }}</strong>

@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.googlemail.com'),
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -85,11 +85,11 @@ return [
     |
     */
 
-    // 'username' => env('MAIL_USERNAME'),
-    'username' => env('dev.skype2020@gmail.com'),
+    'username' => env('MAIL_USERNAME'),
+  
 
-    // 'password' => env('MAIL_PASSWORD'),
-    'password' => env('dvkgydoxijrxzfpl'),
+    'password' => env('MAIL_PASSWORD'),
+ 
 
     /*
     |--------------------------------------------------------------------------
@@ -104,13 +104,13 @@ return [
 
     'sendmail' => '/usr/sbin/sendmail -bs',
 
-    // 'stream' => [
-    //     'ssl' => [
-    //         'allow_self_signed' => true,
-    //         'verify_peer' => false,
-    //         'verify_peer_name' => false,
-    //     ],
-    // ],
+    'stream' => [
+        'ssl' => [
+            'allow_self_signed' => true,
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------

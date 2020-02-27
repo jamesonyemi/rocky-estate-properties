@@ -25,52 +25,52 @@
             <li class="nav-item-title">Pages</li>
 
             <li class="nav-item ">
-                <a href=" {{ url('clients') }} " class="nav-link">
+                <a href=" {{ url('/admin-portal/clients') }} " class="nav-link">
                     <span class="icon"><i class='bx bx-user-circle'></i></span>
                     <span class="menu-title">Clients</span>
                 </a>
             </li>
 
             <li class="nav-item ">
-                <a href="{{ url('projects') }}" class="nav-link">
+                <a href="{{ url('/admin-portal/projects') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-briefcase-alt-2'></i></span>
                     <span class="menu-title">Projects</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('project-docs') }}" class="nav-link">
+                <a href="{{ url('/admin-portal/project-docs') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-briefcase-alt-2'></i></span>
                     <span class="menu-title">Documents</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('onsite-visit') }}" class="nav-link">
+                <a href="{{ url('/admin-portal/onsite-visit') }}" class="nav-link">
                     <span class="icon"><i class=' bx bx-building-house'></i></span>
                     <span class="menu-title">On Site Visit</span>
                 </a>
             </li>
 
             <li class="nav-item ">
-                <a href="{{ url('reports') }}" class="nav-link">
+                <a href="{{ url('/admin-portal/reports') }}" class="nav-link">
                     <span class="icon"><i class=' bx bx-bar-chart'></i></span>
                     <span class="menu-title">Reports</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('stage-of-completion') }}" class="nav-link">
+                <a href="{{ url('/admin-portal/stage-of-completion') }}" class="nav-link">
                     <span class="icon"><i class='bx bxs-news'></i></span>
                     <span class="menu-title">Stages of Completion</span>
                 </a>
             </li>
 
             <li class="nav-item ">
-                <a href="{{ url('verified-users') }}" class="nav-link">
+                <a href="{{ url('/admin-portal/verified-users') }}" class="nav-link">
                     <span class="icon"><i class=' bx bxs-user-detail'></i></span>
                     <span class="menu-title">Users</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('payments') }}" class="nav-link">
+                <a href="{{ url('/admin-portal/payments') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-dollar'></i></span>
                     <span class="menu-title">Payments</span>
                 </a>
@@ -83,35 +83,35 @@
 
                 <ul class="sidemenu-nav-second-level">
                     <li class="nav-item ">
-                        <a href="{{ url('system-setup/towns') }}" class="nav-link">
+                        <a href="{{ url('/admin-portal/system-setup/towns') }}" class="nav-link">
                             <span class="icon"><i class='bx bx-log-in'></i></span>
                             <span class="menu-title">Towns</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href=" {{ url('system-setup/nationality') }}" class="nav-link">
+                        <a href=" {{ url('/admin-portal/system-setup/nationality') }}" class="nav-link">
                             <span class="icon"><i class='bx bxs-log-in'></i></span>
                             <span class="menu-title">Nationality</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href="{{ url('system-setup/personal_title') }}" class="nav-link">
+                        <a href="{{ url('/admin-portal/system-setup/personal_title') }}" class="nav-link">
                             <span class="icon"><i class='bx bx-log-in-circle'></i></span>
                             <span class="menu-title">Title</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href=" {{ url('system-setup/currency') }}" class="nav-link">
+                        <a href=" {{ url('/admin-portal/system-setup/currency') }}" class="nav-link">
                             <span class="icon"><i class='bx bxs-log-in-circle'></i></span>
                             <span class="menu-title">Currency</span>
                         </a>
                     </li>
 
                     <li class="nav-item ">
-                        <a href=" {{ url('system-setup/role') }}" class="nav-link">
+                        <a href=" {{ url('/admin-portal/system-setup/role') }}" class="nav-link">
                             <span class="icon"><i class='bx bx-lock'></i></span>
                             <span class="menu-title">Assign Role to User</span>
                         </a>

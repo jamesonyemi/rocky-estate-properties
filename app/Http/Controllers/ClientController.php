@@ -177,7 +177,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($_POST);
+       
         $id         = PaymentController::decryptedId($id);
         $updateData = static::allExcept();
         $update_clientInfo = DB::table('tblclients')->where('clientid', $id)->update($updateData);
@@ -186,7 +186,7 @@ class ClientController extends Controller
 
      public function updateCorporateClient(Request $request, $id)
     {
-        // dd($_POST);
+
         $id         = PaymentController::decryptedId($id);
         $updateData = static::allExcept();
         $update_clientInfo = DB::table('tblcorporate_client')->where('id', $id)->update($updateData);
@@ -211,8 +211,6 @@ class ClientController extends Controller
 
     public function destroyCorporateClient($id)
     {
-        //code
-        // implode()
         $id                  = PaymentController::decryptedId($id);
         $flag_as_deleted     =  ['isdeleted' => "yes"];
         $update_clientInfo   =  DB::table('tblcorporate_client')->where('id', $id)->update($flag_as_deleted);

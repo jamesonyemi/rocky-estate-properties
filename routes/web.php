@@ -1,4 +1,6 @@
 <?php
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,21 +21,22 @@ Route::get('/', function () {
     return view('auth.login');  
 });
 
-Route::group(['prefix' => 'admin','namespace' => 'Auth'],function(){
-    // Authentication Routes...
-    Route::get('login', 'LoginController@showLoginForm')->name('login');
-    Route::post('login', 'LoginController@login');
-    Route::post('logout', 'LoginController@logout')->name('logout');
+// Route::group(['prefix' => 'admin','namespace' => 'Auth'],function(){
+//     // Authentication Routes...
+//     Route::get('login', 'LoginController@showLoginForm')->name('login');
+//     Route::post('login', 'LoginController@login');
+//     Route::post('logout', 'LoginController@logout')->name('logout');
 
-    // Password Reset Routes...
-    Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.reset');
-    Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('forgot-password');
-    Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset.token');
-    Route::post('password/reset', 'ResetPasswordController@reset');
-});
+//     // Password Reset Routes...
+//     Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+//     Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('forgot-password');
+//     Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset.token');
+//     Route::post('password/reset', 'ResetPasswordController@reset');
+// });
 
 
 Route::get('/logout', function () { return redirect('/'); });
+Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
 
 
 Route::group( ['middleware' => 'auth', 'prefix' => 'admin-portal'],  function() {
