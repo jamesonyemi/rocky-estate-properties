@@ -37,6 +37,7 @@ Route::get('/', function () {
 
 Route::get('/logout', function () { return redirect('/'); });
 Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
+Route::get('/client/verify/{token}', 'Auth\RegisterController@verifyUser');
 
 
 Route::group( ['middleware' => 'auth', 'prefix' => 'admin-portal'],  function() {

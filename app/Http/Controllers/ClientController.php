@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Expr\AssignOp\Concat;
 use App\Http\Controllers\PaymentController;
+use App\Mail\ClientRegistrationMail;
+use Illuminate\Support\Facades\Mail;
+
 
 class ClientController extends Controller
 {
@@ -76,9 +79,14 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         //code 
-        $postData = static::allExcept();
-        $createNewClient = DB::table('tblclients')->insert([$postData]);
-        return redirect()->route('clients.index')->with('success', 'New Client Created Sucessfully');
+        $postData             = static::allExcept();
+        $createNewClient      = DB::table('tblclients')->insertGetId([$postData]);
+        $currentClientEmail   = DB::table('tblclients')->where('clientid', $createNewClient)->select('email')->first();
+             if ( $createNewClient ) {
+                 # code...
+                 static::sendRegistrationEmail($currentClientEmail);
+             }
+        return redirect()->route('clients.index')->with('success', 'Client "'.$createNewClient.'"Created Sucessfully, with a link to register');
     }
 
     public function corporateClient(Request $request)
@@ -247,5 +255,12 @@ class ClientController extends Controller
                 $full_name     = $concated_name;
                 return $full_name;
             }
+    }
+
+    public static function sendRegistrationEmail($email)
+    {
+        # code...
+        $send = Mail::to( $email )->send( new ClientRegistrationMail() );
+        return $send;
     }
 }
