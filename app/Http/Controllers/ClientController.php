@@ -78,23 +78,31 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //code 
-        $postData             = static::allExcept();
-        $createNewClient      = DB::table('tblclients')->insertGetId([$postData]);
-        $currentClientEmail   = DB::table('tblclients')->where('clientid', $createNewClient)->select('email')->first();
+        #code 
+        $primaryPhoneNumber  =  $request->phone1;
+        $successMessage      =  '"Created Sucessfully, with an Email sent to Sign-Up, please contact client ("'.$primaryPhoneNumber.'") to check their Inbox';
+        $postData            =  static::allExcept();
+        $createNewClient     =  DB::table('tblclients')->insertGetId([$postData]);
+        $client              =  DB::table('tblclients')->where('clientid', $createNewClient)->select('*')->first();
+        $currentClientEmail  =  $client->email;
+
              if ( $createNewClient ) {
                  # code...
-                 static::sendRegistrationEmail($currentClientEmail);
+                 static::sendRegistrationEmail($currentClientEmail, $client);
              }
-        return redirect()->route('clients.index')->with('success', 'Client "'.$createNewClient.'"Created Sucessfully, with a link to register');
+        return redirect()->route('clients.index')->with('success', 'Client # "'.$createNewClient. $successMessage);
     }
 
     public function corporateClient(Request $request)
     {
-        //code 
+       #code 
         $postData        = static::allExcept();
         $corporateClient = DB::table('tblcorporate_client')->insertGetId(array_merge($postData));
-        return redirect()->route('clients.index')->with('success', 'Corporate Client Created Sucessfully');
+
+            if ( $corporateClient ) {
+                # code...
+                return redirect()->route('clients.index')->with('success', 'Corporate Client Created Sucessfully');
+            }
     }
 
     // /**
@@ -257,10 +265,10 @@ class ClientController extends Controller
             }
     }
 
-    public static function sendRegistrationEmail($email)
+    public static function sendRegistrationEmail($email, $target)
     {
         # code...
-        $send = Mail::to( $email )->send( new ClientRegistrationMail() );
+        $send = Mail::to( $email )->send( new ClientRegistrationMail($target) );
         return $send;
     }
 }

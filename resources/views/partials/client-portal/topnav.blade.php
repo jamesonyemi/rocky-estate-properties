@@ -276,7 +276,7 @@
             <li class="nav-item dropdown profile-nav-item">
                 <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="menu-profile">
-                        <span class="name">Hi {{ Auth::user()->first_name . ' '. Auth::user()->last_name }}</span>
+                        <span class="name">Welcome: {{ Auth::user()->first_name . ' '. Auth::user()->last_name }}</span>
                         {{-- <img src="{{ asset('assets/img/user1.jpg') }}" class="rounded-circle" alt="user image"> --}}
                     </div>
                 </a>

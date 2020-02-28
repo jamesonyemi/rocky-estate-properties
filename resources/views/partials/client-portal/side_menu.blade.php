@@ -32,37 +32,37 @@
             </li>
 
             <li class="nav-item ">
-                <a href="{{ url('projects') }}" class="nav-link">
+                <a href="{{ url('/client-portal/my-projects') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-briefcase-alt-2'></i></span>
                     <span class="menu-title">My Projects</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('project-docs') }}" class="nav-link">
+                <a href="{{ url('/client-portal/project-docs') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-briefcase-alt-2'></i></span>
                     <span class="menu-title">My Documents</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('onsite-visit') }}" class="nav-link">
+                <a href="{{ url('/client-portal/onsite-visit') }}" class="nav-link">
                     <span class="icon"><i class=' bx bx-building-house'></i></span>
                     <span class="menu-title">OnSite Visits</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('stage-of-completion') }}" class="nav-link">
+                <a href="{{ url('/client-portal/stage-of-completion') }}" class="nav-link">
                     <span class="icon"><i class='bx bxs-news'></i></span>
                     <span class="menu-title">Stages of Completion</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('payments') }}" class="nav-link">
+                <a href="{{ url('/client-portal/payments') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-dollar'></i></span>
                     <span class="menu-title">Payments</span>
                 </a>
             </li>
-            <li class="nav-item mm-active">
-                <a href="{{ url('tracking') }}" class="nav-link" aria-expanded="true">
+            <li class="nav-item">
+                <a href="{{ url('/client-portal/tracking') }}" class="nav-link" aria-expanded="true">
                     <span class="icon"><i class="bx bx-align-justify"></i></span>
                     <span class="menu-title">Tracking</span>
                 </a>

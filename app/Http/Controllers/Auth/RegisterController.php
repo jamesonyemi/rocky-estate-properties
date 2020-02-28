@@ -8,6 +8,7 @@ use App\Mail\VerifyMail;
 use App\VerifyUser;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
@@ -108,6 +109,18 @@ class RegisterController extends Controller
         return redirect('/login')->with('warning', "Sorry your email cannot be identified.");
       }
       return redirect('/login')->with('status', $status);
+    }
+
+    public function sigUpClient($clientid)
+    {
+      #code...
+      $signUpClient = DB::table('tblclients')->where('clientid', $clientid)->first();
+      $fname        = $signUpClient->fname;
+      $oname        = $signUpClient->oname;
+      $lname        = $signUpClient->lname;
+      $email        = $signUpClient->email;
+      $role_id      = 3;
+      return view('auth.register_client', compact($signUpClient, $role_id, $fname, $oname, $lname, $email ));
     }
 
 }

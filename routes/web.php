@@ -37,7 +37,7 @@ Route::get('/', function () {
 
 Route::get('/logout', function () { return redirect('/'); });
 Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
-Route::get('/client/verify/{token}', 'Auth\RegisterController@verifyUser');
+Route::get('/client/sign-up/{clientid}', 'Auth\RegisterController@sigUpClient');
 
 
 Route::group( ['middleware' => 'auth', 'prefix' => 'admin-portal'],  function() {
@@ -94,7 +94,8 @@ Route::group( ['middleware' => 'auth', 'prefix' => 'admin-portal'],  function() 
         Route::get('/dashboard', function() { 
             return view('client_portal.dashboard.index');
          })->name('client-dashboard');
-        Route::resource('personal-details', 'ClientPersonalDetailsController');
+        Route::resource('personal-details', 'Clients\ClientPersonalDetailsController');
+        Route::resource('my-projects', 'Clients\ClientProjectController');
     });
 
 

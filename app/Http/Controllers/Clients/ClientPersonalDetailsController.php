@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Clients;
 
 use App\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ class ClientPersonalDetailsController extends Controller
      */
     public function index()
     {
-        $clients = User::findOrfail(Auth::id());
+        $clients = DB::table('vw_client_personal_details')->where('user_id', Auth::id() )->select('*')->first();
         return view('client_portal.personal_details.index', compact('clients'));
     }
 

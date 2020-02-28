@@ -5,71 +5,60 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3>Personal Details</h3>
             </div>
-            {{ $clients}}
+           
             <div class="card-body">
             <form class="mt-5" action="#" method="#">
                     {{ csrf_field() }}
                     <div class="form-row">
                         <div class="form-group col-md-1"> </div>
-                        <div class="form-group col-md-4 {{ $errors->has('first_name') ? ' has-error' : '' }}">
-                            <label for="first_name">First Name</label>
-                        <input type="text" class="form-control" name="first_name" id="first_name" required>  
-                            @if ($errors->has('first_name'))
-                            <span class="help-block"><strong>{{ $errors->first('first_name') }}</strong></span>
-                            @endif          
+                        <div class="form-group col-md-4">
+                            <label for="first_name">Full Name</label>
+                        <input type="text" class="form-control" name="first_name" id="first_name" 
+                            value="{!! $clients->full_name !!}" disabled>        
                         </div>
                         <div class="form-group col-md-1"> </div>
                         <div class="form-group col-md-4">
-                            <label for="middle_name">Middle Name</label>
-                        <input type="text" class="form-control" name="middle_name" id="middle_name" >        
+                            <label for="middle_name">Client Primary Phone</label>
+                        <input type="text" class="form-control" name="primary_contact" id="primary_contact"
+                            value="{!! $clients->phone1 !!}" disabled >        
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-1"> </div>
-                        <div class="form-group col-md-4 {{ $errors->has('last_name') ? ' has-error' : '' }} ">
-                            <label for="last_name">Last Name</label>
-                        <input type="text" class="form-control" name="last_name" id="last_name" required> 
-                                 @if ($errors->has('last_name'))
-                                    <span class="help-block"><strong>{{ $errors->first('last_name') }}</strong></span>
-                                 @endif       
-                        </div>
-                        <div class="form-group col-md-1"> </div>
-                        <div class="form-group col-md-4 {{ $errors->has('email') ? ' has-error' : '' }} ">
+                        <div class="form-group col-md-4">
                             <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" required>  
-                            @if ($errors->has('email'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('email') }}</strong>
-                            </span>
-                            @endif      
+                        <input type="email" class="form-control" name="email" id="email" value="{!! $clients->email !!}" disabled>  
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-1"> </div>
                         <div class="form-group col-md-4" >
-                            <label for="pwd">Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Password">  
-                            <span class="badge badge-pill badge-danger" id="error-msg" style="display:none; float:right; margin-top: 2.5px;" value="" ></span>
-                            <span class="badge badge-pill badge-success" id="success-msg" style="display:none; float:right; margin-top: 2.5px;" value="" ></span>    
-                        </div>
-                        <div class="form-group col-md-1"> </div>
-                        <div class="form-group col-md-4">
-                            <label for="email">Comfirm Password</label>
-                            <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
-                            <span class="badge badge-pill badge-danger" id="error-msg" style="display:none; float:right; margin-top: 2.5px;" value="" ></span>
-                            <span class="badge badge-pill badge-success" id="success-msg" style="display:none; float:right; margin-top: 2.5px;" value="" ></span>
+                            <label for="nat">Nationality</label>
+                            <input type="text" class="form-control" name="Nationality" value="{!! $clients->nationality !!}" disabled>  
                         </div>
                     </div>
-                    <hr style="background-color:fuchsia; opacity:0.1">
-                      <div class="container">
-                          <div class="row">
-                              <div class="col text-center">
-                                  <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
-                                   Save</button>
-                                </div>
-                                <div class="form-group col-md-2"></div>
+                    <div class="form-row">
+                        <div class="form-group col-md-1"> </div>
+                        <div class="form-group col-md-4">
+                            <label for="dob">Date Of Birth</label>
+                            <input type="text" class="form-control" name="dob" value="{!! $clients->dob !!}" disabled>
                         </div>
-                      </div>
+                        <div class="form-group col-md-1"> </div>
+                        <div class="form-group col-md-4" >
+                            <label for="kin">Next of Kin</label>
+                            <input type="text" class="form-control" name="nkin" value="{!! $clients->nok !!}" disabled>  
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-1"> </div>
+                        <div class="form-group col-md-4">
+                            <label for="rel-kin">Relationship to Next of Kin</label>
+                            <input type="text" class="form-control" name="rel-kin" value="{!! ucfirst($clients->relationship) !!}" disabled>
+                        </div>
+                        <div class="form-group col-md-1"> </div>
+                        <div class="form-group col-md-4" >
+                            <label for="kin">Phone Number of Next of Kin</label>
+                            <input type="text" class="form-control" name="nkin" value="{!! $clients->nokphone !!}" disabled>  
+                        </div>
+                    </div><br><br>
                 </form>
             </div>
         </div>
