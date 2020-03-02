@@ -80,5 +80,29 @@
 
 <!-- Datatable init js -->
 <script src=" {{ asset('custom_assets/js/pages/datatables.init.js') }}"></script>
-    </body>
+
+<script>
+    $(document).ready(function() {
+      let cTable = $('table.my-projects').DataTable({
+            "scrollCollapse": true,
+            "paging": true,
+            "info": false,
+            "columnDefs": [ {
+                "searchable": false,
+                "orderable": false,
+                "targets": $('td#client_ids')
+            } ],
+            "order": [[ 1, 'asc' ]],
+      });
+    
+      cTable.on( 'order.dt search.dt', function () {
+        cTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+      
+    } );
+    
+    </script>
+</body>
 </html>

@@ -1,1 +1,1 @@
-@include('projects.view')
+@include('client_portal.my_projects.view')

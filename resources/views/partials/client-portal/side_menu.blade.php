@@ -69,8 +69,9 @@
             </li>
             <li class="nav-item">
                 <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
-                                   document.getElementById('logout-form').submit();">
-                  <i class='bx bx-log-out'></i> <span>Logout</span>
+                    document.getElementById('logout-form').submit();">
+                  <span class="icon"><i class='bx bx-log-out'></i> </span>
+                  <span class="menu-title">Logout</span>
               </a>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                           {{ csrf_field() }}

@@ -1,150 +1,73 @@
-@include('partials.header')
-@include('partials.side_menu')
 
-<!-- End Sidemenu Area -->
-
-<!-- Main Content Wrapper -->
-<div class="main-content d-flex flex-column">
-    <!-- Top Navbar -->
-    <!-- Top Navbar Area -->
-    @include('partials.topnav')
-    <!-- End Top Navbar Area -->
-
-    <!-- Main Content Layout -->
-    <!-- Breadcrumb Area -->
-    @include('partials.breadcrumb')
-    <!-- End Breadcrumb Area -->
-
-
+@include('partials.client-portal.master_header')
         <!-- Start -->
-
-        <div class="card mb-30">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h3>Project Summary</h3>
-
-                <!-- <div class="dropdown">
-                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class='bx bx-dots-horizontal-rounded'></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-show'></i> View
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-edit-alt'></i> Edit
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-trash'></i> Delete
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-printer'></i> Print
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class='bx bx-download'></i> Download
-                        </a>
+        <div class="row" style="margin-top:100px;">
+            <div class="col-lg-3 col-md-6">
+                <div class="stats-card-box">
+                    <div class="icon-box">
+                        <i class="bx bx-current-location"></i>
                     </div>
-                </div> -->
+                    <span class="sub-title">Location</span>
+                    <h6>{!! ucfirst($projects->location) !!}<span class="badge"></span></h6>
+                </div>
             </div>
-
-            <div class="card-body">
-                <!-- <form>
-                    <div class="row">
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="First name">
-                        </div>
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="Last name">
-                        </div>
+    
+            <div class="col-lg-3 col-md-6">
+                <div class="stats-card-box">
+                    <div class="icon-box">
+                        <i class="bx bx-dollar"></i>
                     </div>
-                </form> -->
-                @foreach ($projectId as $project)
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="validate_title">Project Title</label>
-                            <input type="text" class="form-control " placeholder="" id="title"
-                                name="title" value="{{ old('title', $project->title) }}" disabled>
-                        </div>
-                        <div class="form-group col-md-2">
-
-                        </div>
-                    <div class="form-group col-md-4">
-                        <label for="validate_country">Region</label>
-                        <select  id="region" name="region" class="form-control custom-select" disabled>
-                            @foreach ($regionId as $key => $value)
-                        <option value="{{ $key }}" {{ old('region', in_array($value,[$value]) ? $project->rid : 'null') === $key ? 'selected' : '' }}>
-                            {{ ucwords($value) }}</option>
-                        @endforeach
-                        </select>
-                    
+                    <span class="sub-title">Amount Spent</span>
+                    <h6>{!! ucfirst($pay) !!}<span class="badge"></span></h6>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stats-card-box">
+                    <div class="icon-box">
+                        <i class="bx bx-bar-chart-alt"></i>
                     </div>
+                    <span class="sub-title">Project Status</span>
+                    <h6>{!! ucfirst($projects->status) !!}<span class="badge"></span></h6>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stats-card-box">
+                    <div class="icon-box">
+                        <i class="bx bx-briefcase-alt-2"></i>
                     </div>
-               
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="validate_country">Town</label>
-                             <select id="town" name="town" class="form-control custom-select" disabled>
-                            @foreach ($townId as $key => $town)
-                        <option value="{{ $key }}" {{ old('town', in_array($town,[$town]) ? $project->tid : 'null') == $key ? 'selected' : '' }}>
-                            {{ ucwords($town) }}</option>
-                        @endforeach
-                        </select>
-
-                        </div>
-                        <div class="form-group col-md-2">
-
-                        </div>
-                       
-                        <div class="form-group col-md-4">
-                            <label for="other_landmark">Other Land Marks Close to Project</label>
-                            <input type="text" class="form-control" id="landmark" 
-                                name="landmark" value="{{ old('title', $project->landmark) }}" disabled>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="project_state">Current State of Project</label>
-                            <select id="statusid" name="statusid" class="form-control custom-select" disabled>
-                            @foreach ($project_status as $key => $status) 
-                               <option value="{{ $key }}" {{ old('statusid', in_array($status,[$status]) ? $project->tid : 'null') == $key ? 'selected' : '' }}>
-                            {{ ucwords($status) }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-
-                        </div>
-                       
-                        <div class="form-group col-md-4">
-                            <label for="validate_phone_number">Total Cost of Project</label>
-                            <input type="text" class="form-control" id="totalcost"
-                                name="totalcost" value="{{ old('totalcost', $project->totalcost) }}" disabled>
-
-                        </div> 
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6"></div>
-                        <div class="form-group col-md-4">
-                            <label for="validate_othername">Project Description</label>
-                        <textarea name="description" id="description" cols="43" rows="6" disabled value="{{ old('description', $project->description) }}"> 
-                            {{$project->description}}</textarea>
-                        </div>
-                            {{-- <div class="form-group col-md-2"></div> --}}
-                        
-                    </div>
-                     
-                      @endforeach
-                </form>
+                    <span class="sub-title">Project Title</span>
+                    <h6>{!! ucfirst($projects->title) !!}<span class="badge"></span></h6>
+                </div>
             </div>
         </div>
+        @include('client_portal.my_projects.gallery_modal')
+        @include('client_portal.my_projects.payment_breakdown')
+@include('partials.client-portal.footer')
 
-        <!-- End -->
-  <!-- Footer -->
-  <div class="flex-grow-1"></div>
-</div>
-<!-- End Main Content Wrapper -->
+<script>
+    // =======================My Projects======================================
+$(document).ready(function() {
+  let cTable = $('table.clients').DataTable({
+        "scrollY": "200px",
+        "scrollCollapse": true,
+        "paging": true,
+        "info": false,
+        "columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": $('td#client_ids')
+        } ],
+        "order": [[ 1, 'asc' ]],
+  });
 
-@include('partials.footer')
-    
+  cTable.on( 'order.dt search.dt', function () {
+    cTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+        cell.innerHTML = i+1;
+    } );
+} ).draw();
+  
+} );
 
-      
+// =======================My Projects======================================
+
+</script>
