@@ -2,7 +2,7 @@
         <!-- Start Sidemenu Area -->
 <div class="sidemenu-area">
     <div class="sidemenu-header">
-        <a href=" {{ route('home') }} " class="navbar-brand d-flex align-items-center">
+        <a href=" {{ url('client-portal/dashboard') }} " class="navbar-brand d-flex align-items-center">
         <img src="{{ asset('assets/img/small-logo.png') }}" alt="company logo">
             <span>Olaf</span>
         </a>
@@ -38,7 +38,7 @@
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('/client-portal/project-docs') }}" class="nav-link">
+                <a href="{{ url('/client-portal/my-documents') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-briefcase-alt-2'></i></span>
                     <span class="menu-title">My Documents</span>
                 </a>

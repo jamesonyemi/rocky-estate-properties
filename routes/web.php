@@ -96,6 +96,8 @@ Route::group( ['middleware' => 'auth', 'prefix' => 'admin-portal'],  function() 
          })->name('client-dashboard');
         Route::resource('personal-details', 'Clients\ClientPersonalDetailsController');
         Route::resource('my-projects', 'Clients\ClientProjectController');
+        Route::resource('my-documents', 'Clients\ClientDocumentController');
+        Route::get('my-projects/single-project/{id}', 'Clients\ClientProjectController@clientWithSingleProject')->name('single-project');
     });
 
 

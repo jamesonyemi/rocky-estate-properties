@@ -1,0 +1,1 @@
+@include('client_portal.my_documents.view')

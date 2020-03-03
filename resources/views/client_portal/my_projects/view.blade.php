@@ -36,7 +36,18 @@
                         <i class="bx bx-briefcase-alt-2"></i>
                     </div>
                     <span class="sub-title">Project Title</span>
-                    <h6>{!! ucfirst($projects->title) !!}<span class="badge"></span></h6>
+                    @php
+                    function truncate($text, $chars = 20) {
+                        if(strlen($text) > $chars) {
+                            $text = $text.' ';
+                            $text = substr($text, 0, $chars);
+                            $text = substr($text, 0, strrpos($text ,' '));
+                            $text = $text.'...';
+                        }
+                        return $text;
+                    }   
+                @endphp
+                <h6><span class="badge"></span>{!! truncate($projects->title) !!}</h6> 
                 </div>
             </div>
         </div>

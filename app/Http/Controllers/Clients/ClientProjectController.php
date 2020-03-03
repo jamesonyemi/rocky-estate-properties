@@ -18,8 +18,25 @@ class ClientProjectController extends Controller
      */
     public function index()
     {
-        $projects = DB::table('vw_my_projects')->where('user_id', Auth::id() )->select('*')->first();
-        return view('client_portal.my_projects.index', compact('projects'));
+        $projects           =   DB::table('vw_my_projects')->where('user_id', Auth::id() )->select('*');
+        $retriveProjects    =   $projects->get();
+        $pid                =   $retriveProjects[0]->pid;
+
+        if ( ( count($retriveProjects) === 1 ) ) {
+            $singleProject  =   DB::table('vw_my_projects')->where('pid', $pid )->select('*')->first();
+            $projectImage       =   DB::table('users')->where('id', Auth::id() )->select('clientid')->first();
+            $clientId           =   $projectImage->clientid;
+            $projectImage       =   DB::table('tblprojectimage')->where('clientid', $clientId)->where('pid', $pid)->where('status_id', '2')->select('*');
+           
+            $image              =   $projectImage->pluck('img_name');
+            // ddd($image);
+            $payments           =   DB::table('tblpayment')->where('clientid', $clientId)->where('pid', $pid)->select('amt_received','paymentdate','comments')->get();
+            $pay                =   $payments->sum('amt_received');
+
+        return view('client_portal.my_projects.single_project', compact('singleProject','pay','payments','image') );
+
+        }
+        return view('client_portal.my_projects.multiple_projects', compact('retriveProjects'));
     }
 
     /**
@@ -56,7 +73,7 @@ class ClientProjectController extends Controller
         $projects       =   DB::table('vw_my_projects')->where('pid', $id )->select('*')->first();
         $projectImage   =   DB::table('users')->where('id', Auth::id() )->select('clientid')->first();
         $clientId       =   $projectImage->clientid;
-        $projectImage   =   DB::table('tblprojectimage')->where('clientid', $clientId)->where('status_id', '2')->select('*');
+        $projectImage   =   DB::table('tblprojectimage')->where('clientid', $clientId)->where('pid', $id)->where('status_id', '2')->select('*');
         $image          =   $projectImage->pluck('img_name');
         $payments       =   DB::table('tblpayment')->where('clientid', $clientId)->where('pid', $id)->select('amt_received','paymentdate','comments')->get();
         $pay            =   $payments->sum('amt_received');
@@ -98,4 +115,32 @@ class ClientProjectController extends Controller
     {
         //
     }
+
+    public static function clientWithSingleProject($id)
+    {
+        
+        $id             =   PaymentController::decryptedId($id);
+        $projects       =   DB::table('vw_my_projects')->where('pid', $id )->select('*')->first();
+        $projectImage   =   DB::table('users')->where('id', Auth::id() )->select('clientid')->first();
+        $clientId       =   $projectImage->clientid;
+        $projectImage   =   DB::table('tblprojectimage')->where('clientid', $clientId)->where('pid', $id)->where('status_id', '2')->select('*');
+        $image          =   $projectImage->pluck('img_name');
+        $payments       =   DB::table('tblpayment')->where('clientid', $clientId)->where('pid', $id)->select('amt_received','paymentdate','comments')->get();
+        $pay            =   $payments->sum('amt_received');
+
+        return view('client_portal.my_projects.single_project', compact('projects','pay','payments','image') );
+
+    }
+
+    public static  function truncate($text, $chars = 120) 
+    {
+        if(strlen($text) > $chars) {
+            $text = $text.' ';
+            $text = substr($text, 0, $chars);
+            $text = substr($text, 0, strrpos($text ,' '));
+            $text = $text.'...';
+        }
+        return $text;
+    }  
+     
 }
