@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Facades\Auth;
 
 class ClientOnsiteVisitController extends Controller
 {
@@ -14,7 +17,11 @@ class ClientOnsiteVisitController extends Controller
      */
     public function index()
     {
-        //
+        #code
+        $onsiteVisit    =   DB::table('tblprojectimage')->where('clientid', Auth::user()->clientid)->paginate(1);
+        $visit          =   DB::table('vw_project_visited')->where('clientid', Auth::user()->clientid)->paginate(1);
+      
+        return view('client_portal.onsite_visit.profile', compact('onsiteVisit', 'visit'));
     }
 
     /**

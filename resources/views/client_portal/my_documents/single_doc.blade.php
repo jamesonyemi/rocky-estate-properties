@@ -1,4 +1,14 @@
 @include('partials.client-portal.master_header')
+<style>
+/* .entry:not(:first-of-type)
+{
+    margin-top: 10px;   
+}
+.glyphicon
+{
+    font-size: 12px;
+} */
+</style>
  <!-- Start -->
  <div class="row">
     <div class="col-lg-12 col-md-12">
@@ -49,40 +59,75 @@
 </div>
 <br><br><br>
 
-<div class="card-header d-flex justify-content-between align-items-center">
-    <h3>Submit More Document</h3>
-</div>
-
 <div class="card mb-30">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3><?= strtoupper('submit more documents') ?></h3>
+    </div>
     <div class="card-body">
-<form action="{{ route('project-docs.store') }}" method="POST"  class="mt-3" enctype="multipart/form-data">
-{{ csrf_field() }}
-<div class="row">
-    <div class="col col-md-3"></div>
-<div class="col col-2">
-<div class="custom-control custom-radio mb-3">
-    <label for="document">Document Name</label>
-    <input type="text" class="form-control" name="doc" id="doc">
+        <form class="mt-5" action="{{'#'}}"  method="POST">
+            {{ csrf_field() }}
+        <div id="RepeatingFields">
+            <div class="entry">
+                <div class="form-row "> 
+                    <div class="form-group col-md-1"></div>
+                    <div class="form-group col-md-4">
+                        <label for="validate_region">Document Name:</label>
+                        <input type="text" id="doc" name="doc[]" class="form-control" >
+                    </div>
+                    <div class="form-group col-md-1"></div>
+                    <div class="form-group col-md-4">
+                        <label for="rfrom">Document:</label>
+                        <input type="file"  id="doc_name" name="doc_name[]" accept=".doc, .docx, .pdf" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-2" style="margin:32px -10px 0px 10px;">
+                        <span class="input-group-btn">
+                                <button type="button" class="btn btn-success btn-sm btn-add rounded-pill">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    more documents
+                                </button>
+                        </span>
+                    </div>
+
+                </div> 
+            </div>
+        </div><br><br>
+             <hr style="background-color:fuchsia; opacity:0.1"><br> 
+              <div class="container">
+                  <div class="row">
+                      <div class="col text-center">
+                          <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
+                           Submit</button>
+                        </div>
+                        <div class="form-group col-md-2"></div>
+                </div><br>
+              </div>
+        </form>
+       
+    </div>
 </div>
 
-</div>
-<div class="col col-3">
-    <label for="document">Attach Documents</label>
-    <input type="file" class="form-control" accept=".pdf,.doc,.docx,.xl,.xlx" max="50000" id="docname" name="docname" required="">
-</div>
-<div class="col col-2"></div>
-</div>
-<hr style="background-color:fuchsia; opacity:0.1">
-<div class="container">
-<div class="row">
-<div class="col text-center">
-    <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
-     Save</button>
-  </div>
-  <div class="form-group col-md-2"></div>
-</div>
-</div>
-</form>
-</div>
-</div>
+
 @include('partials.client-portal.footer')
+
+<script>
+$(function() {
+    let repeater    =   $(document).on('click', '.btn-add', function(e) {
+        e.preventDefault();
+        let controlForm  =  $('#RepeatingFields:first'),
+            currentEntry =  $(this).parents('.entry:first'),
+            newEntry     =  $(currentEntry.clone()).appendTo(controlForm);
+
+        newEntry.find('input').val('');
+        controlForm.find('.entry:not(:last) .btn-add')
+            .removeClass('btn-add').addClass('btn-remove')
+            .removeClass('btn-success').addClass('btn-danger')
+            .html('remove');
+    });
+    repeater.on('click', '.btn-remove', function(e) {
+        e.preventDefault();
+        $(this).parents('.entry:first').remove();
+        return false;
+    });
+});
+
+</script>

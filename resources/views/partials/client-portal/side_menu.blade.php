@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/client-portal/tracking') }}" class="nav-link" aria-expanded="true">
+                <a href="{{ url('/client-portal/project-tracking') }}" class="nav-link" aria-expanded="true">
                     <span class="icon"><i class="bx bx-align-justify"></i></span>
                     <span class="menu-title">Tracking</span>
                 </a>

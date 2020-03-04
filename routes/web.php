@@ -97,6 +97,10 @@ Route::group( ['middleware' => 'auth', 'prefix' => 'admin-portal'],  function() 
         Route::resource('personal-details', 'Clients\ClientPersonalDetailsController');
         Route::resource('my-projects', 'Clients\ClientProjectController');
         Route::resource('my-documents', 'Clients\ClientDocumentController');
+        Route::resource('onsite-visit', 'Clients\ClientOnsiteVisitController');
+        Route::resource('stage-of-completion', 'Clients\ClientStageOfCompletionController');
+        Route::resource('payments', 'Clients\ClientPaymentBreakDownController');
+        Route::resource('project-tracking', 'Clients\ClientProjectTrackingController');
         Route::get('my-projects/single-project/{id}', 'Clients\ClientProjectController@clientWithSingleProject')->name('single-project');
     });
 
