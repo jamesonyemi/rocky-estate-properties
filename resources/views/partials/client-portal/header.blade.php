@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="{{ asset('assets/css/vendors.min.css') }}">
 <!-- Style CSS -->
 <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/font.google.css') }}">
 <!-- Responsive CSS -->
 <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
 

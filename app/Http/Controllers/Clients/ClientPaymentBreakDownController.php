@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ClientPaymentBreakDownController extends Controller
 {
@@ -14,7 +16,11 @@ class ClientPaymentBreakDownController extends Controller
      */
     public function index()
     {
-        //
+        $payments       =   DB::table('vw_client_payment_tracking')->where('clientid', Auth::user()->clientid)->paginate(15);
+        $data           =   ['total' => $payments->total(), 'perPage' => $payments->perPage(), 'currentPage' => $payments->currentPage()];
+      
+        return view('client_portal.payments.index', compact('payments', 'data') );
+
     }
 
     /**

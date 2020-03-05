@@ -23,7 +23,15 @@
 
                                     <div class="card-body">
                                         <ul class="list-unstyled mb-0">
-                                            @foreach ($visit as $project)
+                                            @foreach ($allStage as $project)
+                                            <li class="d-flex">
+                                                <i class="bx bx-briefcase mr-2"></i>
+                                                <span class="d-inline-block"> <a href="#" class="d-inline-block">{!! $project->title !!}</a></span>
+                                            </li>
+                                            <li class="d-flex">
+                                                <i class="bx bx-dollar mr-2"></i>
+                                                <span class="d-inline-block">Amount Spent <a href="#" class="d-inline-block">{!! $project->amtspent !!}</a></span>
+                                            </li>
                                             <li class="d-flex">
                                                 <i class='bx bx-map mr-2'></i>
                                                 <span class="d-inline-block">Landmark <a href="#" class="d-inline-block">{!! $project->landmark  !!}</a></span>
@@ -41,16 +49,16 @@
                             <div class="col-lg-8">
                                 <div class="timeline-story-content">
                                     <div class="card mb-30">
-                                        @foreach ($visit as $vcomment)
+                                        @foreach ($allStage as $stage)
                                             
                                         
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <div class="timeline-story-header d-flex align-items-center">
                                                 <div class="info ml-3">
-                                                    <h3>Comment</h3>
+                                                    <h3>Details of Work Done</h3>
                                                     <span class="d-block">
-                                                        {!! date("F j, Y", strtotime($project->date_of_visit)) !!} 
-                                                        at {!! date("g:i a", strtotime($project->time_of_visit)) !!} </span>
+                                                        {!! date("F j, Y", strtotime($stage->uploaded_date)) !!} 
+                                                        at {!! date("g:i a", strtotime($stage->uploaded_time)) !!} </span>
                                                 </div>
                                             </div>
 
@@ -79,7 +87,7 @@
                                         </div>
 
                                         <div class="card-body">
-                                            <p class="mb-0">{!! $vcomment->comments !!}</p>
+                                            <p class="mb-0">{!! $stage->amtdetails !!}</p>
 
                                             {{-- <div class="feedback-summary mt-4">
                                                 <a href="#" data-toggle="tooltip" data-placement="top" title="Like"><i class='bx bx-like'></i> 9898</a>
@@ -94,14 +102,14 @@
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <div class="timeline-story-header d-flex align-items-center">   
                                                 <div class="info ml-3">
-                                                    <h3>Photos on Visit</h3>
+                                                    <h3>Photos of Completion</h3>
                                                     <span class="d-block"></span>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="card-body">
-                                            @include('client_portal.onsite_visit.gallery')
+                                            @include('client_portal.stage_of_completion.gallery')
                                             
                                             {{-- <div class="feedback-summary mt-4">
                                                 <a href="#" data-toggle="tooltip" data-placement="top" title="Like"><i class='bx bx-like'></i> 9898</a>
@@ -118,10 +126,10 @@
             </div>
 
             <div class="col-lg-3">
+                @foreach ( $allStage as $key => $item )
                 <div class="card user-events-box mb-30">
-                    @foreach ( $visit as $item )
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h3>{!! $item->title !!}</h3>
+                        <h3>{!! __('Useful Info') !!}</h3>
                     </div>
 
                     <div class="card-body">
@@ -129,8 +137,8 @@
                             <li>
                                 <a href="#">
                                     <i class="bx bx-calendar"></i>
-                                    <span>Date of Visit</span>
-                                    {!! $item->date_of_visit !!}
+                                    <span>Upload Date </span>
+                                    {!! $item->uploaded_date !!}
                                 </a>
                             </li>
                             <li>
@@ -152,10 +160,27 @@
                                     @endswitch
                                 </a>
                             </li>
+                            <li>{!! ucfirst($item->matpurchased) !!}</li>
                         </ul>
                     </div>
-                    @endforeach
+                    {{-- @endforeach --}}
                 </div>
+                <div class="card user-trends-box mb-30">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3>{!! __('Materials Purchased') !!}</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="#">
+                                    <i class="bx bxs-bookmark-star"></i>
+                                    <em>  {!! $item->matpurchased !!}</em>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
     </section>

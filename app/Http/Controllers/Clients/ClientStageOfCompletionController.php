@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ClientStageOfCompletionController extends Controller
 {
@@ -14,11 +16,14 @@ class ClientStageOfCompletionController extends Controller
      */
     public function index()
     {
-        //
+        $stageOfCompletion    =   DB::table('tblstage_image')->where('clientid', Auth::user()->clientid)->paginate(1);
+        $allStage             =   DB::table('vw_project_stage_of_completion')->where('clientid', Auth::user()->clientid)->paginate(1);
+      
+        return view('client_portal.stage_of_completion.profile', compact('stageOfCompletion', 'allStage',));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource.   
      *
      * @return \Illuminate\Http\Response
      */
