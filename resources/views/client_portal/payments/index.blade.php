@@ -74,7 +74,7 @@
                                      <!-- Pagination-Counter-Start -->
                                     <div class="col-md-6">
                                         <nav>
-                                            <ul class="pagination justify-content-start"> Page {!! ( $data["currentPage"] ) !!} of {!! $data["total"] !!} </ul>
+                                            {{-- <ul class="pagination justify-content-start"> Page {!! ( $data["currentPage"] ) !!} of {!! $data["total"] !!} </ul> --}}
                                         </nav>
                                     </div>
                                      <!-- Pagination-Counter-End -->
