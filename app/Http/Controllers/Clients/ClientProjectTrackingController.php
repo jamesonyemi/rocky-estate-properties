@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ClientProjectTrackingController extends Controller
 {
@@ -14,7 +16,11 @@ class ClientProjectTrackingController extends Controller
      */
     public function index()
     {
-        //
+        
+        $tracking    =   DB::table('vw_project_stage_of_completion')->where('clientid', Auth::user()->clientid)->paginate(10);
+        $data        =   ['total' => $tracking->total(), 'perPage' => $tracking->perPage(), 'currentPage' => $tracking->currentPage()];
+      
+        return view('client_portal.tracking.index', compact('tracking', 'data'));
     }
 
     /**
@@ -81,5 +87,11 @@ class ClientProjectTrackingController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function projectTracking()
+    {
+        $tracking    =   DB::table('vw_project_stage_of_completion')->where('clientid', Auth::user()->clientid)->get();
+         return $tracking->toJson();
     }
 }

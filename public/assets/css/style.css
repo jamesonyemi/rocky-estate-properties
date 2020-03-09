@@ -9200,7 +9200,7 @@ Timeline CSS
   content: '';
   width: 4px;
   height: 100%;
-  background-color: #e1000a;
+  background-color: #690a45;
   left: 14px;
   top: 5px;
   border-radius: 4px;
@@ -9209,7 +9209,7 @@ Timeline CSS
 .timeline .timeline-month {
   position: relative;
   padding: 4px 15px 4px 35px;
-  background-color: #e1000a;
+  background-color: #10254c;
   display: inline-block;
   border-radius: 30px;
   margin-bottom: 30px;

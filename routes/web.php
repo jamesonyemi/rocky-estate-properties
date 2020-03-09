@@ -84,6 +84,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('stage-of-completion', 'Clients\ClientStageOfCompletionController');
         Route::resource('payments', 'Clients\ClientPaymentBreakDownController');
         Route::resource('project-tracking', 'Clients\ClientProjectTrackingController');
+        // Route::get('tracking', 'Clients\ClientProjectTrackingController@projectTracking')->name('tracking');
         Route::get('my-projects/single-project/{id}', 'Clients\ClientProjectController@clientWithSingleProject')->name('single-project');
     });
             
