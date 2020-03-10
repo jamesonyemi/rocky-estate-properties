@@ -72,7 +72,15 @@ use Illuminate\Support\Facades\Route;
         });
 
     });
-        
+    
+
+    Route::get('corporateClientlogin', 'Clients\ClientAuthController@index')->name('corporate-login-form');
+    Route::post('corporateClient-post-login', 'Clients\ClientAuthController@postLogin')->name('corporate-post-login'); 
+    Route::get('corporateClient-registration', 'Clients\ClientAuthController@registration')->name('corporate-registration-form');
+    Route::post('corporateClient-post-registration', 'Clients\ClientAuthController@postRegistration')->name('corporate-post-registration'); 
+    Route::get('dashboard', 'Clients\ClientAuthController@dashboard'); 
+    Route::get('corporateClientlogout', 'Clients\ClientAuthController@logout')->name('corporate-client-logout');
+
     Route::group( ['middleware' => 'auth', 'prefix' => 'client-portal'], function () {
         Route::get('/dashboard', function() { 
             return view('client_portal.dashboard.index');

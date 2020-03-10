@@ -1,6 +1,15 @@
 <!-- Start -->
         <div class="card mb-30">
             <h3>Individual Client</h3>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             <hr style="background-color:fuchsia; opacity:0.1">
             <div class="card-body">
                 <form class="mt-5" action="{{route('clients.store') }}"  method="POST">

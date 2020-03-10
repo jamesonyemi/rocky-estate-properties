@@ -1,23 +1,32 @@
 <hr style="background-color:fuchsia; opacity:0.1">
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <form class="mt-5" action="{{route('corporate-client') }}"  method="POST">
     {{ csrf_field() }}
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="c-name">Company Name</label>
-            <input type="text" class="form-control " id="company_name" name="company_name" placeholder="">
+            <input type="text" class="form-control " id="company_name" name="company_name" placeholder="" required>
         </div>
         <div class="form-group col-md-2">
 
         </div>
         <div class="form-group col-md-4">
             <label for="c-mobile">Mobile Number</label>
-            <input type="text" class="form-control " id="mobile" name="mobile" placeholder="">
+            <input type="text" class="form-control " id="mobile" name="mobile" placeholder="" required>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="p-email">Primary Email</label>
-            <input type="email" class="form-control" placeholder="" id="primary_email" name="primary_email">
+            <input type="email" class="form-control" placeholder="" id="primary_email" name="primary_email" required>
             </div>
                 <div class="form-group col-md-2"> </div>    
         <div class="form-group col-md-4">

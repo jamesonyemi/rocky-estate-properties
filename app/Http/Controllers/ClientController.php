@@ -9,8 +9,13 @@ use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Expr\AssignOp\Concat;
 use App\Http\Controllers\PaymentController;
 use App\Mail\ClientRegistrationMail;
+use App\Notifications\Clients\CorporateClientLoginNotification;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Notification as FacadesNotification;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Session;
+use App\Http\Requests\CorporateUserRequest;
 
 class ClientController extends Controller
 {
@@ -93,15 +98,40 @@ class ClientController extends Controller
         return redirect()->route('clients.index')->with('success', 'Client # "'.$createNewClient. $successMessage);
     }
 
-    public function corporateClient(Request $request)
+    public function corporateClient(CorporateUserRequest $request)
     {
-       #code 
-        $postData        = static::allExcept();
-        $corporateClient = DB::table('tblcorporate_client')->insertGetId(array_merge($postData));
+       #code
+       
+        $validator = $request->validated();       /* Will return only validated data */
 
-            if ( $corporateClient ) {
-                # code...
-                return redirect()->route('clients.index')->with('success', 'Corporate Client Created Sucessfully');
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect()->back()->withInput();
+        }
+
+        $postData         = static::allExcept();
+        $corporateClient  = DB::table('tblcorporate_client')->insertGetId(array_merge($postData));
+        $newCorporateUser = DB::table('tblcorporate_client')->where('id', $corporateClient )->select('id','company_name', 'primary_email', 'mobile')->first();
+                                    
+        $secretWord     =   time().random_int(1111, 9999);
+        $secretKey      =   $secretWord;
+        $roleId         =   5; //corporate-client role-id
+        $clientId       =   $newCorporateUser->id;
+        $company_name   =   $newCorporateUser->company_name;
+        $email          =   $newCorporateUser->primary_email;
+        $password       =   password_hash($secretKey, PASSWORD_ARGON2I );
+        $data           =   ['role_id' => $roleId, 'company_name' => $company_name, 'corporate_clientid' => $clientId,  'email' => $email, 'password' => $password ];
+        
+        if ( $corporateClient ) {
+            # code...                      
+            $createCorporateUser =  DB::table('corporate_users')->insertGetId(array_merge($data));
+            
+            if ( $createCorporateUser ) {
+                        FacadesNotification::route('mail', $email)->notify(new CorporateClientLoginNotification($email, $secretKey, $company_name));
+                    }
+                                       
+                return redirect()->route('clients.index')->with('success', 'Corporate Client Created Sucessfully, please contact client Id '.$createCorporateUser.' 
+                                                                (with phone number '.$newCorporateUser->mobile.') to check their Inbox');
             }
     }
 
@@ -111,14 +141,14 @@ class ClientController extends Controller
     //  * @param  array  $data
     //  * @return \Illuminate\Contracts\Validation\Validator
     //  */
-    // protected function validator(array $data)
-    // {
-    //     return Validator::make($data, [
-    //         'name' => 'required|string|max:255',
-    //         'email' => 'required|string|email|max:255|unique:users',
-    //         'password' => 'required|string|min:6|confirmed',
-    //     ]);
-    // }
+        // protected function validator(array $data)
+        // {
+        //     return Validator::make($data, [
+        //         'name' => 'required|string|max:255',
+        //         'email' => 'required|string|email|max:255|unique:users',
+        //         'password' => 'required|string|min:6|confirmed',
+        //     ]);
+        // }
 
     /**
      * Display the specified resource.
@@ -271,4 +301,6 @@ class ClientController extends Controller
         $send = Mail::to( $email )->send( new ClientRegistrationMail($target) );
         return $send;
     }
+
+    
 }
