@@ -39,8 +39,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_othername">Middle Name</label>
-                            <input type="text" class="form-control" name="oname" id="oname"
-                                placeholder="" value="{{ $client->oname }}">
+                            <div class="list-group-item">{{ $client->oname }} </div>
                             </div>
                                 <div class="form-group col-md-2">
     
@@ -83,22 +82,20 @@
                     <div class="form-row">
                     <div class="form-group col-md-4">
                     <label for="validate_country">Nationality</label>
-                    <select id="nationality" name="nationality" class="form-control custom-select" disabled>
                         @foreach ($countryId as $key => $country)
-                        <option value="{{ $key }}" {{ old('nationality', in_array($country,[$country]) ? $client->nationality : 'null') == $key ? 'selected' : '' }}>
-                            {{ ucwords($country) }}</option>
+                            @if ( $client->nationality === $key )
+                            <div class="list-group-item">{{ ucwords($country) }}</div>
+                            @endif
                         @endforeach
-                        </select>
                         </div>
                         <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
                             <label for="validate_gender">Gender</label>
-                            <select id="gender" name="gender" class="form-control custom-select" disabled>  
-                                @foreach ($genId as $key => $gender)
-                                <option value="{{ $key }}" {{ old('gender', in_array($gender,[$gender]) ? $client->gender : 'null') == $key ? 'selected' : '' }}>
-                                       {{ ucwords($gender) }}
-                                @endforeach
-                            </select>
+                            @foreach ($genId as $key => $gender)
+                                @if ( $client->gender === $key )
+                                <div class="list-group-item">{{ ucwords($gender) }}</div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
 

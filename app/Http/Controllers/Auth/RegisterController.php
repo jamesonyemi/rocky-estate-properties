@@ -72,7 +72,7 @@ class RegisterController extends Controller
         $middle_name = $data['oname'];
         $last_name   = $data['lname'];
         $full_name   = $first_name . " " . $middle_name . " " . $last_name;
-        $roleId      = 3;
+        $roleId      = [ 'client' => 3 ];
 
         $user =  User::create([
             'first_name'  => $first_name,
@@ -80,8 +80,8 @@ class RegisterController extends Controller
             'last_name'   => $last_name,
             'full_name'   => $full_name,
             'email'       => $data['email'],
-            'role_id'     => $roleId,
-            'password'    => bcrypt($data['password']),
+            'role_id'     => $roleId['client'],
+            'password'    => password_hash($data['password'], PASSWORD_ARGON2I ),
         ]);
         $verifyUser = VerifyUser::create([
             'user_id' => $user->id,
@@ -119,7 +119,7 @@ class RegisterController extends Controller
       $oname        = $signUpClient->oname;
       $lname        = $signUpClient->lname;
       $email        = $signUpClient->email;
-      $role_id      = 3;
+      $role_id      = [ 'client' => 3 ];
       return view('auth.register_client', compact($signUpClient, $role_id, $fname, $oname, $lname, $email ));
     }
 
