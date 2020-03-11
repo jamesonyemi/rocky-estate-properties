@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Notification as FacadesNotification;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\CorporateUserRequest;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class ClientController extends Controller
 {
@@ -27,12 +28,12 @@ class ClientController extends Controller
     public function index()
     {
         //code 
-        $regions        =  DB::table('tblregion')->pluck('rid', 'region');
-        $corporate      =  DB::table('tblcorporate_client')->get();
-        $clients        =  DB::table("tblclients");
-        $all_clients    =  $clients->get();
-        $clientWithProjects = static::clientWithProjects();
-            // dd($clientWithProjects); 
+        $clientWithProjects =  static::clientWithProjects();
+        $regions            =  DB::table('tblregion')->pluck('rid', 'region');
+        $clients            =  DB::table("tblclients");
+        $all_clients        =  $clients->get();
+        $corporate          =  $clients->where('cc_company_name', '!=', '' )->select("*")->get();
+            
         return view('clients.index', compact('all_clients', 'corporate', 'regions','clientWithProjects'));
     }
 
@@ -100,55 +101,55 @@ class ClientController extends Controller
 
     public function corporateClient(CorporateUserRequest $request)
     {
-       #code
        
-        $validator = $request->validated();       /* Will return only validated data */
+        $flashMessage   =   'Corporate Client Created Sucessfully, please contact client Id #  ';
+        $isValidated = $request->validated();       /* Will return only validated data */
 
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
+        if ( !$isValidated ) {
+            Session::flash('error', $isValidated->messages()->first());
             return redirect()->back()->withInput();
         }
-
-        $postData         = static::allExcept();
-        $corporateClient  = DB::table('tblcorporate_client')->insertGetId(array_merge($postData));
-        $newCorporateUser = DB::table('tblcorporate_client')->where('id', $corporateClient )->select('id','company_name', 'primary_email', 'mobile')->first();
+        
+        $except    =  static::allExcept();
+        $postData  =  static::processCorporateClientData();
+        $corporateClient  = DB::table('tblclients')->insertGetId(array_merge($postData));
+        $newCorporateUser = DB::table('tblclients')->where('clientid', $corporateClient )->select('clientid','cc_company_name', 'email', 'cc_secondary_email', 'cc_mobile')->first();
                                     
         $secretWord     =   time().random_int(1111, 9999);
         $secretKey      =   $secretWord;
-        $roleId         =   5; //corporate-client role-id
-        $clientId       =   $newCorporateUser->id;
-        $company_name   =   $newCorporateUser->company_name;
-        $email          =   $newCorporateUser->primary_email;
+        $roleId         =   [ 'corporate_client' => 5]; //corporate-client role-id
+        $isVerified     =   [ 'verified' => true];      //verification status, set to true
+        $clientId       =   $newCorporateUser->clientid;
+        $company_name   =   $newCorporateUser->cc_company_name;
+        $email          =   $newCorporateUser->email;
+        $cc_sec_email   =   $newCorporateUser->cc_secondary_email;
+        $full_name      =   $company_name;
         $password       =   password_hash($secretKey, PASSWORD_ARGON2I );
-        $data           =   ['role_id' => $roleId, 'company_name' => $company_name, 'corporate_clientid' => $clientId,  'email' => $email, 'password' => $password ];
+
+        $data           =   [
+            'role_id'            => $roleId['corporate_client'], 
+            'clientid'           => $clientId,  
+            'first_name'         => $company_name,
+            'full_name'          => $full_name,
+            'email'              => $email, 
+            'cc_secondary_email' => $cc_sec_email, 
+            'password'           => $password,
+            'verified'           => $isVerified['verified'],
+        ];
+
         
         if ( $corporateClient ) {
             # code...                      
-            $createCorporateUser =  DB::table('corporate_users')->insertGetId(array_merge($data));
+            $createCorporateUser =  DB::table('users')->insertGetId(array_merge($data));
             
             if ( $createCorporateUser ) {
                         FacadesNotification::route('mail', $email)->notify(new CorporateClientLoginNotification($email, $secretKey, $company_name));
                     }
                                        
-                return redirect()->route('clients.index')->with('success', 'Corporate Client Created Sucessfully, please contact client Id '.$createCorporateUser.' 
-                                                                (with phone number '.$newCorporateUser->mobile.') to check their Inbox');
+                return redirect()->route('clients.index')->with('success', $flashMessage.$createCorporateUser.' (with phone number '.$newCorporateUser->cc_mobile.') to check their Inbox');
+                                                                
             }
     }
-
-    // /**
-    //  * Get a validator for an incoming registration request.
-    //  *
-    //  * @param  array  $data
-    //  * @return \Illuminate\Contracts\Validation\Validator
-    //  */
-        // protected function validator(array $data)
-        // {
-        //     return Validator::make($data, [
-        //         'name' => 'required|string|max:255',
-        //         'email' => 'required|string|email|max:255|unique:users',
-        //         'password' => 'required|string|min:6|confirmed',
-        //     ]);
-        // }
 
     /**
      * Display the specified resource.
@@ -175,7 +176,7 @@ class ClientController extends Controller
     public function viewCorporateClient($id)
     {
         $id         = PaymentController::decryptedId($id);
-        $corporate  = DB::table('tblcorporate_client')->where('id', $id)->get();
+        $corporate  = DB::table('tblclients')->where('clientid', $id)->get();
         return view('clients.view_corporate', compact('corporate'));
     }
 
@@ -209,7 +210,7 @@ class ClientController extends Controller
     public function editCorporateClient($id)
     {
         $id         = PaymentController::decryptedId($id);
-        $corporate  = DB::table('tblcorporate_client')->where('id', $id)->get();
+        $corporate  = DB::table('tblclients')->where('clientid', $id)->get();
         return view('clients.edit_corporate', compact('corporate', 'id'));
 
     }
@@ -232,11 +233,11 @@ class ClientController extends Controller
 
      public function updateCorporateClient(Request $request, $id)
     {
-
-        $id         = PaymentController::decryptedId($id);
-        $updateData = static::allExcept();
-        $update_clientInfo = DB::table('tblcorporate_client')->where('id', $id)->update($updateData);
+        
+        $updateData = static::processCorporateClientData();
+        $update_clientInfo = DB::table('tblclients')->where('clientid', $id)->update(array_merge($updateData));
         return redirect()->route('clients.index')->with('success', 'Corporate Client Info Updated');
+
     }
 
 
@@ -259,7 +260,7 @@ class ClientController extends Controller
     {
         $id                  = PaymentController::decryptedId($id);
         $flag_as_deleted     =  ['isdeleted' => "yes"];
-        $update_clientInfo   =  DB::table('tblcorporate_client')->where('id', $id)->update($flag_as_deleted);
+        $update_clientInfo   =  DB::table('tblclients')->where('clientid', $id)->update($flag_as_deleted);
         return redirect('/clients')->with('success', 'Corporate Client Info Deleted');
     }
 
@@ -302,5 +303,26 @@ class ClientController extends Controller
         return $send;
     }
 
-    
+    public static function processData( array $data )
+    {
+        return $data;
+    }
+
+    public static function processCorporateClientData()
+    {
+        # code...
+        $postData  =  static::processData([
+            
+            'cc_secondary_email'    =>  request('secondary_email'),
+            'cc_company_name'       =>  request('company_name'),
+            'cc_mobile'             =>  request('mobile'),
+            'cc_postal_addr'        =>  request('postal_addr'),
+            'cc_fax'                =>  request('fax'),
+            'cc_tel_no'             =>  request('tel_no'),
+            'cc_res_addr'           =>  request('res_addr'),
+            'email'                 =>  request('primary_email'),
+        ]);
+        return $postData;
+    }
+
 }

@@ -4,16 +4,19 @@
      <!-- ============================================================== -->
      <!-- Start right Content here -->
      <!-- ============================================================== -->
-     <div>
-        <hr style="background-color:fuchsia; opacity:0.1"><br>
+     <div><br><br>
+        <hr style="background-color:fuchsia; opacity:0.1">
         <div class="page-content">
             <div class="container-fluid">
                 <!-- start page title -->
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex align-items-center justify-content-between">
-                            <h4 class="mb-0 font-size-18">Individual</h4>
-                            <div class="page-title-right">  </div>
+                            <h4 class="mb-0 font-size-18">All Clients with Projects</h4>
+                            <div class="page-title-right">
+                                {{-- <a href="{{ route('clients.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
+                                    New Client</a>  --}}
+                                </div>
                         </div>
                     </div>
                 </div><br>

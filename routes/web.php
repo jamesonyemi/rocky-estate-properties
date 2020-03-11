@@ -32,9 +32,9 @@ use Illuminate\Support\Facades\Route;
 
         Route::resource('clients', 'ClientController');
         Route::any('/corporate-client', 'ClientController@corporateClient')->name('corporate-client');
-        Route::any('/edit-corporate-client/{id}/edit_corporate', 'ClientController@editCorporateClient')->name('edit-corporate-client');
-        Route::any('/update-corporate-client/{id}', 'ClientController@updateCorporateClient')->name('update-corporate-client');
-        Route::any('/corporate-client/{id}', 'ClientController@viewCorporateClient')->name('view-corporate-client');
+        Route::get('/edit-corporate-client/{id}/edit_corporate', 'ClientController@editCorporateClient')->name('edit-corporate-client');
+        Route::any('/edit-corporate-client/{id}', 'ClientController@updateCorporateClient')->name('update-corporate-client');
+        Route::any('/view-corporate-client/{id}', 'ClientController@viewCorporateClient')->name('view-corporate-client');
         Route::any('/corporate-client/{id}', 'ClientController@destroyCorporateClient')->name('delete-corporate-client');
 
         Route::resource('projects', 'ProjectController');
@@ -74,12 +74,12 @@ use Illuminate\Support\Facades\Route;
     });
     
 
-    Route::get('corporateClientlogin', 'Clients\ClientAuthController@index')->name('corporate-login-form');
-    Route::post('corporateClient-post-login', 'Clients\ClientAuthController@postLogin')->name('corporate-post-login'); 
-    Route::get('corporateClient-registration', 'Clients\ClientAuthController@registration')->name('corporate-registration-form');
-    Route::post('corporateClient-post-registration', 'Clients\ClientAuthController@postRegistration')->name('corporate-post-registration'); 
+    Route::get('corporate-login-form', 'Clients\ClientAuthController@index')->name('corporate-login-form');
+    Route::post('corporate-client-post-login', 'Clients\ClientAuthController@postLogin')->name('corporate-post-login'); 
+    Route::get('corporate-client-registration', 'Clients\ClientAuthController@registration')->name('corporate-registration-form');
+    Route::post('corporate-client-post-registration', 'Clients\ClientAuthController@postRegistration')->name('corporate-post-registration'); 
     Route::get('dashboard', 'Clients\ClientAuthController@dashboard'); 
-    Route::get('corporateClientlogout', 'Clients\ClientAuthController@logout')->name('corporate-client-logout');
+    Route::get('corporate-client-logout', 'Clients\ClientAuthController@logout')->name('corporate-client-logout');
 
     Route::group( ['middleware' => 'auth', 'prefix' => 'client-portal'], function () {
         Route::get('/dashboard', function() { 

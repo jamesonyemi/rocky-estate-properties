@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">Corporate</h4>
+                                <h4 class="mb-0 font-size-18">Corporate Clients</h4>
                                 <div class="page-title-right">
                                 <a href="{{ route('clients.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
                                     New Client</a> 
@@ -42,14 +42,14 @@
                                             @foreach ($corporate as $item) 
                                             <tr>
                                                 <td id="corporate_ids"></td>
-                                                <td style='text-align:left'>  {{ $item->company_name }} </td>
-                                                <td style='text-align:left'>{{ $item->primary_email }}</td>
-                                                <td>{{ $item->mobile }}</td>
-                                                <td>{{ $item->postal_addr }}</td>
-                                                <td>{{ $item->res_addr }}</td>
+                                                <td style='text-align:left'>  {{ $item->cc_company_name }} </td>
+                                                <td style='text-align:left'>{{ $item->email }}</td>
+                                                <td>{{ $item->cc_mobile }}</td>
+                                                <td>{{ $item->cc_postal_addr }}</td>
+                                                <td>{{ $item->cc_res_addr }}</td>
                                                 <td>
-                                                    <?php $encryptId = Crypt::encrypt($item->id) ?>
-                                                    <a href=" {{ route('corporate-client',$encryptId)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <?php $encryptId = Crypt::encrypt($item->clientid) ?>
+                                                    <a href=" {{ route('view-corporate-client',$encryptId)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
                                                     <a href="{{ route('edit-corporate-client',$encryptId) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">

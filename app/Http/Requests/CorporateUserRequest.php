@@ -25,8 +25,12 @@ class CorporateUserRequest extends FormRequest
     {
         return [
             'company_name' => 'required|string|max:255',
-            'primary_email' => 'required|string|email|max:255|unique:corporate_users',
-            'password' => 'required|string|min:8',
+            'primary_email' => 'required|string|email|max:255',
+            'mobile' => 'required|string|max:255',
+            'postal_addr' => 'required|string|max:255',
+            'res_addr' => 'required|string|max:255',
+            // 'cc_secondary_email' => 'required|string|email|max:255',
+            // 'password' => 'required|string|min:8 |alpha_num',
         ];
     }
 
@@ -38,9 +42,13 @@ class CorporateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'Email is required!',
-            'company_name.required' => 'Company Name is required!',
-            'password.required' => 'Password is required!'
+            'primary_email.required' => 'Email is required!',
+            'mobile.required' => 'Mobile number is required!',
+            'company_name.required' => 'Company Name is required and must be a string!',
+            'postal_addr.required' => 'Postal Address is required and must be a string!',
+            'res_addr.required' => 'Residential Address is required and must be a string!',
+            
+            // 'password.required' => 'Password must be at least 8 character long and alpha-numeric  required!'
         ];
     }
 }

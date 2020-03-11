@@ -47,14 +47,18 @@ class CorporateClientLoginNotification extends Notification implements ShouldQue
      */
     public function toMail($notifiable)
     {
-        $url    = url('corporateClientlogin');
+        $url    = url('corporate-login-form');
+        $recipient_name = $this->company_name;
+        $recipient_email = $this->email;
+        $recipient_secretKey = $this->secretKey;
         
-        return (new MailMessage)->greeting('Hello  '. $this->company_name)
+        return (new MailMessage)->greeting('Hello  '. $recipient_name)
                 ->subject('Corporate Client Login')
-                ->line('Your Email Address:  ' . $this->email)
-                ->line('Your Password:  ' . $this->secretKey)
-                ->action('Client Login', $url)
-                ->line('Thank you for using  '.config('app.name').' !');
+                ->line('Your Email Address:  ' . $recipient_email)
+                ->line('Your Password:  ' . $recipient_secretKey)
+                ->view('mail-template.corporate-client', compact('recipient_email', 'recipient_secretKey', 'recipient_name', 'url'));
+                // ->action('Client Login', $url)
+                // ->line('Thank you for using  '.config('app.name').' !');
     }
 
     /**

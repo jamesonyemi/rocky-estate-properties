@@ -26,7 +26,7 @@
                         </div>
                         @endif
 
-                    <form method="POST" action="{{ route('corporate-post-login') }}">
+                    <form method="POST" action="{{ route('login') }}">
                         {{csrf_field()}}
                         <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                             <input type="text" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
@@ -50,6 +50,16 @@
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
+                        </div>
+                        <div class="form-group">
+                            <div class="remember-forgot">
+                                {{-- <label class="checkbox-box">Remember me
+                                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <span class="checkmark"></span>
+                                </label> --}}
+                                <a href="{{ route('password.request') }}" 
+                                class="forgot-password">Forgot password?</a>
+                            </div>
                         </div>
                         <button type="submit" class="login-btn">Login</button>
 

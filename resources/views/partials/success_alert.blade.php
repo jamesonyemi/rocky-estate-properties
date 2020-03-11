@@ -9,7 +9,7 @@
 
 <script>
 ( (jQuery) => {
-  let cancelAlert = document.querySelector('button[type="button"]');
+  let cancelAlert = document.querySelector('.close');
   cancelAlert.addEventListener('click', () => {
     $(this).parent('#success-mgs').remove();
     window.location.reload();
