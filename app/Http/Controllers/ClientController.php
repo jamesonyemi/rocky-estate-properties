@@ -160,17 +160,17 @@ class ClientController extends Controller
     public function show($id)
     {
         //code
-        $id         = PaymentController::decryptedId($id);
-        $clients    = DB::table('tblclients')->get();
-        $genders    = DB::table('tblgender')->get();
-        $countries  = DB::table('tblcountry')->get();
+        $id             = PaymentController::decryptedId($id);
+        $clients        = DB::table('tblclients')->get();
+        $genders        = DB::table('tblgender')->get();
+        $countries      = DB::table('tblcountry')->get();
         
-        $genId      = DB::table('tblgender')->get()->pluck('type', 'id');
-        $countryId  = DB::table('tblcountry')->get()->pluck('country_name', 'id');
-        $clientId   = DB::table('tblclients')->where('clientid', $id)->get();
-        $format_date = static::textualDate();
+        $genId          = DB::table('tblgender')->get()->pluck('type', 'id');
+        $countryId      = DB::table('tblcountry')->get()->pluck('country_name', 'id');
+        $clientId       = DB::table('tblclients')->where('clientid', $id)->get();
+        $format_date    = static::textualDate();
 
-        return view('clients.show', compact('clientId', 'clients', 'genders', 'genId', 'countries', 'countryId', 'formate_date' ));
+        return view('clients.show', compact('clientId', 'clients', 'genders', 'genId', 'countries', 'countryId', 'format_date' ));
     }
 
     public function viewCorporateClient($id)
@@ -225,7 +225,7 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
        
-        $id         = PaymentController::decryptedId($id);
+        // $id         = PaymentController::decryptedId($id);
         $updateData = static::allExcept();
         $update_clientInfo = DB::table('tblclients')->where('clientid', $id)->update($updateData);
         return redirect()->route('clients.index')->with('success', 'Client Info Updated');
