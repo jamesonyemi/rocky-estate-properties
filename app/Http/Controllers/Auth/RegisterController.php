@@ -123,4 +123,16 @@ class RegisterController extends Controller
       return view('auth.register_client', compact($signUpClient, $role_id, $fname, $oname, $lname, $email ));
     }
 
+    public function signInVerifiedIndividualClient($clientid)
+    {
+      #code...
+      $signInClient = DB::table('tblclients')->where('clientid', $clientid)->first();
+      $fname        = $signInClient->fname;
+      $oname        = $signInClient->oname;
+      $lname        = $signInClient->lname;
+      $email        = $signInClient->email;
+      $role_id      = [ 'client' => 3 ];
+      return view('auth.client_login', compact($signInClient, $role_id, $fname, $oname, $lname, $email ));
+    }
+
 }

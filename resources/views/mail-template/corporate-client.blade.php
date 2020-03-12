@@ -130,11 +130,14 @@
                     <tbody>
                       <tr>
                         <td align="center" valign="middle" width="100%" style="background: linear-gradient(to right, #ff7a59 0%, #ff8f59 100%); width: 100%; padding: 20px; min-width:100%; color: #ffffff">
-                            <p><h4 style="max-width: 150px">{!! config('app.name') !!}</h4></p>
-                            {{-- <img src="{!! asset('assets/img/small-logo.png') !!}" alt="{!! config('app.name') !!}-company logo" width="120" height="35" style="width: 120px; height: 35px; vertical-align: middle; clear: both; width: auto; max-width: 100%;"> --}}
-                          <span
-                            style="-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; color: transparent; background: none; user-select: none; -moz-user-select: none; -ms-user-select:none; -webkit-user-select:none; text-overflow: ellipsis; opacity: 0; width:100%; min-width: 100%; height:1; overlfow:hidden; margin: -1px 0 0 0; padding:0; font-size: 0;">
-                          &nbsp;</span>
+      
+                              @if ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+                                <img src="{!!  asset('assets/img/small-logo.png') !!}" alt="{!! config('app.name') !!}-logo" width="120" height="35" style="width: 120px; height: 35px; vertical-align: middle; clear: both; width: auto; max-width: 100%;">
+                                @else
+                                <p><h4 style="max-width: 150px">{!! config('app.name') !!}</h4></p>
+                              @endif
+
+                          <span style="-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; color: transparent; background: none; user-select: none; -moz-user-select: none; -ms-user-select:none; -webkit-user-select:none; text-overflow: ellipsis; opacity: 0; width:100%; min-width: 100%; height:1; overlfow:hidden; margin: -1px 0 0 0; padding:0; font-size: 0;">&nbsp;</span>
                         </td>
                       </tr>
                     </tbody>

@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('/logout', function () { return redirect('/'); });
     Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
     Route::get('/client/sign-up/{clientid}', 'Auth\RegisterController@sigUpClient');
+    Route::get('/client/sign-in/{clientid}', 'Auth\RegisterController@signInVerifiedIndividualClient');
 
     Route::group( ['middleware' => 'auth', 'prefix' => 'admin-portal'],  function() {
 
