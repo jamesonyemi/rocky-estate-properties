@@ -37,12 +37,14 @@
                     <span class="menu-title">Projects</span>
                 </a>
             </li>
+            @if ( Auth::user()->role_id === 1 || Auth::user()->role_id === 2 )
             <li class="nav-item ">
                 <a href="{{ url('/admin-portal/project-docs') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-briefcase-alt-2'></i></span>
                     <span class="menu-title">Documents</span>
                 </a>
             </li>
+            @endif
             <li class="nav-item ">
                 <a href="{{ url('/admin-portal/onsite-visit') }}" class="nav-link">
                     <span class="icon"><i class=' bx bx-building-house'></i></span>
@@ -69,12 +71,14 @@
                     <span class="menu-title">Users</span>
                 </a>
             </li>
+            @if ( Auth::user()->role_id === 1 || Auth::user()->role_id === 2 )
             <li class="nav-item ">
                 <a href="{{ url('/admin-portal/payments') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-dollar'></i></span>
                     <span class="menu-title">Payments</span>
                 </a>
             </li>
+            @endif
              <li class="nav-item">
                 <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-lock-open'></i></span>

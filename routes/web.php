@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Route;
         Route::any('/corporate-client/{id}', 'ClientController@destroyCorporateClient')->name('delete-corporate-client');
 
         Route::resource('projects', 'ProjectController');
-        Route::resource('project-docs', 'ProjectDocumentController');
+        Route::resource('project-docs', 'ProjectDocumentController')->middleware('checkUserRole');
         Route::resource('onsite-visit', 'OnsiteVisitController');
         Route::resource('reports', 'ReportController');
         Route::resource('stage-of-completion', 'StageOfCompletionController');
