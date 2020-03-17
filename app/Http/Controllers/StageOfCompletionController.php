@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Input;
 
 class StageOfCompletionController extends Controller
 {
+    
+    private static $relativeImagePath   =   '/stage_of_completion_img/';
     /**
      * Display a listing of the resource.
      *
@@ -131,7 +133,7 @@ class StageOfCompletionController extends Controller
         //code 
         if ($request->hasFile('img_name')) {
 
-            $destinationPath = public_path() . '/stage_of_completion_img/';
+            $destinationPath = public_path() . static::$relativeImagePath;
             $files  = $request->file('img_name');   // will get all files
 
             //this statement will loop through all files.
@@ -143,6 +145,7 @@ class StageOfCompletionController extends Controller
                 $alternative_name[] =  date("Y-m-d h_i_s") . "_" . pathinfo($file_name, PATHINFO_FILENAME);    //Get file original name, without extension
                 $fileNamesInArray[] =  $file_name;
                 $base64img_encode[] =  $b64imageEncoded;
+                $imagePath[]        =  static::$relativeImagePath.$files;
      
             }
         }
@@ -181,6 +184,7 @@ class StageOfCompletionController extends Controller
                         'phase_id'      =>  $phase_Id,
                         'alt_name'      =>  json_encode($alternative_name),
                         'img_name'      =>  json_encode($fileNamesInArray),
+                        'img_path'      =>  json_encode($imagePath),
                         'uploaded_date' =>  date("Y-m-d"),
                         'uploaded_time' =>  date("h:i:s"),
                     ]
@@ -384,14 +388,8 @@ class StageOfCompletionController extends Controller
         
         dd($updateStage); //WORKING AS PLANNED
 
-        $users = DB::table('tblstage_image')->where('pid', $id)->get();
-        // if (Input::hasFile('img_name')) {
-
-        //     $file = Input::file('img_name');
-        //     $name = time() . '-' . $file->getClientOriginalName();
-        //     $file = $file->move(('/stage_of_completion_img/'), $name);
-        //     $users->img_name = $name;
-        // }
+        $stageImage = DB::table('tblstage_image')->where('pid', $id)->get();
+        
 
         if ($request->hasFile('img_name')) {
 
@@ -411,11 +409,11 @@ class StageOfCompletionController extends Controller
         }
 
 // WORK TO DO UPDATE LIST OF IMAGES ON UPDATE
-        $users->save();
+        $stageImage->save();
 //  UPDATE LIST OF IMAGES ON UPDATE
 
         if (Input::hasFile('img_name')) {
-            $usersImage = public_path("/stage_of_completion_img/{$users->img_name}"); // get previous image from folder
+            $usersImage = public_path("/stage_of_completion_img/{$stageImage->img_name}"); // get previous image from folder
             if (Storage::exists($usersImage)) { // unlink or remove previous image from folder
                 unlink($usersImage);
             }
@@ -436,12 +434,7 @@ class StageOfCompletionController extends Controller
      */
     public function destroy($id)
     {
-        
-        //code
-        // $flag_as_deleted     =  ['isdeleted' => 0 ];
-        // $update_clientInfo   =  DB::table('tblproject')->where('pid', $id)->update($flag_as_deleted);
         return redirect('stage-of-completion')->with('success', 'Data will Soon Self Delete ');   
-        
     }
 
   

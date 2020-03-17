@@ -73,7 +73,7 @@
                   <span class="icon"><i class='bx bx-log-out'></i> </span>
                   <span class="menu-title">Logout</span>
               </a>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              <form id="logout-form" action="{{ route('corporate-client-logout') }}" method="GET" style="display: none;">
                           {{ csrf_field() }}
               </form>
           </li>

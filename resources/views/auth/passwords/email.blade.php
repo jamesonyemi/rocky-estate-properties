@@ -34,7 +34,7 @@
                                             <i class='bx bx-envelope'></i>
                                         </span>
                                     </div>
-                                    <button type="submit" class="forgot-password-btn">Send Password</button>
+                                    <button type="submit" class="forgot-password-btn">Send Password Reset Link</button>
                                 </form>
                             </div>
                         </div>

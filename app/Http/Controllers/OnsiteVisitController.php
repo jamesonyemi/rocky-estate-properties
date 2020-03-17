@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Input;
 
 class OnsiteVisitController extends Controller
 {
+    
+    private static $relativePath    = '/project-documents/';
     /**
      * Display a listing of the resource.
      *
@@ -63,19 +65,23 @@ class OnsiteVisitController extends Controller
     public function store(Request $request)
     {
         //code 
-        if ($request->hasFile('img_name')) {
+        $img_name   =   $request->hasFile('img_name');
+        static::validateImageMimeType($img_name);
 
-            $destinationPath = public_path() . '/project_img/';
-            $files  = $request->file('img_name');   // will get all files
+        if ( $img_name ) {
+
+            $destinationPath    =   public_path() . static::$relativePath;
+            $files              =   $request->file('img_name');   // will get all files
+            $ImagePathInArray   =   static::$relativePath.$files;
 
             //this statement will loop through all files.
             foreach ($files as $file) {
 
-                $file_name       = date("Y-m-d h_i_s")."_".$file->getClientOriginalName();    
-                $b64imageEncoded = base64_encode($file_name);
-                $full_path       = $file->move($destinationPath, $file_name);    //move files to destination folder
-                $fileNamesInArray[]  = $file_name;
-                $base64img_encode[]  = $b64imageEncoded;
+                $file_name           =  date("Y-m-d h_i_s")."_".$file->getClientOriginalName();    
+                $b64imageEncoded     =  base64_encode($file_name);
+                $full_path           =  $file->move($destinationPath, $file_name);    //move files to destination folder
+                $fileNamesInArray[]  =  $file_name;
+                $base64img_encode[]  =  $b64imageEncoded;
               
             }
         }
@@ -91,17 +97,18 @@ class OnsiteVisitController extends Controller
                      ]));
 
                 $lastInsertedRowOnVisit =  DB::table('tblvisit')->latest('vid')->first();
-                $Id       = $lastInsertedRowOnVisit->vid;
-                $vId      = $lastInsertedRowOnVisit->vid;
-                $statusId = $lastInsertedRowOnVisit->status;
+                $Id                     =  $lastInsertedRowOnVisit->vid;
+                $vId                    =  $lastInsertedRowOnVisit->vid;
+                $statusId               =  $lastInsertedRowOnVisit->status;
                 
-                $generateVnumber = ['vnumber' => static::generateUniqueCode($vId)];
-                $updateVnumber   = DB::table('tblvisit')->where('vid', $Id )->update($generateVnumber); 
+                $generateVnumber        =  ['vnumber' => static::generateUniqueCode($vId)];
+                $updateVnumber          =  DB::table('tblvisit')->where('vid', $Id )->update($generateVnumber); 
                 
-                $projectImgSaveOnvisit = DB::table('tblprojectimage')->insertGetId(array_merge(
+                $projectImgSaveOnvisit  =  DB::table('tblprojectimage')->insertGetId(array_merge(
                     request()->except(['_token', '_method','vdate', 'comments','status',]),
                     [
                         'img_name'         => json_encode($fileNamesInArray),
+                        'img_path'         => json_encode($ImagePathInArray),
                         'base64img_encode' => json_encode($base64img_encode), 
                         'vid'              => $save_visit,
                         'status_id'        => $statusId,
@@ -182,5 +189,15 @@ class OnsiteVisitController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected static function validateImageMimeType( String $img)
+    {
+        # code...
+        $mimeType       =   'png,jpg,jpeg,webp,gif';
+        $maxSize        =   '50000';
+        $isValidated    =    $this->validate(Request(), [ $img => 'required|file|'.$mimeType.'|'.'max:'.$maxSize ]);
+
+        return $isValidated;
     }
 }

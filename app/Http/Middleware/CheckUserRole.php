@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class CheckUserRole
 {
+
     /**
      * Handle an incoming request.
      *
@@ -23,7 +24,7 @@ class CheckUserRole
         $isSuperOrAdmin  =  ( $getRole->type === 'super-admin' || $getRole->type === 'admin' );
         $isRole          =  ( $getRole->id === 1 || $getRole->id ===  2 );
         
-        if ( ( $isSuperOrAdmin ) && ( $isRole ) ) {
+        if ( !( $isSuperOrAdmin ) && !( $isRole ) ) {
             abort(403);
         }
         

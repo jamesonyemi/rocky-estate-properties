@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Contracts\Session\Session;
 // use App\User;
 use App\ClientModels\CorporateUser;
+use Illuminate\Support\Facades\Session;
 use Validator,Response;
 
 
@@ -76,6 +76,6 @@ class ClientAuthController extends Controller
     public function logout() {
         Session::flush();
         Auth::logout();
-        return Redirect('login');
+        return Redirect('corporate-login-form');
     }
 }
