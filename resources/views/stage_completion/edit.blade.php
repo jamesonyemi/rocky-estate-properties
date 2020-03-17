@@ -67,17 +67,22 @@
                                       {{-- @endif --}}
                               
                                       {{-- @if ( count($r->img_name) > 0 ) --}}
-                                          @foreach ( json_decode($r->img_name) as $img)
+                                      @php
+                                          $couter = 1;
+
+                                      @endphp
+                                          @foreach ( json_decode($r->img_name)  as $key => $img)
                                           <div class="col-lg-4 col-sm-6 col-md-6">
                                               <div class="single-gallery-image mb-30">
                                                   <div class="col-md-6" >
-                                                    <a href="{{ route('remove-unlink-image', $r->id, $img) }}" class="btn btn-primary active btn-sm" 
-                                                     role="button" onclick="event.preventDefault(); document.getElementById('delete_image').submit();">
+                                                    <a href="{{ route('remove-unlink-image', [$r->id, $img]) }}" class="btn btn-primary active btn-sm" 
+                                                     role="button" onclick="event.preventDefault(); document.getElementById('delete_image{!!++$key!!}').submit();">
                                                         <i class='bx bx-x'></i>
+                                                        <form id="{{'delete_image'. $key++ }}" action="{{ route('remove-unlink-image', [$r->id,$img]) }}" method="POST" style="display: none;">
+                                                            {{ csrf_field() }}
+                                                            @method('PATCH')
+                                                        </form>
                                                     </a>
-                                                    <form id="delete_image" action="{{ route('remove-unlink-image', $r->id,$img) }}" method="POST" style="display: none;">
-                                                                {{ csrf_field() }}
-                                                    </form>
                                                 </div>
                                                   <img class="img-thumbnail rounded" src="{{ asset('/stage_of_completion_img/'.$img) }}" alt="Gallery Image" data-original="{{ asset('/stage_of_completion_img/'.$img) }}">
                                               </div>
