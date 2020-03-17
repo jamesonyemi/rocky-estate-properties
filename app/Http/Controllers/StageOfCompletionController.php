@@ -189,7 +189,7 @@ class StageOfCompletionController extends Controller
                         'uploaded_time' =>  date("h:i:s"),
                     ]
                 ));
-                print_r($save_StageCompletion);
+                // print_r($save_StageCompletion);
               
                 return redirect()->route('projects.index')->with('success', 'Stage  of Completion  # ' . " \n " . $save_StageCompletion . ' Created Sucessfully');
 
@@ -208,7 +208,8 @@ class StageOfCompletionController extends Controller
      */
     public function show(Request $request, $id)
     {
-        //code  
+        //code
+        $id        = PaymentController::decryptedId($id);  
         $genders   = DB::table('tblgender')->pluck('id', 'type');
         $regions   = DB::table('tblregion')->pluck('region', 'rid');
         $regionId  = DB::table('tblregion')->get()->pluck('rid', 'region');
@@ -310,7 +311,7 @@ class StageOfCompletionController extends Controller
     public function edit(Request $request, $id)
     {
         //code  
-     
+        $id        = PaymentController::decryptedId($id);
         $genders   = DB::table('tblgender')->pluck('id', 'type');
         $regions   = DB::table('tblregion')->pluck('region', 'rid');
         $regionId  = DB::table('tblregion')->get()->pluck('rid', 'region');
@@ -340,7 +341,7 @@ class StageOfCompletionController extends Controller
 
 
         $townId   = DB::table('tbltown')->get()->pluck('id', 'town');
-        $stage1  = DB::table('tblstage_image')->get()->pluck('id', 'id');
+        $stage1   = DB::table('tblstage_image')->get()->pluck('id', 'id');
         $project_status  = DB::table('tblstatus')->get()->pluck('id', 'status');
         $project_phase   = DB::table('tblproject_phase')->get()->pluck('id', 'phase');
         $project_visited = DB::table('tblproject')->get()->where('clientid', $id)->pluck('pid', 'title')->sort();
@@ -371,12 +372,14 @@ class StageOfCompletionController extends Controller
     public function update(Request $request, $id)
     {
         //code
+        $getPid    = DB::table('tblstage_image')->where('id', $id)->select('pid')->first();
+      
         $stagImage = DB::table('tblstage_image')->where('id', $id)->get()->pluck('stage_id', 'stage_id');
          foreach ( $stagImage as $key => $value ) {
             $stagId = $value;
             $id     = $stagId;
          }
-
+       
         $excepts = request()->except(['_token', '_method', 'clientid', 'pid', 'alt_name', 'img_name']);
         $updateStage     =  [
             'amtspent'     =>  $request->input('amtspent'),
@@ -386,41 +389,49 @@ class StageOfCompletionController extends Controller
         $updateStage   =  DB::table('tblstage')->where('id', $id)
         ->update( array_merge( $excepts, $updateStage) );
         
-        dd($updateStage); //WORKING AS PLANNED
+        //dd($updateStage); //WORKED AS PLANNED
 
-        $stageImage = DB::table('tblstage_image')->where('pid', $id)->get();
+       
         
-
+        
         if ($request->hasFile('img_name')) {
-
-            $destinationPath = public_path() . '/stage_of_completion_img/';
+            
+            $destinationPath = public_path() . static::$relativeImagePath;;
             $files  = $request->file('img_name');   // will get all files
-
+            
             //this statement will loop through all files.
             foreach ($files as $file) {
-
-                $file_name          =  date("Y-m-d h_i_s") . "_" . $file->getClientOriginalName();
-                $b64imageEncoded    =  base64_encode($file_name);
-                $full_path          =  $file->move($destinationPath, $file_name);    //move files to destination folder
-                $alternative_name[] =  date("Y-m-d h_i_s") . "_" . pathinfo($file_name, PATHINFO_FILENAME);    //Get file original name, without extension
-                $fileNamesInArray[] =  $file_name;
-                $base64img_encode[] =  $b64imageEncoded;
+                
+                $file_name           =  date("Y-m-d h_i_s") . "_" . $file->getClientOriginalName();
+                $b64imageEncoded     =  base64_encode($file_name);
+                $full_path           =  $file->move($destinationPath, $file_name);    //move files to destination folder
+                $alternative_name[]  =  date("Y-m-d h_i_s") . "_" . pathinfo($file_name, PATHINFO_FILENAME);    //Get file original name, without extension
+                $fileNamesInArray[]  =  $file_name;
+                $base64img_encode[]  =  $b64imageEncoded;
+                $imagePath[]         =  static::$relativeImagePath.$files;
             }
         }
+        // $stageImage = DB::table('tblstage_image')->where('pid', $id)->first()->toArray();
+        $excepts    = request()->except(['_token', '_method', 'amtspent', 'status_id', 'matpurchased', 'amtdetails','stage_code']);
+        $data       = [ 'alt_name' => json_encode($alternative_name), 'img_name' => json_encode($fileNamesInArray),'img_path' => json_encode($imagePath) ]; 
+                          
+        $updateData = DB::table('tblstage_image')->where('pid', $getPid)->update( array_merge($excepts, $data) );
+           
+        // $re = $stageImage->save();    
+        dd($updateData);
 
 // WORK TO DO UPDATE LIST OF IMAGES ON UPDATE
-        $stageImage->save();
 //  UPDATE LIST OF IMAGES ON UPDATE
 
-        if (Input::hasFile('img_name')) {
-            $usersImage = public_path("/stage_of_completion_img/{$stageImage->img_name}"); // get previous image from folder
-            if (Storage::exists($usersImage)) { // unlink or remove previous image from folder
-                unlink($usersImage);
-            }
-        }
-        $updateData = ClientController::allExcept();
-        $update_project = DB::table('tblproject')->where('pid', $id)->update($updateData);
-        return redirect()->route('projects.index')->with('success', 'Project # '.$id.' Updated');
+        // if (Input::hasFile('img_name')) {
+        //     $usersImage = public_path("/stage_of_completion_img/{$stageImage->img_name}"); // get previous image from folder
+        //     if (Storage::exists($usersImage)) { // unlink or remove previous image from folder
+        //         unlink($usersImage);
+        //     }
+        // }
+        // $updateData = ClientController::allExcept();
+        // $update_project = DB::table('tblproject')->where('pid', $id)->update($updateData);
+        return redirect()->route('projects.index')->with('success', 'Project # '.$getPid.' Updated');
 
 
 
@@ -434,6 +445,24 @@ class StageOfCompletionController extends Controller
      */
     public function destroy($id)
     {
+        // $id             =   PaymentController::decryptedId($id);
+        // $deleteImage    =   DB::table('tblstage_image')->where('id', $id)->first();
+        // Storage::delete($deleteImage->img_path);
+        // $deleteImage->delete();
+        return redirect('stage-of-completion')->with('success', 'Data will Soon Self Delete ');   
+    }
+
+    public function deleteImage($id, $img)
+    {
+        $stageId        =   $id;
+        $getImage       =   $img;
+        dd($getImage);
+        $deleteImage    =   DB::table('tblstage_image')->where('id', $stageId)->select('img_name')->first();
+        dd(($deleteImage));
+        $deleteImage    =   DB::table('tblstage_image')->select('img_name')->get()->toArray();
+        
+        Storage::delete($deleteImage->img_name);
+        $deleteImage->delete();
         return redirect('stage-of-completion')->with('success', 'Data will Soon Self Delete ');   
     }
 

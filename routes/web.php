@@ -43,6 +43,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('onsite-visit', 'OnsiteVisitController');
         Route::resource('reports', 'ReportController');
         Route::resource('stage-of-completion', 'StageOfCompletionController');
+        Route::any('/remove-unlink-image/{id}/{img_name}','StageOfCompletionController@deleteImage')->name('remove-unlink-image');
         Route::resource('verified-users', 'VerifiedUserController');
         Route::any('/import-users', 'VerifiedUserController@import')->name('import-users');
         Route::any('/export-users', 'VerifiedUserController@export')->name('export-users');

@@ -75,17 +75,18 @@
                                                 <td>{!! $item->status !!}</td>
                                                 {{-- <td><span class="badge badge-primary">Received</span></td>  --}}
                                                 <td>
-                                                    <a href=" {!! route('stage-of-completion.show', $item->id)!!}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <?php $encryptId = Crypt::encrypt($item->id) ?>
+                                                    <a href=" {!! route('stage-of-completion.show',$encryptId)!!}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{!! route('stage-of-completion.edit', $item->id) !!}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                    <a href="{!! route('stage-of-completion.edit',$encryptId) !!}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                                             <i class="bx bx-edit"></i>
                                                         </a>
                                                     <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
                                                         onclick="event.preventDefault();
                                                                  document.getElementById('delete_client').submit();">
                                                    
-                                                    <form id="delete_client" action="{!! route('stage-of-completion.destroy', $item->id) !!}" method="post" >
+                                                    <form id="delete_client" action="{!! route('stage-of-completion.destroy',$encryptId) !!}" method="post" >
                                                         {{ csrf_field() }}
                                                         <input name="_method" type="hidden" value="DELETE">
                                                         <i class="bx bx-trash"></i>
