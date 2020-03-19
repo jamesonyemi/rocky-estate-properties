@@ -145,7 +145,7 @@ class StageOfCompletionController extends Controller
                 $alternative_name[] =  date("Y-m-d h_i_s") . "_" . pathinfo($file_name, PATHINFO_FILENAME);    //Get file original name, without extension
                 $fileNamesInArray[] =  $file_name;
                 $base64img_encode[] =  $b64imageEncoded;
-                $imagePath[]        =  static::$relativeImagePath.$files;
+                $imagePath[]        =  static::$relativeImagePath.$file_name;
      
             }
         }
@@ -310,18 +310,15 @@ class StageOfCompletionController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        //code  
-        $id        = PaymentController::decryptedId($id);
-        $genders   = DB::table('tblgender')->pluck('id', 'type');
-        $regions   = DB::table('tblregion')->pluck('region', 'rid');
-        $regionId  = DB::table('tblregion')->get()->pluck('rid', 'region');
-        $clients   = DB::table('tblclients')->get();
-        // $stageOfCompletionImg = DB::table('tblstage_image')->get();
-
-        // $full_name = ClientController::clientFullName();
-
-        $track_stage       = static::trackPhaseOfCompletion();
-        $stageOfCompletion = DB::table('tblstage_image')->where('id', $id)->get();
+        #code...  
+        $id                 =   PaymentController::decryptedId($id);
+        $genders            =   DB::table('tblgender')->pluck('id', 'type');
+        $regions            =   DB::table('tblregion')->pluck('region', 'rid');
+        $regionId           =   DB::table('tblregion')->get()->pluck('rid', 'region');
+        $clients            =   DB::table('tblclients')->get();
+        $gallery            =   static::imageGallery($id);
+        $track_stage        =   static::trackPhaseOfCompletion();
+        $stageOfCompletion  =   DB::table('tblstage_image')->where('id', $id)->get();
 
             foreach ($track_stage as $key2 => $value2) 
             {
@@ -358,7 +355,8 @@ class StageOfCompletionController extends Controller
             'project_phase',
             'stage1',
             'r',
-            'stageOfCompletion'
+            'stageOfCompletion',
+            'gallery',
         ));
     }
 
@@ -373,8 +371,8 @@ class StageOfCompletionController extends Controller
     {
         //code
         $getPid    = DB::table('tblstage_image')->where('id', $id)->select('pid')->first();
-      
         $stagImage = DB::table('tblstage_image')->where('id', $id)->get()->pluck('stage_id', 'stage_id');
+
          foreach ( $stagImage as $key => $value ) {
             $stagId = $value;
             $id     = $stagId;
@@ -391,12 +389,9 @@ class StageOfCompletionController extends Controller
         
         //dd($updateStage); //WORKED AS PLANNED
 
-       
-        
-        
         if ($request->hasFile('img_name')) {
             
-            $destinationPath = public_path() . static::$relativeImagePath;;
+            $destinationPath = public_path() . static::$relativeImagePath;
             $files  = $request->file('img_name');   // will get all files
             
             //this statement will loop through all files.
@@ -408,14 +403,16 @@ class StageOfCompletionController extends Controller
                 $alternative_name[]  =  date("Y-m-d h_i_s") . "_" . pathinfo($file_name, PATHINFO_FILENAME);    //Get file original name, without extension
                 $fileNamesInArray[]  =  $file_name;
                 $base64img_encode[]  =  $b64imageEncoded;
-                $imagePath[]         =  static::$relativeImagePath.$files;
+                $imagePath[]         =  static::$relativeImagePath.$file_name;
             }
         }
         // $stageImage = DB::table('tblstage_image')->where('pid', $id)->first()->toArray();
         $excepts    = request()->except(['_token', '_method', 'amtspent', 'status_id', 'matpurchased', 'amtdetails','stage_code']);
-        $data       = [ 'alt_name' => json_encode($alternative_name), 'img_name' => json_encode($fileNamesInArray),'img_path' => json_encode($imagePath) ]; 
+        $data       = [ 'alt_name' => json_encode($alternative_name), 'img_name' => json_encode($fileNamesInArray),'img_path' => json_encode($imagePath) ];
+        $r          = ['img_name' => json_encode($fileNamesInArray)]; 
+        // ddd($r);
                           
-        $updateData = DB::table('tblstage_image')->where('pid', $getPid)->update( array_merge($excepts, $data) );
+        $updateData = DB::table('tblstage_image')->where('pid', $getPid)->update( array_merge(($r)) );
            
         // $re = $stageImage->save();    
         dd($updateData);
@@ -431,7 +428,7 @@ class StageOfCompletionController extends Controller
         // }
         // $updateData = ClientController::allExcept();
         // $update_project = DB::table('tblproject')->where('pid', $id)->update($updateData);
-        return redirect()->route('projects.index')->with('success', 'Project # '.$getPid.' Updated');
+        return redirect()->route('stage-of-completion.index')->with('success', 'Project # '.$getPid.' Updated');
 
 
 
@@ -449,21 +446,68 @@ class StageOfCompletionController extends Controller
         // $deleteImage    =   DB::table('tblstage_image')->where('id', $id)->first();
         // Storage::delete($deleteImage->img_path);
         // $deleteImage->delete();
-        return redirect('stage-of-completion')->with('success', 'Data will Soon Self Delete ');   
+        return redirect('/admin-portal/stage-of-completion')->with('success', 'Data will Soon Self Delete ');   
     }
 
-    public function deleteImage($id, $img)
+    /** 
+     * @param int   $id
+     * @param string  $img
+     * Check if the image exist in:
+        * 1.either a the specified folder or saved relative-image-path
+        * 2.then delete image file from folder, if it exist, if not continue 
+        * 3.then  delete either the image-name from the  database table
+        
+        */
+    public static function deleteImage($id, $img)
     {
+     # code...
+        $removeImage    =   static::deleteImageFromFolder($img);
+        if ( $removeImage ) {
+            # code...
+            return static::updateImageList($id, $img);
+        }
+        return redirect()->route('stage-of-completion.index')->with('success', 'Thank You');   
+    }
+
+    public static function imageGallery($id)
+    {
+        # code...
+        $gallery    =   DB::table('tblstage_image')->where('id', $id)->select('img_name')->first();
+        return $gallery;
+
+    }
+
+    public static function updateImageList($id, $img)
+    {
+        # code...
         $stageId        =   $id;
         $getImage       =   $img;
-        dd($getImage);
-        $deleteImage    =   DB::table('tblstage_image')->where('id', $stageId)->select('img_name')->first();
-        dd(($deleteImage));
-        $deleteImage    =   DB::table('tblstage_image')->select('img_name')->get()->toArray();
-        
-        Storage::delete($deleteImage->img_name);
-        $deleteImage->delete();
-        return redirect('stage-of-completion')->with('success', 'Data will Soon Self Delete ');   
+        $stageImages    =   DB::table('tblstage_image')->where('id', $stageId)->select('img_name')->first();
+        foreach ( json_decode($stageImages->img_name) as $key => $value) {
+            $base       =   json_decode($stageImages->img_name);
+            if ( $getImage === $value ) {
+                if ( in_array($value, ([$value]))) {
+                    unset($base[$key]);
+                    $img_name        =   $base;
+                    $isUpdate        =   DB::table('tblstage_image')->where('id', $stageId)->update(
+                            array_merge( ['img_name' => array_values($img_name) ])
+                        );
+                        $isUpdate;
+                }
+            }
+        }
+    }
+
+    public static function deleteImageFromFolder($imageToDelete)
+    {
+        # code...
+        if( file_exists( public_path( static::$relativeImagePath.$imageToDelete) )) {
+            $unLinkImage = unlink( public_path( static::$relativeImagePath.$imageToDelete));
+                if ( $unLinkImage ) {
+                    return true;
+                }
+        }
+        return false;
     }
 
   
