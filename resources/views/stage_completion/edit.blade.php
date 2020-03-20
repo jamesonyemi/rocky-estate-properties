@@ -1,9 +1,12 @@
 @include('partials.master_header')
         <!-- Start -->
+        <h3>Stage of Completion </h3>
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3>Stage of Completion  </h3>
-                <span><i><b>Project Owner:</b>{{$r->full_name}}</i></span>
+                <span><i><b>Project Owner:</b> {{ $r->full_name }}</i></span>
+                <div class="col-md-8">
+                    @include('stage_completion.gallery_modal')
+                </div>
             </div>
             <div class="card-body">
             <form method="POST" action="{{ route('stage-of-completion.update', $r->id)}}" enctype="multipart/form-data" class="mt-5">
@@ -48,63 +51,26 @@
                                 @endforeach
                             </select> 
                             </div>
+                            
                             <div class="form-group col-md-2"></div>
                             <div class="form-group col-md-4">
                                 <label for="img_name">Photos of Work Done</label>
                                 <input type="file" class="form-control" id="img_name" name="img_name[]" multiple >
-                                <hr style="background-color:darkgray">
-                                    <h6><i>UPLOADED IMAGE</i> </h6><br>
-                              {{-- WORK-TO-DO for, DELETE SPECIFIC IMAGE FROM ARRAY LIST AND DATABASE ON CLICK --}}
-                              
-                              <div class="gallery-area">
-                                  <div class="row">
-                                      {{-- @if ( count($r->img_name) === 0 ) --}}
-                                      {{-- <div class="col-lg-4 col-sm-6 col-md-6">
-                                          <div class="single-gallery-image mb-30">
-                                              <p>No Image Available</p>
-                                          </div>
-                                      </div> --}}
-                                      {{-- @endif --}}
-                              
-                                      {{-- @if ( count($r->img_name) > 0 ) --}}
-                                      @php
-                                          $couter = 1;
-
-                                      @endphp
-                                          @foreach ( json_decode($r->img_name)  as $key => $img)
-                                          <div class="col-lg-4 col-sm-6 col-md-6">
-                                              <div class="single-gallery-image mb-30">
-                                                  <div class="col-md-6" >
-                                                    <a href="{{ route('remove-unlink-image', [$r->id, $img]) }}" class="btn btn-primary active btn-sm" 
-                                                     role="button" onclick="event.preventDefault(); document.getElementById('delete_image{!!++$key!!}').submit();">
-                                                        <i class='bx bx-x'></i>
-                                                        <form id="{{'delete_image'. $key++ }}" action="{{ route('remove-unlink-image', [$r->id,$img]) }}" method="POST" style="display: none;">
-                                                            {{ csrf_field() }}
-                                                            @method('PATCH')
-                                                        </form>
-                                                    </a>
-                                                </div>
-                                                  <img class="img-thumbnail rounded" src="{{ asset('/stage_of_completion_img/'.$img) }}" alt="Gallery Image" data-original="{{ asset('/stage_of_completion_img/'.$img) }}">
-                                              </div>
-                                          </div>
-                                      @endforeach
-                                      {{-- @endif --}}
-                                  </div>
-                              </div>
                           </div>
-                            </div>
+                        </div>
                         <br>
                        
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="comment">Materials Purchased</label>
-                                <textarea name="matpurchased" id="matpurchased"  cols="50" rows="6"   required > 
-                                    {{ strip_tags($r->matpurchased) }}</textarea>
+                                <textarea name="matpurchased" id="matpurchased"  cols="50" rows="4"  required class="form-control"> 
+                                    {{ strip_tags($r->matpurchased) }}
+                                </textarea>
                             </div> 
                             <div class="form-group col-md-2"></div>
                             <div class="form-group col-md-4">
                                 <label for="comment">Details of Amount Spent</label>
-                                    <textarea name="amtdetails" id="amtdetails" cols="50" rows="6" required >
+                                    <textarea name="amtdetails" id="amtdetails" cols="50" rows="4" required  class="form-control">
                                         {{ strip_tags($r->amtdetails)}}</textarea>
                                 </div>
                         </div>
@@ -120,12 +86,7 @@
                 </form>
             </div>
         </div>
+        <br><br>
      <!-- End -->
- 
 <!-- End Main Content Wrapper -->
-
 @include('partials.footer')
-
-<script>
-    
-</script>

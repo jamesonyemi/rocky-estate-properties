@@ -86,8 +86,8 @@
         </ul>
 
         <form class="nav-search-form d-none ml-auto d-md-block">
-            <label><i class="bx bx-search"></i></label>
-            <input type="text" class="form-control" placeholder="Search here...">
+            {{-- <label><i class="bx bx-search"></i></label>
+            <input type="text" class="form-control" placeholder="Search here..."> --}}
         </form>
 
         <ul class="navbar-nav right-nav align-items-center">
