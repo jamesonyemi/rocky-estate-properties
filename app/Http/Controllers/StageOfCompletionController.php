@@ -133,7 +133,7 @@ class StageOfCompletionController extends Controller
             foreach ($files as $file) {
 
                 $file_name          =  date("Y-m-d_h_i_s") . "_" . $file->getClientOriginalName();
-                $b64imageEncoded    =  static::imageBase64Enconding(static::$relativeImagePath,$file_name);
+                $b64imageEncoded    =  base64_encode($file_name);
                 $full_path          =  $file->move($destinationPath, $file_name);    //move files to destination folder
                 $alternative_name[] =  pathinfo($file_name, PATHINFO_FILENAME);    //Get file original name, without extension
                 $fileNamesInArray[] =  $file_name;
@@ -366,8 +366,8 @@ class StageOfCompletionController extends Controller
             $id     = $stagId;
          }
 
-        $excepts      =  request()->except(['_token', '_method', 'clientid', 'pid', 'alt_name', 'img_name']);
-        $updateStage  =  [
+        $excepts = request()->except(['_token', '_method', 'clientid', 'pid', 'alt_name', 'img_name']);
+        $updateStage     =  [
             'amtspent'     =>  $request->input('amtspent'),
             'amtdetails'   =>  $request->input('amtdetails'),
             'matpurchased' =>  $request->input('matpurchased'),
@@ -383,9 +383,10 @@ class StageOfCompletionController extends Controller
             foreach ($files as $file) {
 
                 $file_name           =  date("Y-m-d_h_i_s") . "_" . $file->getClientOriginalName();
-                $b64imageEncoded     =  static::imageBase64Enconding($destinationPath,$file_name);
+                $imageData           =  base64_encode(Storage::put(static::$relativeImagePath.$file_name));
+                $b64imageEncoded     =  $imageData;
+                $src                 =  'data:'.$file->getClientMimeType().';'.'base64,'.$b64imageEncoded;
                 $full_path           =  $file->move($destinationPath, $file_name);    /** move files to destination folder */
-                $b64path             =  $file->move($b64imageEncoded, $file_name);    /** move files to destination folder */
                 $alternative_name[]  =  pathinfo($file_name, PATHINFO_FILENAME);    /** Get file original name, without extension*/
                 $fileNamesInArray[]  =  $file_name;
                 $base64img_encode[]  =  $b64imageEncoded;
@@ -487,16 +488,6 @@ class StageOfCompletionController extends Controller
     {
         $iNeedTrimming  =   trim($trimmable);
         return $iNeedTrimming;
-    }
-
-    public static function imageBase64Enconding($path, $uploadedImage)
-    {
-        # code...
-        $isPath     = $path.$uploadedImage;
-        $extention  = pathinfo($uploadedImage, PATHINFO_EXTENSION);
-        $imageData  =  base64_encode(file_get_contents($isPath));
-        $src        =  'data:'.mime_content_type($extention).';'.'base64,'.$imageData;
-        return $src;
     }
 
 }
