@@ -8,11 +8,11 @@
                     @include('stage_completion.gallery_modal')
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body"> 
             <form method="POST" action="{{ route('stage-of-completion.update', $r->id)}}" enctype="multipart/form-data" class="mt-5">
                 {{ csrf_field() }}
                 <input name="_method" type="hidden" value="PUT">
-              
+
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="amount_spent">Amount Spent</label>
@@ -25,14 +25,14 @@
                                     @if ( empty($r->status_id) )
                                         <option>-- select --</option>
                                     @endif
-                                    @foreach ($project_status as $key => $status) 
+                                    @foreach ($project_status as $key => $status)
                                         @if ( !empty($r->status_id) )
-                                            <option value="{{ $status }}" {{ old('phase_id', in_array($r,[$key]) ? $r->status_id : 'null') === $key ? 
-                                            'selected' : '' }}> {{ ucwords($key) }} </option>    
+                                            <option value="{{ $status }}" {{ old('phase_id', in_array($r,[$key]) ? $r->status_id : 'null') === $key ?
+                                            'selected' : '' }}> {{ ucwords($key) }} </option>
                                         @else
                                     @endif
                                     @endforeach
-                                </select>  
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">
@@ -42,16 +42,16 @@
                                 @if ( empty($r->phase_id) )
                                     <option>-- select --</option>
                                 @endif
-                                @foreach ($project_phase as $key => $phase) 
+                                @foreach ($project_phase as $key => $phase)
                                     @if ( !empty($r->phase_id) )
-                                        <option value="{{ $phase }}" {{ old('phase_id', in_array($r,[$key]) ? $r->phase_id : 'null') === $key ? 
-                                        'selected' : '' }}> {{ ucwords($key) }} </option>    
+                                        <option value="{{ $phase }}" {{ old('phase_id', in_array($r,[$key]) ? $r->phase_id : 'null') === $key ?
+                                        'selected' : '' }}> {{ ucwords($key) }} </option>
                                     @else
                                 @endif
                                 @endforeach
-                            </select> 
+                            </select>
                             </div>
-                            
+
                             <div class="form-group col-md-2"></div>
                             <div class="form-group col-md-4">
                                 <label for="img_name">Photos of Work Done</label>
@@ -59,14 +59,14 @@
                           </div>
                         </div>
                         <br>
-                       
+
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="comment">Materials Purchased</label>
-                                <textarea name="matpurchased" id="matpurchased"  cols="50" rows="4"  required class="form-control"> 
+                                <textarea name="matpurchased" id="matpurchased"  cols="50" rows="4"  required class="form-control">
                                     {{ strip_tags($r->matpurchased) }}
                                 </textarea>
-                            </div> 
+                            </div>
                             <div class="form-group col-md-2"></div>
                             <div class="form-group col-md-4">
                                 <label for="comment">Details of Amount Spent</label>
