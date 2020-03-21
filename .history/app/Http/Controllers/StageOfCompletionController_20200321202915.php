@@ -132,7 +132,7 @@ class StageOfCompletionController extends Controller
             //this statement will loop through all files.
             foreach ($files as $file) {
 
-                $file_name           =  static::iCrypto(). "_" . $file->getClientOriginalName();
+                $file_name           =  static::$icrypto. "_" . $file->getClientOriginalName();
                 $imageData           =  base64_encode(static::$relativeImagePath.$file_name);
                 $b64imageEncoded     =  $imageData;
                 $src                 =  'data:'.$file->getClientMimeType().';'.'base64,'.$b64imageEncoded;
@@ -384,7 +384,7 @@ class StageOfCompletionController extends Controller
             /** this statement will loop through all incoming files. */
             foreach ($files as $file) {
 
-                $file_name           =  static::iCrypto()."_" . $file->getClientOriginalName();
+                $file_name           =  date("Y-m-d_h_i_s") . "_" . $file->getClientOriginalName();
                 $imageData           =  base64_encode(static::$relativeImagePath.$file_name);
                 $b64imageEncoded     =  $imageData;
                 $src                 =  'data:'.$file->getClientMimeType().';'.'base64,'.$b64imageEncoded;
@@ -533,6 +533,7 @@ class StageOfCompletionController extends Controller
     {
         # code...
         $icrypto = date("Y_m_d_h_i_s") .random_int(time(),9999);
+        random_bytes()
         return $icrypto;
 
     }

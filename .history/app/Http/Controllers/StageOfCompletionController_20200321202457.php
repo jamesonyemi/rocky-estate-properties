@@ -18,6 +18,7 @@ class StageOfCompletionController extends Controller
 {
 
     private static $relativeImagePath   =   '/stage_of_completion_img/';
+    public static $icrypto;
 
     /**
      * Display a listing of the resource.
@@ -124,6 +125,8 @@ class StageOfCompletionController extends Controller
     public function store(Request $request)
     {
         //code
+        $secure =   static::$icrypto;
+        
         if ($request->hasFile('img_name')) {
 
             $destinationPath = public_path() . static::$relativeImagePath;
@@ -132,7 +135,7 @@ class StageOfCompletionController extends Controller
             //this statement will loop through all files.
             foreach ($files as $file) {
 
-                $file_name           =  static::iCrypto(). "_" . $file->getClientOriginalName();
+                $file_name           =  static::$icrypto. "_" . $file->getClientOriginalName();
                 $imageData           =  base64_encode(static::$relativeImagePath.$file_name);
                 $b64imageEncoded     =  $imageData;
                 $src                 =  'data:'.$file->getClientMimeType().';'.'base64,'.$b64imageEncoded;
@@ -384,7 +387,7 @@ class StageOfCompletionController extends Controller
             /** this statement will loop through all incoming files. */
             foreach ($files as $file) {
 
-                $file_name           =  static::iCrypto()."_" . $file->getClientOriginalName();
+                $file_name           =  date("Y-m-d_h_i_s") . "_" . $file->getClientOriginalName();
                 $imageData           =  base64_encode(static::$relativeImagePath.$file_name);
                 $b64imageEncoded     =  $imageData;
                 $src                 =  'data:'.$file->getClientMimeType().';'.'base64,'.$b64imageEncoded;
@@ -527,14 +530,6 @@ class StageOfCompletionController extends Controller
             return false;
         }
         
-    }
-
-    public static function iCrypto()
-    {
-        # code...
-        $icrypto = date("Y_m_d_h_i_s") .random_int(time(),9999);
-        return $icrypto;
-
     }
 
 }
