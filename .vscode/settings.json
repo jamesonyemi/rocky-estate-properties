@@ -1,4 +1,10 @@
 {
-    "workbench.colorTheme": "Dracula Italics",
-    "workbench.preferredHighContrastColorTheme": "Shades of Purple"
+    "editor.matchBrackets": "always",
+    "files.autoSave": "afterDelay",
+    "git.autofetch": true,
+    "editor.fontFamily": "Fira Code Retina,'Operator Mono',Consolas, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "todo-tree.tree.showScanModeButton": false,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
 }
