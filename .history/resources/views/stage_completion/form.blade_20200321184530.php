@@ -58,7 +58,7 @@
                     <div class="form-group col-md-4">
                         <label for="client">Client</label>
                         <select id="clientid" name="clientid" class="form-control custom-select" required>
-                            <option value="">-- select --</option>
+                            <option>-- select --</option>
                             @foreach ($clients as $client_id => $client)
                             
                                 @if ($client->clientid )
@@ -75,6 +75,7 @@
                     <div class="form-group col-md-4">
                         <label for="pid">Project:</label>
                         <select id="pid" name="pid" class="form-control" required></select>
+                        <i id="warning" class="badge badge-dander" style="display:none;"></i>
                     </div>
                 </div>
                         <div class="form-row">
@@ -86,7 +87,7 @@
                             <div class="form-group col-md-4">
                                 <label for="status">Status of Project</label>
                                 <select id="status_id" name="status_id" class="form-control custom-select" required>
-                                    <option value="">-- select --</option>
+                                    <option>-- select --</option>
                                     @foreach ($project_status as $key => $status) 
                                         <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                         @endforeach
@@ -97,7 +98,7 @@
                             <div class="form-group col-md-4">
                                 <label for="phase">Stage of Completion</label>
                                 <select id="phase_id" name="phase_id" class="form-control custom-select" required>
-                                    <option value="">-- select --</option>
+                                    <option>-- select --</option>
                                     @foreach ($project_phase as $key => $phase) 
                                     <option value="{{ $phase }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                     @endforeach
@@ -140,3 +141,22 @@
 
 @include('partials.footer')
 
+<script>
+(function () {
+    let clientid = document.querySelector("#clientid");
+    console.log()
+    let pid = document.querySelector("#pid");
+    let warning = document.querySelector("#warning");
+    let selValue = pid.options.value;
+    clientId.addEventListener('change', function () {
+        if ( selValue === " " ) {
+            warning.textContent = "This field is required";
+            warning.style.display = "inline";
+        }
+        pid.textContent = pid.value;
+        
+    });
+
+})();
+
+</script>

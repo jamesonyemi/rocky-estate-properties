@@ -7,4 +7,5 @@
     "todo-tree.tree.showScanModeButton": false,
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "AllAutocomplete.showCurrentDocument": false,
 }

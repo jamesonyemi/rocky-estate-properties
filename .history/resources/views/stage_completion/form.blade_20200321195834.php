@@ -97,7 +97,7 @@
                             <div class="form-group col-md-4">
                                 <label for="phase">Stage of Completion</label>
                                 <select id="phase_id" name="phase_id" class="form-control custom-select" required>
-                                    <option value="">-- select --</option>
+                                    <option value>-- select --</option>
                                     @foreach ($project_phase as $key => $phase) 
                                     <option value="{{ $phase }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                     @endforeach
