@@ -132,15 +132,13 @@ class StageOfCompletionController extends Controller
             //this statement will loop through all files.
             foreach ($files as $file) {
 
-                $file_name           =  date("Y-m-d_h_i_s") . "_" . $file->getClientOriginalName();
-                $imageData           =  base64_encode(static::$relativeImagePath.$file_name);
-                $b64imageEncoded     =  $imageData;
-                $src                 =  'data:'.$file->getClientMimeType().';'.'base64,'.$b64imageEncoded;
-                $full_path           =  $file->move($destinationPath, $file_name);    /** move files to destination folder */
-                $alternative_name[]  =  $file_name;    /** Get file original name, without extension*/
-                $fileNamesInArray[]  =  $file_name;
-                $base64img_encode[]  =  $b64imageEncoded;
-                $imagePath[]         =  static::$relativeImagePath.$file_name;
+                $file_name          =  date("Y-m-d_h_i_s") . "_" . $file->getClientOriginalName();
+                $b64imageEncoded    =  base64_encode($file_name);
+                $full_path          =  $file->move($destinationPath, $file_name);    //move files to destination folder
+                $alternative_name[] =  pathinfo($file_name, PATHINFO_FILENAME);    //Get file original name, without extension
+                $fileNamesInArray[] =  $file_name;
+                $base64img_encode[] =  $b64imageEncoded;
+                $imagePath[]        =  static::$relativeImagePath.$file_name;
 
             }
         }
@@ -386,6 +384,8 @@ class StageOfCompletionController extends Controller
 
                 $file_name           =  date("Y-m-d_h_i_s") . "_" . $file->getClientOriginalName();
                 $imageData           =  base64_encode(static::$relativeImagePath.$file_name);
+                print_r(base64_decode($imageData));
+                ddd(base64_encode("https://static-exp1.licdn.com/scds/common/u/images/promo/ads/li_evergreen_jobs_ad_300x250_v1.jpg"));
                 $b64imageEncoded     =  $imageData;
                 $src                 =  'data:'.$file->getClientMimeType().';'.'base64,'.$b64imageEncoded;
                 $full_path           =  $file->move($destinationPath, $file_name);    /** move files to destination folder */
@@ -402,7 +402,7 @@ class StageOfCompletionController extends Controller
         ];
         $incomingUpload =  $data;
         $mergeUpdate    =  array_merge_recursive( $getImage, $incomingUpload );
-        // ddd($mergeUpdate);
+        dd($mergeUpdate);
         $updateData     =  DB::table('tblstage_image')->where('pid', $getField->pid)->update($mergeUpdate);
         dd($updateData);
         if ($updateData) {

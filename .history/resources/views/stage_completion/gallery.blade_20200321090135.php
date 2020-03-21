@@ -27,7 +27,7 @@
                     <i class='bx bx-x' ></i>
                     <form id="{{'delete_image'. $key++ }}" action="{{ route('remove-unlink-image', [$r->id,$img]) }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
-                        @method('PUT')
+                        @method('ANY')
                     </form>
                 </a>
             </div>

@@ -402,7 +402,7 @@ class StageOfCompletionController extends Controller
         ];
         $incomingUpload =  $data;
         $mergeUpdate    =  array_merge_recursive( $getImage, $incomingUpload );
-        // ddd($mergeUpdate);
+        dd($mergeUpdate);
         $updateData     =  DB::table('tblstage_image')->where('pid', $getField->pid)->update($mergeUpdate);
         dd($updateData);
         if ($updateData) {
