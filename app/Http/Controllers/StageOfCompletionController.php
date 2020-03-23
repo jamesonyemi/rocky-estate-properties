@@ -359,10 +359,12 @@ class StageOfCompletionController extends Controller
     public function update(Request $request, $id)
     {
         //code
-        $fields      =
-        $getField    =  DB::table('tblstage_image')->where('id', $id)->select('pid', 'img_name', 'alt_name', 'img_path', 'base64_img_encode')->first();
         $stagImage   =  DB::table('tblstage_image')->where('id', $id)->get()->pluck('stage_id', 'stage_id');
+        $getField    =  DB::table('tblstage_image')->where('id', $id)->select('pid', 'img_name', 'alt_name', 'img_path', 'base64_img_encode')->first();
         $getImage    =  json_decode($getField->img_name);
+        $imgAltName  =  json_decode($getField->alt_name);
+        $imgRelPath  =  json_decode($getField->img_path);
+        $b64Img      =  json_decode($getField->base64_img_encode);
 
          foreach ( $stagImage as $key => $value ) {
             $stagId = $value;
@@ -397,30 +399,33 @@ class StageOfCompletionController extends Controller
             }
         }
 
-        $data   =  [
-            'img_path' => json_encode($imagePath),
-            'alt_name' => json_encode($alternative_name), 'base64_img_encode' => json_encode($base64img_encode),
-        ];
-
-        // $incomingUpload  =  $data;
-        $incomingUpload['img_path']  =  $data['img_path'];
-        ddd(($incomingUpload));
-        $base64_img_encode  =  json_encode($base64_img_encode);
-        $img_path           =  json_encode($imagePath);
-        $alt_name           =  json_encode($alt_name);
-        $retrievedImage     =  array_values($getImage);
         $incomingImage      =  json_encode($fileNamesInArray);
-        $imageArray         =  static::dataIndexing($incomingImage);
-        $mergeImage         =  array_merge_recursive(['img_name' => array_merge($retrievedImage, $imageArray)] );
+        $img_path           =  json_encode($imagePath);
+        $alt_name           =  json_encode($alternative_name);
+        $base64_img_encode  =  json_encode($base64img_encode);
 
-        // ddd($mergeImage);
-        $mergeUpdate    =  array_merge_recursive( $mergeImage, $incomingUpload );
-        ddd($mergeUpdate);
+        $retrievedImage     =  array_values($getImage);
+        $altName            =  array_values($imgAltName);
+        $relPath            =  array_values($imgRelPath);
+        $base64Img          =  array_values($b64Img);
+
+        $imageArray         =  static::dataIndexing($incomingImage);
+        $relImgPathArray    =  static::dataIndexing($img_path);
+        $altArray           =  static::dataIndexing($alt_name);
+        $b64Array           =  static::dataIndexing($base64_img_encode);
+
+        $mergeImage         =  array_merge_recursive(
+            ['img_name' => array_merge($retrievedImage, $imageArray)],
+            ['alt_name' => array_merge($altName, $altArray)],
+            ['img_path' => array_merge($relPath, $relImgPathArray)],
+            ['base64_img_encode' => array_merge($base64Img, $b64Array)],
+        );
+
+        $mergeUpdate    =  array_merge_recursive($mergeImage);
         $updateData     =  DB::table('tblstage_image')->where('pid', $getField->pid)->update($mergeUpdate);
-        dd($updateData);
-        if ($updateData) {
-            return redirect()->route('stage-of-completion.index')->with('success', 'Project # '.$getField->pid.' Updated');
-        }
+            if ($updateData) {
+                return redirect()->route('stage-of-completion.index')->with('success', 'Project # '.$getField->pid.' Updated');
+            }
 
     }
 
@@ -432,10 +437,6 @@ class StageOfCompletionController extends Controller
      */
     public function destroy($id)
     {
-        // $id             =   PaymentController::decryptedId($id);
-        // $deleteImage    =   DB::table('tblstage_image')->where('id', $id)->first();
-        // Storage::delete($deleteImage->img_path);
-        // $deleteImage->delete();
         return redirect('/admin-portal/stage-of-completion')->with('success', 'Data will Soon Self Delete ');
     }
 
