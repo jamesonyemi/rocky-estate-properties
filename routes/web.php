@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes        
+| Web Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -16,11 +16,9 @@ use Illuminate\Support\Facades\Route;
 
     Auth::routes();
 
-    Route::get('/', function () {
-        return view('auth.login');  
-    });
+    Route::get('/', 'DefaultPageController@CheckIn');
 
-    Route::get('/logout', function () { return redirect('/'); });
+    Route::get('/logout', 'DefaultPageController@CheckOut');
     Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
     Route::get('/client/sign-up/{clientid}', 'Auth\RegisterController@sigUpClient');
     Route::get('/client/sign-in/{clientid}', 'Auth\RegisterController@signInVerifiedIndividualClient');
@@ -47,14 +45,14 @@ use Illuminate\Support\Facades\Route;
         Route::resource('verified-users', 'VerifiedUserController');
         Route::any('/import-users', 'VerifiedUserController@import')->name('import-users');
         Route::any('/export-users', 'VerifiedUserController@export')->name('export-users');
-        
+
         Route::resource('payment-mode', 'PaymentModeController');
         Route::resource('payments', 'PaymentController');
         Route::get('/payments/create/{id}','PaymentController@client');
         Route::any('/additional-cost', 'PaymentController@additionalCost')->name('additional-cost');
         Route::any('/process-additional-cost', 'PaymentController@processAdditionalCost')->name('process-additional-cost');
         Route::any('/budget-review', 'PaymentController@budgetReview')->name('budget-review');
-        
+
         Route::get('/projects/create/{id}','ProjectController@getTowns');
         Route::any('/stage-of-completion/{image}/delete', 'StageOfCompletionController@deleteImage');
         Route::get('/onsite-visit/create/{id}','OnsiteVisitController@clientToProject');
@@ -67,26 +65,24 @@ use Illuminate\Support\Facades\Route;
             Route::resource('role', 'UserRoleController');
             Route::any('/assign-role-to-user', 'UserRoleController@assignUserRole')->name('assign-role-to-user');
             Route::any('/assign-role', 'UserRoleController@userRole')->name('assign-role');
-            Route::resource('branches', 'BranchController'); 
+            Route::resource('branches', 'BranchController');
             Route::resource('status', 'StatusController');
             Route::resource('regions', 'RegionController');
             Route::resource('gender', 'GenderController');
         });
 
     });
-    
+
 
     Route::get('corporate-login-form', 'Clients\ClientAuthController@index')->name('corporate-login-form');
-    Route::post('corporate-client-post-login', 'Clients\ClientAuthController@postLogin')->name('corporate-post-login'); 
+    Route::post('corporate-client-post-login', 'Clients\ClientAuthController@postLogin')->name('corporate-post-login');
     Route::get('corporate-client-registration', 'Clients\ClientAuthController@registration')->name('corporate-registration-form');
-    Route::post('corporate-client-post-registration', 'Clients\ClientAuthController@postRegistration')->name('corporate-post-registration'); 
-    Route::get('dashboard', 'Clients\ClientAuthController@dashboard'); 
+    Route::post('corporate-client-post-registration', 'Clients\ClientAuthController@postRegistration')->name('corporate-post-registration');
+    Route::get('dashboard', 'Clients\ClientAuthController@dashboard');
     Route::get('corporate-client-logout', 'Clients\ClientAuthController@logout')->name('corporate-client-logout');
 
     Route::group( ['middleware' => 'auth', 'prefix' => 'client-portal'], function () {
-        Route::get('/dashboard', function() { 
-            return view('client_portal.dashboard.index');
-        })->name('client-dashboard');
+        Route::get('/dashboard', 'DefaultPageController@clientDashboard')->name('client-dashboard');
         Route::resource('personal-details', 'Clients\ClientPersonalDetailsController');
         Route::resource('my-projects', 'Clients\ClientProjectController');
         Route::resource('my-documents', 'Clients\ClientDocumentController');
@@ -97,4 +93,3 @@ use Illuminate\Support\Facades\Route;
         // Route::get('tracking', 'Clients\ClientProjectTrackingController@projectTracking')->name('tracking');
         Route::get('my-projects/single-project/{id}', 'Clients\ClientProjectController@clientWithSingleProject')->name('single-project');
     });
-            
