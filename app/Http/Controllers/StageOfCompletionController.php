@@ -359,7 +359,8 @@ class StageOfCompletionController extends Controller
     public function update(Request $request, $id)
     {
         //code
-        $getField    =  DB::table('tblstage_image')->where('id', $id)->select('pid', 'img_name')->first();
+        $fields      =
+        $getField    =  DB::table('tblstage_image')->where('id', $id)->select('pid', 'img_name', 'alt_name', 'img_path', 'base64_img_encode')->first();
         $stagImage   =  DB::table('tblstage_image')->where('id', $id)->get()->pluck('stage_id', 'stage_id');
         $getImage    =  json_decode($getField->img_name);
 
@@ -395,23 +396,26 @@ class StageOfCompletionController extends Controller
                 $imagePath[]         =  static::$relativeImagePath.$file_name;
             }
         }
-        
+
         $data   =  [
             'img_path' => json_encode($imagePath),
             'alt_name' => json_encode($alternative_name), 'base64_img_encode' => json_encode($base64img_encode),
         ];
-        
-        $incomingUpload  =  $data;
-        $retrievedImage  =  array_values($getImage);
-        $incomingImage   =  json_encode($fileNamesInArray);
-        $imageArray      =  static::dataIndexing($incomingImage);
-        $incomingData    =  $data;
-        
-        $mergeImage      =   array_merge_recursive(['img_name' => [ $retrievedImage, $imageArray]] );
+
+        // $incomingUpload  =  $data;
+        $incomingUpload['img_path']  =  $data['img_path'];
+        ddd(($incomingUpload));
+        $base64_img_encode  =  json_encode($base64_img_encode);
+        $img_path           =  json_encode($imagePath);
+        $alt_name           =  json_encode($alt_name);
+        $retrievedImage     =  array_values($getImage);
+        $incomingImage      =  json_encode($fileNamesInArray);
+        $imageArray         =  static::dataIndexing($incomingImage);
+        $mergeImage         =  array_merge_recursive(['img_name' => array_merge($retrievedImage, $imageArray)] );
 
         // ddd($mergeImage);
         $mergeUpdate    =  array_merge_recursive( $mergeImage, $incomingUpload );
-        // ddd($mergeUpdate);
+        ddd($mergeUpdate);
         $updateData     =  DB::table('tblstage_image')->where('pid', $getField->pid)->update($mergeUpdate);
         dd($updateData);
         if ($updateData) {
@@ -505,8 +509,8 @@ class StageOfCompletionController extends Controller
     {
         # code...
         if ( is_object($data) || is_string($data) ) {
-            
-            for ( $i = 0; $i < count(json_decode($data)); $i++ ) { 
+
+            for ( $i = 0; $i < count(json_decode($data)); $i++ ) {
                 # code...
                 $indexing       =   json_decode($data);
                 return $indexing;
@@ -514,8 +518,8 @@ class StageOfCompletionController extends Controller
 
         }
         elseif ( is_array($data) ) {
-           
-            for ( $i = 0; $i < count($data); $i++ ) { 
+
+            for ( $i = 0; $i < count($data); $i++ ) {
                 # code...
                 $indexing       =   $data;
                 return $indexing;
@@ -526,13 +530,13 @@ class StageOfCompletionController extends Controller
             # code...
             return false;
         }
-        
+
     }
 
     public static function iCrypto()
     {
         # code...
-        $icrypto = date("Y_m_d_h_i_s") .random_int(time(),9999);
+        $icrypto = date("Y_m_d_h_i_s") .random_int(1111,9999);
         return $icrypto;
 
     }
