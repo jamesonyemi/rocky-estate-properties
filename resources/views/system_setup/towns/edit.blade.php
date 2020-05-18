@@ -65,21 +65,35 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_country">Region</label>
-                            <select id="region" name="region" class="form-control custom-select" required>
+                            <select id="rid" name="rid" class="form-control custom-select" required>
                                 @foreach ($regionId as $key => $value)
                             <option value="{{ $town->rid }}" {{ old('rid', in_array($value,[$value]) ? $town->rid : 'null') === $key ? 'selected' : '' }}>
                                 {{ ucwords($value) }}</option>
                             @endforeach
                             </select>
                         </div>
-                        
+
                         <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
                             <label for="validate_country">Town</label>
                         <input type="text" class="form-control" name="town" id="town" value="{{ old('town', $town->town) }}" required>
                         </div>
                     </div>
-               
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="project_state">Status</label>
+                            <select id="active" name="active" class="form-control custom-select" required>
+                                @php
+                                    $yes  = ( $town->active !== 'yes' ) ? "yes" : $town->active;
+                                    $no   = ( $town->active === 'no' ) ? $town->active : "no";
+                                @endphp
+                                <option value="{!!$yes !!}">{!!ucwords($yes) !!}</option>
+                                <option value="{!!$no !!}">{!! ucwords($no) !!}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-8"></div>
+                    </div>
+
                      <hr style="background-color:fuchsia; opacity:0.1">
                       <div class="container">
                           <div class="row">
@@ -102,6 +116,3 @@
 <!-- End Main Content Wrapper -->
 
 @include('partials.footer')
-    
-
-      

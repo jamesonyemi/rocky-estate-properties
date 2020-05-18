@@ -48,15 +48,9 @@ class TownController extends Controller
         $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
 
         return view('system_setup.towns.create', compact(
-            'towns',
             'townId',
             'regions',
             'regionId'
-            // 'project_status',
-            // 'project_visited',
-            // 'project_phase',
-            // 'genders',
-            // 'id'
         ));
     }
 
@@ -72,12 +66,12 @@ class TownController extends Controller
         $postData = ClientController::allExcept();
         $create_town = DB::table('tbltown')->insertGetId(array_merge(
             $postData,
-            [   
+            [
                 'rid'     =>  $request->input('rid'),
                 'active'  =>  $request->input('active')
             ]
         ));
-    
+
         return redirect()->route('towns.index')->with('success', 'Town #  ' .$create_town. ' Created Sucessfully');
     }
 
@@ -99,20 +93,20 @@ class TownController extends Controller
         // I have join and a loop to do here
         $regionTownMap = static::regionTownMap();
         // dd($regionTownMap)
-        foreach ($regionTownMap as $key2 => $regionTown) 
+        foreach ($regionTownMap as $key2 => $regionTown)
             {
 
-                foreach ($towns as $key => $town) 
+                foreach ($towns as $key => $town)
                 {
-                    if ($town->rid === $regionTown->id)   
+                    if ($town->rid === $regionTown->id)
                     {
                         $town = $regionTown ;
                         $region_town = $town;
                         $keyMap =  $region_town;
                     }
-                
+
                 }
-            
+
             }
 
         return view('system_setup.towns.show', compact(
@@ -165,14 +159,18 @@ class TownController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */ 
+     */
     public function update(Request $request, $id)
     {
         // code;
-        $isActive   = ['active' => $request->active ];    
-        $updateData = ClientController::allExcept();
-        $update     = DB::table('tbltown')->where('rid', $id)->update( array_merge($updateData, $isActive) );
-        return redirect()->route('system_setup.towns.index')->with('success', 'Town # " ' .$id. ' "  Info Updated');
+        $checkStatus  = ( $request->active !== 'yes' ) ? "no" : "yes";
+        $updateInfo   = [
+            'active' => $checkStatus,
+            'town'   => $request->town,
+            'rid'   => $request->rid,
+        ];
+        $update     = DB::table('tbltown')->where('tid', $id)->update( $updateInfo );
+        return redirect()->route('towns.index')->with('success', 'Town # ' .$id. '  Info Updated');
     }
 
     /**
@@ -184,19 +182,19 @@ class TownController extends Controller
     public function destroy($id)
     {
       // code;
-      $isActive = ['active' => 'no' ];    
+      $isActive = ['active' => 'no' ];
       $deleted  = DB::table('tbltown')->where('rid', $id)->update($isActive);
-      return redirect()->route('system_setup.towns.index')->with('success', 'Town # " ' .$id. ' "  Info Deleted');
+      return redirect()->route('towns.index')->with('success', 'Town # " ' .$id. ' "  Info Deleted');
     }
 
-    public static function regionTownMap() 
+    public static function regionTownMap()
     {
          # code...
          $regionTown  = DB::table('tblregion as a')
          ->join('tbltown as b', 'b.rid', '=', 'a.rid')
          ->select('a.rid as id', 'b.tid', 'b.rid', 'b.town', 'a.region')
          ->orderBy('a.rid')->get()->toArray();
-         
+
          return $regionTown;
     }
 }

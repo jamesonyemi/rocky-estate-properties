@@ -8,7 +8,7 @@
         </a>
 
         <div class="burger-menu d-none d-lg-block">
-            <span class="top-bar"></span>   
+            <span class="top-bar"></span>
             <span class="middle-bar"></span>
             <span class="bottom-bar"></span>
         </div>
@@ -48,7 +48,7 @@
             <li class="nav-item ">
                 <a href="{{ url('/admin-portal/onsite-visit') }}" class="nav-link">
                     <span class="icon"><i class=' bx bx-building-house'></i></span>
-                    <span class="menu-title">On Site Visit</span>
+                    <span class="menu-title">On Site Visits</span>
                 </a>
             </li>
 
