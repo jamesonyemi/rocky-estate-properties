@@ -59,7 +59,8 @@
                     </div>
                 </form> -->
                 @foreach ($towns as $town)
-                <form class="mt-5" action="{{route('towns.update', $town->tid) }}"  method="POST">
+                <?php $encrypt = Crypt::encrypt($town->tid);  ?>
+                <form class="mt-5" action="{{route('towns.update', $encrypt) }}"  method="POST">
                     {{ csrf_field() }}
                     <input name="_method" type="hidden" value="PUT">
                     <div class="form-row">

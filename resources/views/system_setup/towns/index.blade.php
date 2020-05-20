@@ -55,23 +55,20 @@
                                 <div class="card-body">
                                     <h4 class="card-title"></h4>
                                     <div class="card-title-desc">  </div>
-                                    <table id="" class="table table-bordered dt-responsive nowrap client" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <table id="" class="table table-bordered dt-responsive nowrap client" style="border-collapse: collapse; border-spacing: 0; width: 100%; min-height:0px;">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Town</th>
                                                 <th>Region</th>
-                                                {{-- <th>Project Title</th>
-                                                <th>Town</th> --}}
-                                                {{-- <th>Status</th> --}}
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
 
-                                            @foreach ($regionTownMap as $town)
-                                                {{-- @if ( $town->isdeleted === "no" ) --}}
+                                            @foreach ($regionTown as $town)
+                                                @if ( ($town->active === "yes") && ($town->is_deleted === 0) )
                                             <tr>
                                                 <td id="project_id"></td>
                                                 <td >{{ $town->town}}</span></td>
@@ -80,26 +77,28 @@
                                                 <td>{{ $town->location }}</td>    --}}
                                                 {{-- <td id="status"> {{ ucfirst($project->client_project_status) }} </td>  --}}
                                                 <td>
-                                                    <a href=" {{ route('towns.show', $town->tid)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <?php $encrypt = Crypt::encrypt($town->tid);  ?>
+                                                    <a href=" {{ route('towns.show', $encrypt)}}" class="d-inline-block text-success mr-2" >
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('towns.edit', $town->tid) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                    <a href="{{ route('towns.edit', $encrypt) }}" class="d-inline-block text-success mr-2">
                                                             <i class="bx bx-edit"></i>
                                                         </a>
-                                                 <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                                 <a  href="#" class="d-inline-block text-success"
                                                         onclick="event.preventDefault();
                                                                  document.getElementById('delete').submit();">
 
-                                                    <form id="delete" action="{{ route('towns.destroy', $town->tid) }}" method="post" >
+                                                    <form id="delete" action="{{ route('towns.destroy', $encrypt) }}" method="post" >
                                                         {{ csrf_field() }}
                                                         <input name="_method" type="hidden" value="DELETE">
+                                                        <input type="hidden" name="active" id="active">
+                                                        <input type="hidden" name="is_deleted" id="is_deleted">
                                                         <i class="bx bx-trash"></i>
                                                     </form>
                                                 </a>
                                                 </td>
                                             </tr>
-                                            {{-- @endif --}}
-
+                                            @endif
                                             @endforeach
                                         </tbody>
                                     </table>

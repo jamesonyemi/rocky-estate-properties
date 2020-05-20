@@ -24,14 +24,9 @@ class TownController extends Controller
     public function index()
     {
         //code
-        $towns  = DB::table('tbltown')->get();
-        $regionTownMap = static::regionTownMap();
+        $regionTown = static::regionTownMap();
+        return view('system_setup.towns.index', compact('regionTown'));
 
-        return view('system_setup.towns.index', compact(
-            'towns',
-            'regionTownMap'
-
-        ));
     }
 
     /**
@@ -84,11 +79,12 @@ class TownController extends Controller
     public function show($id)
     {
         //code
-        $genders  = DB::table('tblgender')->pluck('id', 'type');
-        $regions  = DB::table('tblregion')->pluck('region', 'rid');
-        $regionId = DB::table('tblregion')->get()->pluck('region', 'rid');
-        $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
-        $towns    = DB::table('tbltown')->where('tid', $id)->get();
+        $decryptId  = PaymentController::decryptedId($id);
+        $genders    = DB::table('tblgender')->pluck('id', 'type');
+        $regions    = DB::table('tblregion')->pluck('region', 'rid');
+        $regionId   = DB::table('tblregion')->get()->pluck('region', 'rid');
+        $townId     = DB::table('tbltown')->get()->pluck('tid', 'town');
+        $towns      = DB::table('tbltown')->where('tid', $decryptId)->get();
 
         // I have join and a loop to do here
         $regionTownMap = static::regionTownMap();
@@ -98,7 +94,7 @@ class TownController extends Controller
 
                 foreach ($towns as $key => $town)
                 {
-                    if ($town->rid === $regionTown->id)
+                    if ($town->tid === $regionTown->tid)
                     {
                         $town = $regionTown ;
                         $region_town = $town;
@@ -132,23 +128,19 @@ class TownController extends Controller
     public function edit($id)
     {
         //code
-        $genders  = DB::table('tblgender')->pluck('id', 'type');
-        $regions  = DB::table('tblregion')->pluck('region', 'rid');
-        $regionId = DB::table('tblregion')->get()->pluck('region', 'rid');
-        $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
-        $towns    = DB::table('tbltown')->where('tid', $id)->get();
+        $decryptId  = PaymentController::decryptedId($id);
+        $genders    = DB::table('tblgender')->pluck('id', 'type');
+        $regions    = DB::table('tblregion')->pluck('region', 'rid');
+        $regionId   = DB::table('tblregion')->get()->pluck('region', 'rid');
+        $townId     = DB::table('tbltown')->get()->pluck('tid', 'town');
+        $towns      = DB::table('tbltown')->where('tid', $decryptId)->get();
 
 
         return view('system_setup.towns.edit', compact(
             'towns',
             'townId',
             'regions',
-            'regionId'
-            // 'project_status',
-            // 'project_visited',
-            // 'project_phase',
-            // 'genders',
-            // 'id'
+            'regionId',
         ));
     }
 
@@ -163,28 +155,34 @@ class TownController extends Controller
     public function update(Request $request, $id)
     {
         // code;
+        $decryptId    = PaymentController::decryptedId($id);
         $checkStatus  = ( $request->active !== 'yes' ) ? "no" : "yes";
         $updateInfo   = [
             'active' => $checkStatus,
             'town'   => $request->town,
             'rid'   => $request->rid,
         ];
-        $update     = DB::table('tbltown')->where('tid', $id)->update( $updateInfo );
-        return redirect()->route('towns.index')->with('success', 'Town # ' .$id. '  Info Updated');
+        $update     = DB::table('tbltown')->where('tid', $decryptId)->update( $updateInfo );
+        return redirect()->route('towns.index')->with('success', 'Town # ' .$decryptId. '  Info Updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request  $request, $id)
     {
       // code;
-      $isActive = ['active' => 'no' ];
-      $deleted  = DB::table('tbltown')->where('rid', $id)->update($isActive);
-      return redirect()->route('towns.index')->with('success', 'Town # " ' .$id. ' "  Info Deleted');
+      $decryptId            = PaymentController::decryptedId($id);
+      $getTownId            = ($decryptId - 1);
+      $request->active      = 'no';
+      $request->is_deleted  = 1;
+      $isActive = [ "active" => $request->active, "is_deleted" => $request->is_deleted ];
+      $deleted  = DB::table('tbltown')->where('tid', $getTownId)->update($isActive);
+      return redirect()->route('towns.index')->with('success', 'Town # ' .$getTownId. '  Info Deleted');
     }
 
     public static function regionTownMap()
@@ -192,8 +190,8 @@ class TownController extends Controller
          # code...
          $regionTown  = DB::table('tblregion as a')
          ->join('tbltown as b', 'b.rid', '=', 'a.rid')
-         ->select('a.rid as id', 'b.tid', 'b.rid', 'b.town', 'a.region')
-         ->orderBy('a.rid')->get()->toArray();
+         ->select('b.rid as id', 'b.tid', 'b.town', 'a.region','b.active', 'b.is_deleted' )
+         ->orderBy('b.tid')->get()->toArray();
 
          return $regionTown;
     }
