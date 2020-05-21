@@ -7,6 +7,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ClientController;
@@ -183,6 +184,25 @@ class TownController extends Controller
       $isActive = [ "active" => $request->active, "is_deleted" => $request->is_deleted ];
       $deleted  = DB::table('tbltown')->where('tid', $getTownId)->update($isActive);
       return redirect()->route('towns.index')->with('success', 'Town # ' .$getTownId. '  Info Deleted');
+    }
+
+    public function restore()
+    {
+
+        $regionTown = static::regionTownMap();
+        $regionId    = DB::table('tblregion')->get()->pluck('region', 'rid');
+        return view('system_setup.towns.restore', compact('regionTown', 'regionId'));
+
+    }
+
+    public function restoreTown(Request $request)
+    {
+        $id                   =  $request->tid;
+        $request->active      =  'yes';
+        $request->is_deleted  =  0;
+        $isActive             =  [ "active" => $request->active, "is_deleted" => $request->is_deleted ];
+        $deleted              =  DB::table('tbltown')->where('tid', $id)->update($isActive);
+        return redirect()->route ('towns.index')->with('success', 'Town # ' .$request->tid. '  was Restored');
     }
 
     public static function regionTownMap()

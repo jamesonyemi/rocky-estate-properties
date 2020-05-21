@@ -34,15 +34,17 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">All Towns</h4>
+                                <h4 class="mb-0 font-size-18">All Active Towns</h4>
                                 <div class="page-title-right">
-                                <a href="{{ route('towns.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
-                                    Add New Town</a>
+                                    <a href="{{ route('towns.create') }}" class="btn btn-outline-primary btn-sm waves-effect waves-light" >Add New Town</a>
+                                    <span class="pull-left"></span>
+                                    <button type="button" class="btn  btn-outline-primary btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModalCenter">Restore Town</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <br>
+                    @include('system_setup.towns.restore')
                     <!-- end page title -->
 
                     <!-- FILTERING BY PROJECT STATUS  -->
