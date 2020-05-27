@@ -8,7 +8,7 @@
         </a>
 
         <div class="burger-menu d-none d-lg-block">
-            <span class="top-bar"></span>   
+            <span class="top-bar"></span>
             <span class="middle-bar"></span>
             <span class="bottom-bar"></span>
         </div>
@@ -44,25 +44,25 @@
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('/client-portal/onsite-visit') }}" class="nav-link">
+                <a href="{{ url('/client-portal/my-onsite-visit') }}" class="nav-link">
                     <span class="icon"><i class=' bx bx-building-house'></i></span>
                     <span class="menu-title">OnSite Visits</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('/client-portal/stage-of-completion') }}" class="nav-link">
+                <a href="{{ url('/client-portal/my-stage-of-completion') }}" class="nav-link">
                     <span class="icon"><i class='bx bxs-news'></i></span>
                     <span class="menu-title">Stages of Completion</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a href="{{ url('/client-portal/payments') }}" class="nav-link">
+                <a href="{{ url('/client-portal/my-payments') }}" class="nav-link">
                     <span class="icon"><i class='bx bx-dollar'></i></span>
                     <span class="menu-title">Payments</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/client-portal/project-tracking') }}" class="nav-link" aria-expanded="true">
+                <a href="{{ url('/client-portal/my-project-tracking') }}" class="nav-link" aria-expanded="true">
                     <span class="icon"><i class="bx bx-align-justify"></i></span>
                     <span class="menu-title">Tracking</span>
                 </a>
