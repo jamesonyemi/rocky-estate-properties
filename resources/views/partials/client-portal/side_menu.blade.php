@@ -57,7 +57,7 @@
             </li>
             <li class="nav-item ">
                 <a href="{{ url('/client-portal/my-payments') }}" class="nav-link">
-                    <span class="icon"><i class='bx bx-dollar'></i></span>
+                    <span class="icon"><i class=''>₵</i></span>
                     <span class="menu-title">Payments</span>
                 </a>
             </li>
