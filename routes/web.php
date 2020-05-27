@@ -60,6 +60,7 @@ use Illuminate\Support\Facades\Route;
         Route::prefix('system-setup')->group(function () {
             Route::resource('towns', 'TownController');
             Route::get('/restore-form', 'TownController@restore')->name('restore-form');
+            Route::any('/towns/get-restore-data/{id}', 'TownController@getTown')->name('get-restore-data');
             Route::any('/restore-update', 'TownController@restoreTown')->name('restore-update');
             Route::resource('nationality', 'NationalityController');
             Route::resource('title', 'TitleController');

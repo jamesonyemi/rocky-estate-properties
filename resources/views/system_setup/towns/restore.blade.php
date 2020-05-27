@@ -3,13 +3,13 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Restore Deleted Town</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="exampleModalLongTitle">Restore Town</h5>
+        <button type="button" id="close-modal" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <form class="mt-2" action="{!! route('restore-update') !!}"  method="POST">
+      <div class="modal-body" id="modal-body">
+        <form class="mt-2" action="#"  method="POST" id="form">
           {{ csrf_field() }}
           <div class="form-row">
             <div class="form-group col-md-4"> </div>
@@ -41,8 +41,8 @@
             </div> --}}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+          <button type="button" class="btn btn-primary" id="btn-submit">Save changes</button>
         </div>
         </form>
       </div>
@@ -50,3 +50,32 @@
   </div>
 </div>
 <!-- Restore Deleted Towns modal -->
+<script>
+       let list           = document.getElementById("tid");
+       let btnSaveChanges = document.getElementById("btn-submit");
+       let notify         = document.getElementById("modal-body");
+       let ModalTitle     = document.getElementById("exampleModalLongTitle");
+       let closeModal     = document.getElementById("close-modal");
+
+
+      //  list.addEventListener('change', () => {
+      //   // let getId                = list.options[list.selectedIndex].value;
+      //     ModalTitle.textContent = list.options[list.selectedIndex].text;
+      //     ModalTitle.textContent = "Activating... " + ModalTitle.textContent;
+      //     ModalTitle.classList.add("text-success");
+      //   });
+
+      btnSaveChanges.addEventListener('click', (e) => {
+        let getId = list.options[list.selectedIndex].value;
+        fetch(`{!! url('admin-portal/system-setup/towns/get-restore-data') !!}` + '/' +getId )
+          .then(response => response.json())
+          .then(data => console.log(data))
+        ModalTitle.textContent = list.options[list.selectedIndex].text;
+        notify.textContent     = "Activation in Progress... " + ModalTitle.textContent;
+        notify.classList.add("text-success");
+          setTimeout(() => {
+            location.reload();
+          }, 15000);
+      });
+
+</script>

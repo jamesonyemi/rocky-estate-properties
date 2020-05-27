@@ -195,8 +195,19 @@ class TownController extends Controller
 
     }
 
-    public function restoreTown(Request $request)
+    public function getTown(Request $request, $id)
     {
+        $get_data             =  DB::table('tbltown')->where('tid', $id)->get();
+        $request->active      =  'yes';
+        $request->is_deleted  =  0;
+        $isActive             =  [ "active" => $request->active, "is_deleted" => $request->is_deleted ];
+        $restore              =  DB::table('tbltown')->where('tid', $id)->update($isActive);
+        return json_encode($get_data);
+    }
+
+    public function restoreTown(Request $request, $id)
+    {
+
         $id                   =  $request->tid;
         $request->active      =  'yes';
         $request->is_deleted  =  0;

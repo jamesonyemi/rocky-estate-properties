@@ -120,5 +120,6 @@
         <!-- end main content-->
 
     </div>
+    <br><br><br>
     <!-- END layout-wrapper -->
 @include('partials.footer')
