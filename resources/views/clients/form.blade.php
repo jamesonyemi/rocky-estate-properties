@@ -18,41 +18,37 @@
                         <div class="form-group col-md-4">
                             <label for="validate_title">Title</label>
                             <select id="title" name="title" class="form-control custom-select" required>
-                                <option>-- select --</option>
+                                <option value="">-- select --</option>
                               @foreach ($titleId as $id => $title)
                                     <option value="{{ $title }}" class="text-capitalize">{{ ucwords($id)  }}</option>
                                     @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-2">
-
-                        </div>
+                        <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
                             <label for="validate_firstname">First Name</label>
                             <input type="text" class="form-control " id="fname"
-                                name="fname" placeholder="">
+                                name="fname" placeholder="" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_othername">Middle Name</label>
                             <input type="text" class="form-control" name="oname" id="oname"
-                                placeholder="">
+                                placeholder="" required>
                             </div>
-                                <div class="form-group col-md-2"> </div>    
+                                <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
                             <label for="validate_lastname">Last Name</label>
-                            <input type="text" class="form-control" placeholder="" id="lname" name="lname">
+                            <input type="text" class="form-control" placeholder="" id="lname" name="lname" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_birthday">Date of Birth</label>
-                            <input type="date" class="form-control" id="dob" name="dob" required>
+                            <input type="date" class="form-control" id="dob" name="dob" max="<?= date('Y-m-d') ?>" required>
                         </div>
-                        <div class="form-group col-md-2">
-
-                        </div>
+                        <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_email">Email</label>
                             <input type="email" name="email" class="form-control" id="email" required>
@@ -60,34 +56,30 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-
                             <label for="validate_phone1">Phone1</label>
-                            <input type="text" class="form-control" id="phone1" name="phone1" required>
+                            <input type="tel" class="form-control" id="phone1" name="phone1" required>
                         </div>
                             <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
                             <label for="validate_phone2">Phone2</label>
-                            <input type="text" class="form-control" id="phone2" name="phone2"required>
+                            <input type="tel" class="form-control" id="phone2" name="phone2">
                         </div>
-                        
                     </div>
                     <div class="form-row">
                     <div class="form-group col-md-4">
                     <label for="validate_country">Nationality</label>
-                    <select id="gender" name="gender" class="form-control custom-select"  required>
-                                <option>-- select --</option>
+                    <select id="nationality" name="nationality" class="form-control custom-select"  required>
+                                <option value="">-- select --</option>
                                 @foreach ($countryId as $key => $country)
                                 <option value="{{ $country }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-2">
-
-                        </div>
+                        <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_gender">Gender</label>
                             <select id="gender" name="gender" class="form-control custom-select"  required>
-                            <option>-- select --</option>
+                            <option value="">-- select --</option>
                                 @foreach ($genders as $id => $gender_type)
                                 <option value="{{ $gender_type }}" class="text-capitalize">{{ ucwords($id)  }}</option>
                                 @endforeach
@@ -97,18 +89,18 @@
                     <div class="form-row">
                       <div class="form-group col-md-4">
                             <label for="validate_nok">Next of Kin</label>
-                            <input type="text" class="form-control" id="nok" name="nok">
+                            <input type="text" class="form-control" id="nok" name="nok" required>
                         </div>
                         <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_phone_number">Next of Kin Phone Number</label>
-                            <input type="text" class="form-control" id="nokphone" name="nokphone">
+                            <input type="tel" class="form-control" id="nokphone" name="nokphone" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                               <label for="validate_nok">Relationship to Next of Kin</label>
-                              <input type="text" class="form-control" id="relationship"name="relationship">
+                              <input type="text" class="form-control" id="relationship"name="relationship" required>
                           </div>
                           <div class="form-group col-md-2"> </div>
                       </div>

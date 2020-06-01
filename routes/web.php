@@ -31,6 +31,10 @@ use Illuminate\Support\Facades\Route;
 
         Route::resource('clients', 'ClientController');
         Route::any('/corporate-client', 'ClientController@corporateClient')->name('corporate-client');
+        Route::any('/corporate-client-wp', 'ClientController@corporateClientWithProject')->name('corporate-client-wp');
+        Route::any('/client-wp', 'ClientController@IndividualClientWithProject')->name('client-wp');
+        Route::any('/client-wnp', 'ClientController@IndividualClientWithNoProject')->name('client-wnp');
+        Route::any('/corporate-client-wnp', 'ClientController@corporateClientWithNoProject')->name('corporate-client-wnp');
         Route::get('/edit-corporate-client/{id}/edit_corporate', 'ClientController@editCorporateClient')->name('edit-corporate-client');
         Route::any('/edit-corporate-client/{id}', 'ClientController@updateCorporateClient')->name('update-corporate-client');
         Route::any('/view-corporate-client/{id}', 'ClientController@viewCorporateClient')->name('view-corporate-client');

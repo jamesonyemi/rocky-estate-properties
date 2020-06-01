@@ -1,6 +1,5 @@
 @include('partials.master_header')
-  <br><br>
+  <br><br><br>
     @include('partials.success_alert')
-    @include('clients.client_leader_board')
-
+    @include('clients.corporate_clients')
 @include('partials.footer')

@@ -18,7 +18,7 @@ class TitleController extends Controller
     public function index()
     {
         //code
-        $personal_title  = DB::table('tbltitle')->get();
+        $personal_title  = DB::table('tbltitle')->where('active', 'yes')->get();
         return view('system_setup.personal_title.index', compact( 'personal_title' ));
     }
 
@@ -49,7 +49,7 @@ class TitleController extends Controller
              'salutation' => ucfirst($request->salutation),
             ]
           ));
-     
+
         // dd($create_country); //for testing
         return redirect()->route('title.index')->with('success', 'New Personal Title Created Sucessfully');
     }

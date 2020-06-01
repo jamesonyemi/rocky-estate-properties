@@ -74,7 +74,8 @@
             @if ( Auth::user()->role_id === 1 || Auth::user()->role_id === 2 )
             <li class="nav-item ">
                 <a href="{{ url('/admin-portal/payments') }}" class="nav-link">
-                    <span class="icon"><i class=''> ₵ </i></span>
+                    <span class="icon"><i class='' style="font-size: 10.5px; font-weight:bold;
+                        font-style: normal;"> GH₵</i></span>
                     <span class="menu-title">Payments</span>
                 </a>
             </li>
@@ -101,7 +102,7 @@
                     </li>
 
                     <li class="nav-item ">
-                        <a href="{{ url('/admin-portal/system-setup/personal_title') }}" class="nav-link">
+                        <a href="{{ url('/admin-portal/system-setup/title') }}" class="nav-link">
                             <span class="icon"><i class='bx bx-log-in-circle'></i></span>
                             <span class="menu-title">Title</span>
                         </a>
@@ -120,48 +121,6 @@
                             <span class="menu-title">Assign Role to User</span>
                         </a>
                     </li>
-                    {{-- <li class="nav-item ">
-                        <a href="{{ url('system-setup/region') }}" class="nav-link">
-                            <span class="icon"><i class='bx bx-log-out'></i></span>
-                            <span class="menu-title">Regions</span>
-                        </a>
-                    </li> --}}
-
-                    {{-- <li class="nav-item ">
-                        <a href="{{ url('system-setup/branches') }}" class="nav-link">
-                            <span class="icon"><i class='bx bx-lock'></i></span>
-                            <span class="menu-title">Branches</span>
-                        </a>
-                    </li> --}}
-
-                    {{-- <li class="nav-item ">
-                        <a href=" {{ url('system-setup/status') }}" class="nav-link">
-                            <span class="icon"><i class='bx bx-lock-alt'></i></span>
-                            <span class="menu-title">Status</span>
-                        </a>
-                    </li> --}}
-
-
-                    {{-- <li class="nav-item ">
-                        <a href="{{ url('system-setup/gender') }}" class="nav-link">
-                            <span class="icon"><i class='bx bx-log-out-circle'></i></span>
-                            <span class="menu-title">Gender</span>
-                        </a>
-                    </li> --}}
-
-                    {{-- <li class="nav-item ">
-                        <a href="pages/session-lock-screen.html" class="nav-link">
-                            <span class="icon"><i class='bx bxs-lock-open-alt'></i></span>
-                            <span class="menu-title">Lock Screen v1</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item ">
-                        <a href="pages/session-lock-screen-with-image.html" class="nav-link">
-                            <span class="icon"><i class='bx bxs-lock-open'></i></span>
-                            <span class="menu-title">Lock Screen v2</span>
-                        </a>
-                    </li> --}}
                 </ul>
             </li>
         </ul>

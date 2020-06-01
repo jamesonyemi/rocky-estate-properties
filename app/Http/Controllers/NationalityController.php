@@ -18,10 +18,10 @@ class NationalityController extends Controller
     public function index()
     {
         //code
-        $nationality  = DB::table('tblcountry')->get();
+        $nationality  = DB::table('tblcountry')->where("isdeleted", false)->get();
         return view('system_setup.nationality.index', compact( 'nationality' ));
-    
-           
+
+
     }
 
     /**
@@ -51,8 +51,7 @@ class NationalityController extends Controller
             'country_name' => ucfirst($request->country_name)
            ]
          ));
-    
-       dd($create_country);
+
        return redirect()->route('nationality.index')->with('success', 'New Country Created Sucessfully');
     }
 
@@ -67,7 +66,7 @@ class NationalityController extends Controller
         //code
         $nationality = DB::table('tblcountry')->where('id', $id)->get();
         return view('system_setup.nationality.show', compact('nationality' ));
-            
+
     }
 
     /**

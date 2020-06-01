@@ -30,14 +30,53 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //code 
+        return view('clients.index');
+    }
+
+    public function IndividualClientWithProject()
+    {
+        //code
+        $clientWithProjects =  static::clientWithProjects();
+        $clients            =  DB::table("tblclients");
+        $all_clients        =  $clients->get();
+
+        return view('clients.individual', compact('all_clients', 'clientWithProjects'));
+    }
+
+    public function IndividualClientWithNoProject()
+    {
+        //code
+        $clientWithProjects =  static::clientWithProjects();
+        $clients            =  DB::table("tblclients");
+        $all_clients        =  $clients->get();
+        $projects           =  DB::table("tblproject");
+        $get_projects       =  $projects->get();
+
+        return view('clients.individual_with_no_project', compact('all_clients', 'get_projects', 'clientWithProjects'));
+    }
+
+    public function corporateClientWithProject()
+    {
+        //code
         $clientWithProjects =  static::clientWithProjects();
         $regions            =  DB::table('tblregion')->pluck('rid', 'region');
         $clients            =  DB::table("tblclients");
         $all_clients        =  $clients->get();
         $corporate          =  $clients->where('cc_company_name', '!=', '' )->select("*")->get();
-            
-        return view('clients.index', compact('all_clients', 'corporate', 'regions','clientWithProjects'));
+
+        return view('clients.corporate_client_with_project', compact('all_clients', 'corporate', 'regions','clientWithProjects'));
+    }
+
+    public function corporateClientWithNoProject()
+    {
+        //code
+        $clientWithProjects =  static::clientWithProjects();
+        $regions            =  DB::table('tblregion')->pluck('rid', 'region');
+        $clients            =  DB::table("tblclients");
+        $all_clients        =  $clients->get();
+        $corporate          =  $clients->where('cc_company_name', '!=', '' )->select("*")->get();
+
+        return view('clients.corporate_client_without_project', compact('all_clients', 'corporate', 'regions','clientWithProjects'));
     }
 
     public static function clientWithProjects()
@@ -50,11 +89,11 @@ class ClientController extends Controller
             ->join('tblregion', 'tblregion.rid', '=', 'tblproject.rid')
             ->select('tblproject.rid as region_id', 'tblregion.region', 'tbltown.tid as location_id',
                         'tbltown.town as location', 'tblproject.title as project_title','tblclients.phone1 as client_prime_contact',
-                        'tblclients.phone2 as client_second_contact','tblclients.email as client_email','tblproject.pid',   
-                        'tblclients.clientid',( DB::raw('Concat(tblclients.title, " ",tblclients.fname, " ", tblclients.lname) as full_name') ),  
+                        'tblclients.phone2 as client_second_contact','tblclients.email as client_email','tblproject.pid',
+                        'tblclients.clientid',( DB::raw('Concat(tblclients.title, " ",tblclients.fname, " ", tblclients.lname) as full_name') ),
                         'tblstatus.status as client_project_status', 'tblstatus.id as client_project_status_id')
             ->orderBy('tblproject.pid')->where('tblclients.active', '=', 'yes')->get()->toArray();
-            
+
             return $clientWithProjects;
     }
 
@@ -87,11 +126,12 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        #code 
+        #code
         $primaryPhoneNumber  =  $request->phone1;
         $successMessage      =  '"Created Sucessfully, with an Email sent to Sign-Up, please contact client ("'.$primaryPhoneNumber.'") to check their Inbox';
+        
         $postData            =  static::allExcept();
-        $createNewClient     =  DB::table('tblclients')->insertGetId([$postData]);
+        $createNewClient     =  DB::table('tblclients')->insertGetId($postData);
         $client              =  DB::table('tblclients')->where('clientid', $createNewClient)->select('*')->first();
 
         $currentClientEmail  =  $client->email;
@@ -118,7 +158,7 @@ class ClientController extends Controller
 
     public function corporateClient(CorporateUserRequest $request)
     {
-       
+
         $flashMessage   =   'Corporate Client Created Sucessfully, please contact client Id #  ';
         $isValidated    =   $request->validated();       /* Will return only validated data */
 
@@ -126,11 +166,11 @@ class ClientController extends Controller
             Session::flash('error', $isValidated->messages()->first());
             return redirect()->back()->withInput();
         }
-        
+
         $postData         = static::processCorporateClientData();
         $corporateClient  = DB::table('tblclients')->insertGetId(array_merge($postData));
         $newCorporateUser = DB::table('tblclients')->where('clientid', $corporateClient )->select('clientid','cc_company_name', 'email', 'cc_secondary_email', 'cc_mobile')->first();
-                                    
+
         static::$secret =   static::randomizedInteger();
         $secretWord     =   static::$secret;
         $secretKey      =   $secretWord;
@@ -143,27 +183,27 @@ class ClientController extends Controller
         $password       =   password_hash($secretKey, PASSWORD_ARGON2I );
 
         $data           =   [
-            'role_id'            => $roleId['corporate_client'], 
-            'clientid'           => $clientId,  
+            'role_id'            => $roleId['corporate_client'],
+            'clientid'           => $clientId,
             'first_name'         => $company_name,
             'full_name'          => $full_name,
-            'email'              => $email, 
-            'cc_secondary_email' => $cc_sec_email, 
+            'email'              => $email,
+            'cc_secondary_email' => $cc_sec_email,
             'password'           => $password,
             'verified'           => static::isVerified(),
         ];
 
-        
+
         if ( $corporateClient ) {
-            # code...                      
+            # code...
             $createCorporateUser =  DB::table('users')->insertGetId(array_merge($data));
-            
+
             if ( $createCorporateUser ) {
                         FacadesNotification::route('mail', $email)->notify(new CorporateClientLoginNotification($email, $secretKey, $company_name));
                     }
-                                       
+
                 return redirect()->route('clients.index')->with('success', $flashMessage.$createCorporateUser.' (with phone number '.$newCorporateUser->cc_mobile.') to check their Inbox');
-                                                                
+
             }
     }
 
@@ -180,7 +220,7 @@ class ClientController extends Controller
         $clients      = DB::table('tblclients')->get();
         $genders      = DB::table('tblgender')->get();
         $countries    = DB::table('tblcountry')->get();
-        
+
         $genId        = DB::table('tblgender')->get()->pluck('type', 'id');
         $countryId    = DB::table('tblcountry')->get()->pluck('country_name', 'id');
         $clientId     = DB::table('tblclients')->where('clientid', $id)->get();
@@ -240,7 +280,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
+
         // $id         = PaymentController::decryptedId($id);
         $updateData        = static::allExcept();
         $update_clientInfo = DB::table('tblclients')->where('clientid', $id)->update($updateData);
@@ -249,7 +289,7 @@ class ClientController extends Controller
 
      public function updateCorporateClient(Request $request, $id)
     {
-        
+
         $updateData        = static::processCorporateClientData();
         $update_clientInfo = DB::table('tblclients')->where('clientid', $id)->update(array_merge($updateData));
         return redirect()->route('clients.index')->with('success', 'Corporate Client Info Updated');
@@ -336,7 +376,7 @@ class ClientController extends Controller
     {
         # code...
         $postData  =  static::processData([
-            
+
             'cc_secondary_email'  =>  request('secondary_email'),
             'cc_company_name'     =>  request('company_name'),
             'cc_mobile'           =>  request('mobile'),
@@ -353,7 +393,7 @@ class ClientController extends Controller
     {
         # code...
         $postData  =  static::processData([
-            
+
             'first_name'   =>  request('fname'),
             'last_name'    =>  request('lname'),
             'middle_name'  =>  request('oname'),

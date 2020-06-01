@@ -3,6 +3,7 @@
 
 <!-- Begin page -->
  <div id="layout-wrapper">
+
      <!-- ============================================================== -->
      <!-- Start right Content here -->
      <!-- ============================================================== -->
@@ -14,9 +15,10 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex align-items-center justify-content-between">
-                            <h4 class="mb-0 font-size-18 text-uppercase">Individual with Projects</h4>
+                            <h4 class="mb-0 font-size-18">Individual with Zero Project</h4>
                             <div class="page-title-right">
-                                <a href="{!! url()->previous()!!}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >Back</a>
+                                {{-- <a href="{{ route('clients.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
+                                    New Client</a>  --}}
                                 </div>
                         </div>
                     </div>
@@ -42,6 +44,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                         @foreach ($clientWithProjects as $item)
                                         <tr>
                                             <td id="client_id"></td>

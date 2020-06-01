@@ -75,7 +75,7 @@
         notify.classList.add("text-success");
           setTimeout(() => {
             location.reload();
-          }, 15000);
+          }, 1000);
       });
 
 </script>

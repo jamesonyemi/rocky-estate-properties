@@ -1,3 +1,6 @@
+@include('partials.master_header')
+  <br><br><br>
+    @include('partials.success_alert')
 
     <!-- Begin page -->
     <div id="layout-wrapper">
@@ -11,19 +14,14 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18 text-uppercase">Corporate Clients</h4>
-                                <div class="col-6"></div>
-                                {{-- <div class="page-title-right">
-                                    <a href="{!! url('admin-portal/corporate-client-wnp') !!}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >Without Project</a>
-                                    </div> --}}
-                                    <div class="col-0"></div>
+                                <h4 class="mb-0 font-size-18">Corporate Clients Zero Project</h4>
                                 <div class="page-title-right">
-                                <a href="{!! url()->previous()!!}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >Back</a>
+                                <a href="{{ route('clients.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
+                                    New Client</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <br>
+                    </div><br>
                     <!-- end page title -->
                     <div class="row">
                         <div class="col-12">
@@ -54,13 +52,13 @@
                                                 <td>{{ $item->cc_res_addr }}</td>
                                                 <td>
                                                     <?php $encryptId = Crypt::encrypt($item->clientid) ?>
-                                                    <a href=" {{ route('view-corporate-client',$encryptId)}}" class="d-inline-block text-success mr-2">
+                                                    <a href=" {{ route('view-corporate-client',$encryptId)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('edit-corporate-client',$encryptId) }}" class="d-inline-block text-success mr-2">
+                                                    <a href="{{ route('edit-corporate-client',$encryptId) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                                             <i class="bx bx-edit"></i>
                                                         </a>
-                                                    <a  href="#" class="d-inline-block text-success"
+                                                    <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
                                                         onclick="event.preventDefault();
                                                                  document.getElementById('delete_client'+ {{ $encryptId }}).submit();">
 
@@ -94,3 +92,4 @@
     </div>
     <!-- END layout-wrapper -->
     <div style="margin-bottom: -50px;"></div>
+@include('partials.footer')

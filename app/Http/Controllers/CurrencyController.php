@@ -20,8 +20,8 @@ class CurrencyController extends Controller
         //code
         $currency  = DB::table('tblcurrency')->get();
         return view('system_setup.currency.index', compact( 'currency' ));
-    
-           
+
+
     }
 
     /**
@@ -44,15 +44,9 @@ class CurrencyController extends Controller
     public function store(Request $request)
     {
        //code
-       $postData        = ClientController::allExcept();
-       $create_currency = DB::table('tblcurrency')->insert( array_merge(
-           $postData, [
-            'short_name' => strtoupper($request->short_name),
-            'long_name'  => ucfirst($request->long_name)
-           ]
-         ));
-    
-       dd($create_currency);
+       $postData = ClientController::allExcept();
+       $create   = DB::table('tblcurrency')->insert( array_merge($postData));
+
        return redirect()->route('currency.index')->with('success', 'New Currency Created Sucessfully');
     }
 
@@ -67,7 +61,7 @@ class CurrencyController extends Controller
         //code
         $currency = DB::table('tblcurrency')->where('id', $id)->get();
         return view('system_setup.currency.show', compact('currency' ));
-            
+
     }
 
     /**
