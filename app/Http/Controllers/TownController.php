@@ -178,11 +178,12 @@ class TownController extends Controller
     {
       // code;
       $decryptId            = PaymentController::decryptedId($id);
-      $getTownId            = ($decryptId - 1);
+      $getTownId            = $decryptId;
       $request->active      = 'no';
-      $request->is_deleted  = 1;
-      $isActive = [ "active" => $request->active, "is_deleted" => $request->is_deleted ];
-      $deleted  = DB::table('tbltown')->where('tid', $getTownId)->update($isActive);
+      $request->is_deleted  = true;
+      $isDeleted = [ "active" => $request->active, "is_deleted" => $request->is_deleted ];
+      $deleted  = DB::table('tbltown')->where('tid', $getTownId)->update($isDeleted);
+      
       return redirect()->route('towns.index')->with('success', 'Town # ' .$getTownId. '  Info Deleted');
     }
 

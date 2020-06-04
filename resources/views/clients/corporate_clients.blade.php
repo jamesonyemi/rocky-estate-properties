@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18 text-uppercase">Corporate Clients</h4>
+                                <h4 class="mb-0 font-size-18 text-uppercase">Corporate Clients With Project</h4>
                                 <div class="col-6"></div>
                                 {{-- <div class="page-title-right">
                                     <a href="{!! url('admin-portal/corporate-client-wnp') !!}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >Without Project</a>
@@ -27,6 +27,10 @@
                     <!-- end page title -->
                     <div class="row">
                         <div class="col-12">
+                            {{-- @foreach ($clientWithProjects as $item)
+
+                                {{ ddd($item)}}
+                                @endforeach --}}
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title"></h4>
@@ -44,11 +48,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($corporate as $item)
+                                            @foreach ($clientWithProjects as $item)
+                                            @if ( !empty($item->cc_company_name))
                                             <tr>
                                                 <td id="corporate_ids"></td>
                                                 <td style='text-align:left'>  {{ $item->cc_company_name }} </td>
-                                                <td style='text-align:left'>{{ $item->email }}</td>
+                                                <td style='text-align:left'>{{ $item->client_email }}</td>
                                                 <td>{{ $item->cc_mobile }}</td>
                                                 <td>{{ $item->cc_postal_addr }}</td>
                                                 <td>{{ $item->cc_res_addr }}</td>
@@ -58,22 +63,21 @@
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
                                                     <a href="{{ route('edit-corporate-client',$encryptId) }}" class="d-inline-block text-success mr-2">
-                                                            <i class="bx bx-edit"></i>
+                                                        <i class="bx bx-edit"></i>
                                                         </a>
                                                     <a  href="#" class="d-inline-block text-success"
-                                                        onclick="event.preventDefault();
+                                                    onclick="event.preventDefault();
                                                                  document.getElementById('delete_client'+ {{ $encryptId }}).submit();">
-
                                                     <form id="{{'delete_client' .$encryptId}}" action="{{ route('delete-corporate-client',$encryptId) }}" method="post" >
                                                         {{ csrf_field() }}
                                                         <input name="_method" type="hidden" value="DELETE">
                                                         <i class="bx bx-trash"></i>
                                                     </form>
                                                 </a>
-                                                </td>
-                                            </tr>
-
-                                            @endforeach
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @endforeach
                                         </tbody>
                                     </table>
 

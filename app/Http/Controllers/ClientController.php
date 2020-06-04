@@ -33,6 +33,14 @@ class ClientController extends Controller
         return view('clients.index');
     }
 
+    public function allClients()
+    {
+        $clients            =  DB::table("tblclients");
+        $all_clients        =  $clients->get();
+        return view('clients.all', compact('all_clients'));
+    }
+
+
     public function IndividualClientWithProject()
     {
         //code
@@ -46,13 +54,14 @@ class ClientController extends Controller
     public function IndividualClientWithNoProject()
     {
         //code
-        $clientWithProjects =  static::clientWithProjects();
-        $clients            =  DB::table("tblclients");
-        $all_clients        =  $clients->get();
-        $projects           =  DB::table("tblproject");
-        $get_projects       =  $projects->get();
+        $clientWithZeroProject =  static::clientWithZeroProject();
+        $clients               =  DB::table("tblclients");
+        $nationality           =  DB::table('tblcountry')->pluck('id', 'country_name');
+        $all_clients           =  $clients->get();
+        $projects              =  DB::table("tblproject");
+        $get_projects          =  $projects->get();
 
-        return view('clients.individual_with_no_project', compact('all_clients', 'get_projects', 'clientWithProjects'));
+        return view('clients.individual_with_no_project', compact('all_clients', 'get_projects', 'nationality', 'clientWithZeroProject'));
     }
 
     public function corporateClientWithProject()
@@ -70,13 +79,13 @@ class ClientController extends Controller
     public function corporateClientWithNoProject()
     {
         //code
-        $clientWithProjects =  static::clientWithProjects();
+        $clientWithZeroProject =  static::corporateClientWithZeroProject();
         $regions            =  DB::table('tblregion')->pluck('rid', 'region');
         $clients            =  DB::table("tblclients");
         $all_clients        =  $clients->get();
         $corporate          =  $clients->where('cc_company_name', '!=', '' )->select("*")->get();
 
-        return view('clients.corporate_client_without_project', compact('all_clients', 'corporate', 'regions','clientWithProjects'));
+        return view('clients.corporate_client_without_project', compact('all_clients', 'corporate', 'regions','clientWithZeroProject'));
     }
 
     public static function clientWithProjects()
@@ -90,11 +99,35 @@ class ClientController extends Controller
             ->select('tblproject.rid as region_id', 'tblregion.region', 'tbltown.tid as location_id',
                         'tbltown.town as location', 'tblproject.title as project_title','tblclients.phone1 as client_prime_contact',
                         'tblclients.phone2 as client_second_contact','tblclients.email as client_email','tblproject.pid',
-                        'tblclients.clientid',( DB::raw('Concat(tblclients.title, " ",tblclients.fname, " ", tblclients.lname) as full_name') ),
-                        'tblstatus.status as client_project_status', 'tblstatus.id as client_project_status_id')
-            ->orderBy('tblproject.pid')->where('tblclients.active', '=', 'yes')->get()->toArray();
+                        'tblclients.clientid',( DB::raw('Concat(tblclients.title, " ",tblclients.fname, " ", tblclients.lname) as full_name') ), 'tblclients.cc_company_name', 'tblclients.cc_mobile', 'tblclients.cc_postal_addr', 'tblclients.cc_res_addr', 'tblclients.cc_fax', 'tblclients.cc_secondary_email', 'tblclients.isdeleted',
+                        'tblclients.active', 'tblstatus.status as client_project_status', 'tblstatus.id as client_project_status_id')
+            ->orderBy('tblproject.pid')->where('tblclients.active', '=', 'yes')
+            ->where('tblproject.active', '=', 'yes')
+            ->get()->toArray();
 
             return $clientWithProjects;
+    }
+
+    public static function clientWithZeroProject()
+    {
+        # code...
+        $clientWithZeroProject  = DB::table('tblclients')
+        ->select('*')->whereNotIn('tblclients.clientid', [("select tblproject.clientid from tblproject ")] )
+        ->get()->toArray();
+
+        return $clientWithZeroProject;
+    }
+
+    public static function corporateClientWithZeroProject()
+    {
+        # code...
+        $clientWithZeroProject  = DB::table('tblclients')
+        ->select('tblclients.phone1', 'tblclients.phone2','tblclients.email', ( DB::raw('Concat(tblclients.title, " ",tblclients.fname, " ", tblclients.lname) as full_name') ), 'tblclients.cc_company_name', 'tblclients.cc_mobile', 'tblclients.cc_postal_addr', 'tblclients.cc_res_addr', 'tblclients.cc_fax', 'tblclients.cc_secondary_email', 'tblclients.isdeleted','tblclients.active', 'tblclients.clientid')
+        ->whereNotIn('tblclients.clientid', [("select tblproject.clientid from tblproject")] )
+        ->where('cc_company_name', '<>', null)
+        ->get()->toArray();
+
+        return $clientWithZeroProject;
     }
 
     /**
@@ -129,7 +162,7 @@ class ClientController extends Controller
         #code
         $primaryPhoneNumber  =  $request->phone1;
         $successMessage      =  '"Created Sucessfully, with an Email sent to Sign-Up, please contact client ("'.$primaryPhoneNumber.'") to check their Inbox';
-        
+
         $postData            =  static::allExcept();
         $createNewClient     =  DB::table('tblclients')->insertGetId($postData);
         $client              =  DB::table('tblclients')->where('clientid', $createNewClient)->select('*')->first();
@@ -280,11 +313,10 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        // $id         = PaymentController::decryptedId($id);
         $updateData        = static::allExcept();
         $update_clientInfo = DB::table('tblclients')->where('clientid', $id)->update($updateData);
-        return redirect()->route('clients.index')->with('success', 'Client Info Updated');
+        $isUpdated         = ($update_clientInfo) ? 'Info had been Updated' : 'No change made' ;
+        return redirect()->route('clients.index')->with('success', 'Client #' .$id. ' '. $isUpdated);
     }
 
      public function updateCorporateClient(Request $request, $id)
@@ -292,7 +324,8 @@ class ClientController extends Controller
 
         $updateData        = static::processCorporateClientData();
         $update_clientInfo = DB::table('tblclients')->where('clientid', $id)->update(array_merge($updateData));
-        return redirect()->route('clients.index')->with('success', 'Corporate Client Info Updated');
+        $isUpdated         = ($update_clientInfo) ? 'Info had been Updated' : 'No change made' ;
+        return redirect()->route('clients.index')->with('success', 'Client #' .$id. ' '. $isUpdated);
 
     }
 
@@ -303,21 +336,29 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         //code
-        $id                  =  PaymentController::decryptedId($id);
-        $flag_as_deleted     =  ['isdeleted' => "yes"];
-        $update_clientInfo   =  DB::table('tblclients')->where('clientid', $id)->update($flag_as_deleted);
-        return redirect('/clients')->with('success', 'Client Info Deleted');
+        $decryptId            =  PaymentController::decryptedId($id);
+        $getId                =  $decryptId;
+        $request->active      =  'no';
+        $request->isdeleted   =  true;
+        $isDeleted            =  [ "active" => $request->active, "isdeleted" => $request->isdeleted ];
+        $update_clientInfo    =  DB::table('tblclients')->where('clientid', $getId)->update($isDeleted);
+
+        return redirect('/admin-portal/clients')->with('success', 'Client #' . $getId. ' Info Deleted');
     }
 
-    public function destroyCorporateClient($id)
+    public function destroyCorporateClient(Request $request, $id)
     {
-        $id                  =  PaymentController::decryptedId($id);
-        $flag_as_deleted     =  ['isdeleted' => "yes"];
-        $update_clientInfo   =  DB::table('tblclients')->where('clientid', $id)->update($flag_as_deleted);
-        return redirect('/clients')->with('success', 'Corporate Client Info Deleted');
+        $decryptId            =  PaymentController::decryptedId($id);
+        $getId                =  $decryptId;
+        $request->active      =  'no';
+        $request->isdeleted   =  true;
+        $isDeleted            =  [ "active" => $request->active, "cc_deleted" => $request->isdeleted ];
+        $update_clientInfo    =  DB::table('tblclients')->where('clientid', $getId)->update($isDeleted);
+
+        return redirect('/admin-portal/clients')->with('success', 'Client #' . $getId. ' Info Deleted');
     }
 
     public function genderStatus($id)

@@ -1,1 +1,1 @@
-@include('clients.all_clients')
+@include('clients.cl_board')

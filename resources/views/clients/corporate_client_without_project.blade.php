@@ -1,8 +1,7 @@
 @include('partials.master_header')
-  <br><br><br>
-    @include('partials.success_alert')
-
+@include('partials.success_alert')
     <!-- Begin page -->
+    <br><br><br>
     <div id="layout-wrapper">
         <!-- ============================================================== -->
         <!-- Start right Content here -->
@@ -14,17 +13,26 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">Corporate Clients Zero Project</h4>
+                                <h5 class="mb-0 font-size-18 text-uppercase">All Corporate Clients</h5>
+                                <div class="col-6"></div>
+                                {{-- <div class="page-title-right">
+                                    <a href="{!! url('admin-portal/corporate-client-wnp') !!}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >Without Project</a>
+                                    </div> --}}
+                                    <div class="col-0"></div>
                                 <div class="page-title-right">
-                                <a href="{{ route('clients.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
-                                    New Client</a>
+                                <a href="{!! url()->previous()!!}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >Back</a>
                                 </div>
                             </div>
                         </div>
-                    </div><br>
+                    </div>
+                    <br>
                     <!-- end page title -->
                     <div class="row">
                         <div class="col-12">
+                            {{-- @foreach ($clientWithProjects as $item)
+
+                                {{ ddd($item)}}
+                                @endforeach --}}
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title"></h4>
@@ -42,7 +50,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($corporate as $item)
+                                            @foreach ($clientWithZeroProject as $item)
                                             <tr>
                                                 <td id="corporate_ids"></td>
                                                 <td style='text-align:left'>  {{ $item->cc_company_name }} </td>
@@ -52,26 +60,26 @@
                                                 <td>{{ $item->cc_res_addr }}</td>
                                                 <td>
                                                     <?php $encryptId = Crypt::encrypt($item->clientid) ?>
-                                                    <a href=" {{ route('view-corporate-client',$encryptId)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <a href=" {{ route('view-corporate-client',$encryptId)}}" class="d-inline-block text-success mr-2">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('edit-corporate-client',$encryptId) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
-                                                            <i class="bx bx-edit"></i>
+                                                    <a href="{{ route('edit-corporate-client',$encryptId) }}" class="d-inline-block text-success mr-2">
+                                                        <i class="bx bx-edit"></i>
                                                         </a>
-                                                    <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
-                                                        onclick="event.preventDefault();
+                                                    <a  href="{{ route('delete-corporate-client',$encryptId) }}" class="d-inline-block text-success"
+                                                    onclick="event.preventDefault();
                                                                  document.getElementById('delete_client'+ {{ $encryptId }}).submit();">
-
                                                     <form id="{{'delete_client' .$encryptId}}" action="{{ route('delete-corporate-client',$encryptId) }}" method="post" >
                                                         {{ csrf_field() }}
                                                         <input name="_method" type="hidden" value="DELETE">
+                                                        <input type="hidden" name="active" id="active">
+                                                        <input type="hidden" name="isdeleted" id="isdeleted">
                                                         <i class="bx bx-trash"></i>
                                                     </form>
                                                 </a>
-                                                </td>
-                                            </tr>
-
-                                            @endforeach
+                                            </td>
+                                        </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
 

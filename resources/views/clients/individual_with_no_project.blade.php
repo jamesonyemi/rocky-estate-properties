@@ -15,10 +15,10 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex align-items-center justify-content-between">
-                            <h4 class="mb-0 font-size-18">Individual with Zero Project</h4>
+                            <h4 class="mb-0 font-size-18 text-uppercase">All Individual Clients</h4>
                             <div class="page-title-right">
-                                {{-- <a href="{{ route('clients.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
-                                    New Client</a>  --}}
+                                <a href="{!! url()->previous()!!}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >Back</a>
+                            </div>
                                 </div>
                         </div>
                     </div>
@@ -37,44 +37,42 @@
                                             <th>Full Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
-                                            <th>Region</th>
-                                            <th>Location</th>
-                                            {{-- <th>Project Title</th> --}}
+                                            {{-- <th>Nationality</th> --}}
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                        @foreach ($clientWithProjects as $item)
-                                        <tr>
+                                        @foreach ($clientWithZeroProject as $item)
+                                        @if ( empty($item->cc_company_name) )
                                             <td id="client_id"></td>
-                                            <td style='text-align:left'>  {{ $item->full_name }} </td>
-                                            <td style='text-align:left'>{{ $item->client_email }}</td>
-                                            <td>{{ $item->client_prime_contact }}</td>
-                                            <td>{{ $item->region }}</td>
-                                            <td>{{ $item->location }}</td>
-                                            {{-- <td>{{ $item->project_title }}</td> --}}
+                                            <td style='text-align:left'>  {{ $item->fname ." ". $item->lname }} </td>
+                                            <td style='text-align:left'>{{ $item->email }}</td>
+                                            <td>{{ $item->phone1 }}</td>
+                                            {{-- <td>{{ ($item->nationality === $key) ? $country_name : "" }}</td> --}}
                                             <td>
                                                 <?php $encryptId = Crypt::encrypt($item->clientid) ?>
-                                                <a href=" {{ route('clients.show', $encryptId)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                <a href=" {{ route('clients.show', $encryptId)}}" class="d-inline-block text-success mr-2">
                                                     <i class="bx bxs-analyse"></i>
                                                 </a>
-                                                <a href="{{ route('clients.edit', $encryptId) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                <a href="{{ route('clients.edit', $encryptId) }}" class="d-inline-block text-success mr-2">
                                                         <i class="bx bx-edit"></i>
                                                     </a>
-                                                <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
-                                                    onclick="event.preventDefault();
-                                                             document.getElementById('delete_client'+ {{ $encryptId }}).submit();">
+                                                <a  href="#" class="d-inline-block text-success"
+                                                onclick="event.preventDefault();
+                                                        document.getElementById('delete').submit();">
 
-                                                <form id="{{'delete_client' .$encryptId}} action="{{ route('clients.destroy', $encryptId) }}" method="post" >
+                                                <form id="delete" action="{{ route('clients.destroy', $encryptId) }}" method="post" >
                                                     {{ csrf_field() }}
                                                     <input name="_method" type="hidden" value="DELETE">
+                                                    <input type="hidden" name="active" id="active">
+                                                    <input type="hidden" name="isdeleted" id="isdeleted">
                                                     <i class="bx bx-trash"></i>
                                                 </form>
                                             </a>
                                             </td>
                                         </tr>
-
+                                        @endif
                                         @endforeach
                                     </tbody>
                                 </table>

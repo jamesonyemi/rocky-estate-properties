@@ -24,6 +24,7 @@
                 <hr style="background-color:fuchsia; opacity:0.1">
                 @foreach ($clientId as $client)
                     <div class="form-row">
+                        <div class="form-group col-md-1"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_title">Title</label>
                             <div class="list-group-item">{{ $client->title }}</div>
@@ -37,12 +38,13 @@
                         </div>
                     </div>
                     <div class="form-row">
+                       <div class="form-group col-md-1"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_othername">Middle Name</label>
                             <div class="list-group-item">{{ $client->oname }} </div>
                             </div>
                                 <div class="form-group col-md-2">
-    
+
                                 </div>
                         <div class="form-group col-md-4">
                             <label for="validate_lastname">Last Name</label>
@@ -50,6 +52,7 @@
                         </div>
                     </div>
                     <div class="form-row">
+                       <div class="form-group col-md-1"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_birthday">Date of Birth</label>
                             <div class="list-group-item">{{ date("l, jS F, Y", strtotime($client->dob)) }}</div>
@@ -61,9 +64,10 @@
                             <label for="validate_email">Email</label>
                             <div class="list-group-item">{{ $client->email }}</div>
                         </div>
-                        
+
                     </div>
                     <div class="form-row">
+                       <div class="form-group col-md-1"></div>
                         <div class="form-group col-md-4">
 
                             <label for="validate_phone1">Phone1</label>
@@ -71,15 +75,16 @@
 
                         </div>
                             <div class="form-group col-md-2">
-    
+
                             </div>
                         <div class="form-group col-md-4">
                             <label for="validate_phone2">Phone2</label>
                             <div class="list-group-item">{{ $client->phone2 }}</div>
                         </div>
-                        
+
                     </div>
                     <div class="form-row">
+                       <div class="form-group col-md-1"></div>
                     <div class="form-group col-md-4">
                     <label for="validate_country">Nationality</label>
                         @foreach ($countryId as $key => $country)
@@ -100,6 +105,7 @@
                     </div>
 
                     <div class="form-row">
+                       <div class="form-group col-md-1"></div>
                       <div class="form-group col-md-4">
                             <label for="validate_nok">Next of Kin</label>
                                 <div class="list-group-item">{{ $client->nok }}</div>
@@ -114,19 +120,12 @@
                         </div>
                     </div>
                     <div class="form-row">
+                       <div class="form-group col-md-1"></div>
                         <div class="form-group col-md-4">
                               <label for="validate_nok">Relationship to Next of Kin</label>
                               <div class="list-group-item">{{ $client->relationship }}</div>
                           </div>
-                          <div class="form-group col-md-2">
-  
-                          </div>
-                          {{-- <div class="form-group col-md-4">
-                              <label for="validate_phone_number">Next of Kin Phone Number</label>
-                              <input type="text" class="form-control" id="nokphone"
-                                  name="nokphone">
-  
-                          </div> --}}
+                          <div class="form-group col-md-2"></div>
                       </div>
                       @endforeach
             </div>
@@ -156,7 +155,7 @@ let genderStatus = ( () => {
 
         $('#change-gender').on('click', function (event) {
             // let gender = '';
-          $.post("{{ route('gender_update', $client->clientid) }}", { 
+          $.post("{{ route('gender_update', $client->clientid) }}", {
             // {{ route('clients.update', $client->clientid) }}
             gender: $(this).data("gender"),
             // name: $(this).data("name"),

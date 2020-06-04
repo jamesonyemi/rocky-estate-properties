@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Route;
         Route::post('/update-gender/{client_id}', 'ClientController@updateGenderStatus')->name('gender_update');
 
         Route::resource('clients', 'ClientController');
+        Route::any('/all', 'ClientController@allClients')->name('client.all');
         Route::any('/corporate-client', 'ClientController@corporateClient')->name('corporate-client');
         Route::any('/corporate-client-wp', 'ClientController@corporateClientWithProject')->name('corporate-client-wp');
         Route::any('/client-wp', 'ClientController@IndividualClientWithProject')->name('client-wp');
@@ -41,6 +42,7 @@ use Illuminate\Support\Facades\Route;
         Route::any('/corporate-client/{id}', 'ClientController@destroyCorporateClient')->name('delete-corporate-client');
 
         Route::resource('projects', 'ProjectController');
+        Route::any('/all-projects', 'ProjectController@allProjects')->name('all-projects');
         Route::resource('project-docs', 'ProjectDocumentController')->middleware('checkUserRole');
         Route::resource('onsite-visit', 'OnsiteVisitController');
         Route::resource('reports', 'ReportController');

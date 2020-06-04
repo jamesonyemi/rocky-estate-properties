@@ -1,30 +1,25 @@
 'use strict';
-    jQuery(document).ready(function ()
-    {
-        jQuery('select[name="region"]').on('change', function(){
-            var regionID = jQuery(this).val();
-            if(regionID)
-            {
-                jQuery.ajax({
-                    url : '/admin-portal/projects/create/'+regionID,
-                    type : "GET",
-                    dataType : "json",
-                    success:function(data)
-                    {
+jQuery(document).ready(function() {
+    jQuery('select[name="rid"]').on('change', function() {
+        var regionID = jQuery(this).val();
+        if (regionID) {
+            jQuery.ajax({
+                url: '/admin-portal/projects/create/' + regionID,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
                     console.log(data);
-                    jQuery('select[name="town"]').empty();
-                    $('select[name="town"]').append('<option value="">--select--</option>');
-                    jQuery.each(data, function(key,value){
-                        $('select[name="town"]').append('<option value="'+ key +'">'+ value +'</option>');
+                    jQuery('select[name="tid"]').empty();
+                    $('select[name="tid"]').append('<option value="">--select--</option>');
+                    jQuery.each(data, function(key, value) {
+                        $('select[name="tid"]').append('<option value="' + key + '">' + value + '</option>');
                     });
-                    }
-                });
-            }
-            else
-            {
-                $('select[name="town"]').empty();
-            }
-        });
-
-       
+                }
+            });
+        } else {
+            $('select[name="tid"]').empty();
+        }
     });
+
+
+});

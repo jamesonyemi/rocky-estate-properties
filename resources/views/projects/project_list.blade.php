@@ -34,11 +34,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18 text-uppercase">Clients With Projects</h4>
+                                <h4 class="mb-0 font-size-18 text-uppercase">All Projects</h4>
                                 <div class="page-title-right">
-                                <a href="{{ route('all-projects') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
-                                    All Projects</a>
-                                    <span class="col-sm-2"></span>
+                                    <a href="{{ url()->previous() }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
+                                        <i class="bx bx-arrow-back"></i>
+                                        Back</a>
+                                        <span class="col-sm-2"></span>
                                     <a href="{{ route('projects.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
                                         Add New Project</a>
                                 </div>
@@ -47,13 +48,6 @@
                     </div>
                     <br>
                     <!-- end page title -->
-
-
-
-
-
-
-
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -75,10 +69,9 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-
                                         <tbody>
-
-                                            @foreach ($clientWithProjects as $project)
+                                            @foreach ($projects as $project)
+                                            @if ( $project->flag_as_deleted === 0)
                                             <tr>
                                                 <td id="project_id"></td>
                                                 <td >{{ !empty($project->cc_company_name) ? $project->cc_company_name :$project->full_name }}</span></td>
@@ -96,16 +89,18 @@
                                                         </a>
                                                     <a  href="#" class="d-inline-block text-success"
                                                         onclick="event.preventDefault();
-                                                                 document.getElementById('delete_project'+ {{ $encryptId }}).submit();">
+                                                                 document.getElementById('delete_project').submit();">
 
-                                                    <form id="{{'delete_project' .$encryptId}}" action="{{ route('projects.destroy',  $encryptId) }}" method="post" >
+                                                    <form id="delete_project" action="{{ route('projects.destroy',  $encryptId) }}" method="post" >
                                                         {{ csrf_field() }}
                                                         <input name="_method" type="hidden" value="DELETE">
+                                                        <input type="hidden" name="is_deleted" id="is_deleted">
                                                         <i class="bx bx-trash"></i>
                                                     </form>
                                                 </a>
                                                 </td>
                                             </tr>
+                                            @endif
                                             @endforeach
                                         </tbody>
                                     </table>

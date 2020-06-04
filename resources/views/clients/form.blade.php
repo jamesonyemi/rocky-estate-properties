@@ -19,8 +19,8 @@
                             <label for="validate_title">Title</label>
                             <select id="title" name="title" class="form-control custom-select" required>
                                 <option value="">-- select --</option>
-                              @foreach ($titleId as $id => $title)
-                                    <option value="{{ $title }}" class="text-capitalize">{{ ucwords($id)  }}</option>
+                              @foreach ($titleId as $value => $title_id)
+                                    <option value="{{ $value }}" class="text-capitalize">{{ ucwords($value)  }}</option>
                                     @endforeach
                             </select>
                         </div>

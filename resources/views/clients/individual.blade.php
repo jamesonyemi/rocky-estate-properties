@@ -43,6 +43,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($clientWithProjects as $item)
+                                        @if ( empty($item->cc_company_name))
                                         <tr>
                                             <td id="client_id"></td>
                                             <td style='text-align:left'>  {{ $item->full_name }} </td>
@@ -71,7 +72,7 @@
                                             </a>
                                             </td>
                                         </tr>
-
+                                        @endif
                                         @endforeach
                                     </tbody>
                                 </table>

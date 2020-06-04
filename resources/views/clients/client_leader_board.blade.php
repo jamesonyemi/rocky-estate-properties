@@ -6,11 +6,16 @@
                 <h5 class="card-title font-weight-bold text-uppercase">Action Button
                     <hr>
                     <div class="row bx-pull-left" >
-                        <a href="{!!url('admin-portal/clients/create') !!}">
+                        <a href="{!!url('admin-portal/clients/create') !!}" style="margin-left: 20px;">
                             <button type="button" class="btn btn-outline-primary">
                                 Add New Client
                             </button>
                         </a>
+                        {{-- <a href="{!!url('admin-portal/clients/create') !!}" style="margin-left: 20px;">
+                            <button type="button" class="btn btn-outline-primary">
+                                All Clients
+                            </button>
+                        </a> --}}
                     </div>
                 </div>
         </div>
@@ -22,6 +27,11 @@
                     <a href="{!!url('admin-portal/corporate-client-wp') !!}" style="margin-left: 20px;">
                         <button type="button" class="btn btn-outline-primary">
                             With Project
+                        </button>
+                    </a>
+                    <a href="{!!url('admin-portal/corporate-client-wnp') !!}" style="margin-left: 20px;">
+                        <button type="button" class="btn btn-outline-warning">
+                            All List
                         </button>
                     </a>
                 </div>
@@ -36,6 +46,11 @@
                 <a href="{!!url('admin-portal/client-wp') !!}" style="margin-left: 20px;">
                     <button type="button" class="btn btn-outline-primary">
                         With Project
+                    </button>
+                </a>
+                <a href="{!!url('admin-portal/client-wnp') !!}" style="margin-left: 20px;">
+                    <button type="button" class="btn btn-outline-warning">
+                        All List
                     </button>
                 </a>
                 </div>
