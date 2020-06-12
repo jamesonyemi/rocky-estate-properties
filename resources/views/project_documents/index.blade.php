@@ -22,7 +22,7 @@
 <!-- Begin page -->
 <div id="layout-wrapper">
 
-   
+
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -37,8 +37,8 @@
                     <div class="page-title-box d-flex align-items-center justify-content-between">
                         <h4 class="mb-0 font-size-18">Summary of Project Document</h4>
                         <div class="page-title-right">
-                        <a href="{{ route('project-docs.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
-                            New Project Document</a> 
+                        <a href="{{ route('project-docs.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
+                            Add Project Document</a>
                         </div>
                     </div>
                 </div>
@@ -46,39 +46,42 @@
             <!-- end page title -->
 
             <div class="row">
-                <div class="col-12">    
+                <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title"></h4>
-                            <div class="card-title-desc divider"></div>   
+                            <div class="card-title-desc divider"></div>
                             <table id="" class="table table-bordered dt-responsive nowrap stage" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Is Document Available</th>
+                                        <th>Owner</th>
+                                        <th>Is Document Ready</th>
                                         <th>Is Document Submitted</th>
                                         <th>Created On</th>
-                                        <th>Action</th> 
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($projectDocs as $document)  
+                                    @foreach ($projectDocOwnedBy as $document)
+                                    <?php $owner  = ($document->full_name) ? $document->full_name : $document->company_name  ?>
                                     <tr>
                                         <td id="stage"></td>
+                                        <td style='text-align:left'>  {{ $owner}} </td>
                                         <td style='text-align:left'>  {{ $document->is_ready }} </td>
                                         <td style='text-align:left'>  {{ $document->is_submitted }} </td>
                                         <td style='text-align:left'>  {!! $document->created_date !!} </td>
                                         <td>
                                             <?php $encryptId = Crypt::encrypt($document->id) ?>
-                                            <a href=" {!! route('project-docs.show',$encryptId )!!}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                            <a href=" {!! route('project-docs.show',$encryptId )!!}" class="d-inline-block text-success mr-2" >
                                                 <i class="bx bxs-analyse"></i>
                                             </a>
-                                            <a href="{!! route('project-docs.edit',$encryptId ) !!}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                            <a href="{!! route('project-docs.edit',$encryptId ) !!}" class="d-inline-block text-success mr-2" >
                                                     <i class="bx bx-edit"></i>
                                             </a>
                                         </td>
                                     </tr>
-                                    
+
                                     @endforeach
                                 </tbody>
                             </table>

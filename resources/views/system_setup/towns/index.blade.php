@@ -52,6 +52,7 @@
                     <!-- END OF FILTERING BY PROJECT STATUS-->
 
                     <div class="row">
+                        {{-- {{ ddd($regionTown) }} --}}
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
@@ -63,41 +64,35 @@
                                                 <th>ID</th>
                                                 <th>Town</th>
                                                 <th>Region</th>
-                                                <th>Action</th>
+                                                <th style="width: 5%">Action</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
-
                                             @foreach ($regionTown as $town)
+                                            <?php $encrypt = Crypt::encrypt($town->tid);  ?>
                                                 @if ( ($town->active === "yes") && ($town->is_deleted === 0) )
                                             <tr>
                                                 <td id="project_id"></td>
-                                                <td >{{ $town->town}}</span></td>
-                                                <td>{{ $town->region }}</span></td>
-                                                {{-- <td > {{ $town->town_title}} </td>
-                                                <td>{{ $town->location }}</td>    --}}
-                                                {{-- <td id="status"> {{ ucfirst($project->client_project_status) }} </td>  --}}
-                                                <td>
-                                                    <?php $encrypt = Crypt::encrypt($town->tid);  ?>
+                                                <td >
+                                                    <a href=" {{ route('towns.edit', $encrypt)}}" class="nav-link" >
+                                                    {{ $town->town}}
+                                                    </a>
+                                                </td>
+                                                <td>{{ $town->region }}</td>
+                                                <td class="">
                                                     <a href=" {{ route('towns.show', $encrypt)}}" class="d-inline-block text-success mr-2" >
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
                                                     <a href="{{ route('towns.edit', $encrypt) }}" class="d-inline-block text-success mr-2">
                                                             <i class="bx bx-edit"></i>
                                                         </a>
-                                                 <a  href="#" class="d-inline-block text-success"
-                                                        onclick="event.preventDefault();
-                                                                 document.getElementById('delete').submit();">
-
-                                                    <form id="delete" action="{{ route('towns.destroy', $encrypt) }}" method="post" >
+                                                    <form id="delete" action="{{ route('towns.destroy', $encrypt) }}" method="POST" class="d-inline-block text-success">
                                                         {{ csrf_field() }}
-                                                        <input name="_method" type="hidden" value="DELETE">
-                                                        <input type="hidden" name="active" id="active">
-                                                        <input type="hidden" name="is_deleted" id="is_deleted">
-                                                        <i class="bx bx-trash"></i>
+                                                        @method('DELETE')
+                                                    <button class="btn  bx bx-trash text-danger" type="submit" style="margin-bottom: 6px; margin-left:-14px;">
+                                                    </button>
                                                     </form>
-                                                </a>
                                                 </td>
                                             </tr>
                                             @endif

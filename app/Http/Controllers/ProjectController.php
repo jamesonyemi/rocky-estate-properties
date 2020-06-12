@@ -115,22 +115,40 @@ class ProjectController extends Controller
     public function show($id)
     {
         //code
-        $id         = PaymentController::decryptedId($id);
-        $projects   =  DB::table('tblproject')->get();
-        $genders    =  DB::table('tblgender')->get();
-        $regions    =  DB::table('tblregion')->get();
-        $countries  =  DB::table('tblcountry')->get();
+        $id             =  PaymentController::decryptedId($id);
+        $projects       =  DB::table('tblproject')->get();
+        $genders        =  DB::table('tblgender')->get();
+        $regions        =  DB::table('tblregion')->get();
+        $countries      =  DB::table('tblcountry')->get();
 
-        $project_status = DB::table('tblstatus')->get()->pluck('id', 'status');
-        $townId         = DB::table('tbltown')->get()->pluck('town', 'tid');
-        $regionId       = DB::table('tblregion')->get()->pluck('region', 'rid');
-        $projectId      = DB::table('tblproject')->where('pid', $id)->get();
-        $countryId      = DB::table('tblcountry')->get()->pluck('region_name', 'id');
-        $project_status = DB::table('tblstatus')->get()->pluck('status', 'id');
+        $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
+        $townId         =  DB::table('tbltown')->get()->pluck('town', 'tid');
+        $regionId       =  DB::table('tblregion')->get()->pluck('region', 'rid');
+        $projectById    =  DB::table('tblproject')->where('pid', $id)->get();
+        $countryId      =  DB::table('tblcountry')->get()->pluck('region_name', 'id');
+        $project_status =  DB::table('tblstatus')->get()->pluck('status', 'id');
+
+        $owner         =   static::getAllProjects();
+
+        foreach ($owner as $key2 => $value2)
+        {
+
+            foreach ($projectById as $key => $value)
+            {
+                if ($value->clientid === $value2->clientid)
+                {
+                    $value = $value2 ;
+                    $project = $value;
+                    $r =  $project;
+                }
+
+            }
+
+        }
 
 
-        return view('projects.show', compact('projectId', 'projects', 'countries', 'townId',
-                                            'regions', 'regionId','countryId', 'project_status'));
+        return view('projects.show', compact('projectById', 'projects', 'countries', 'townId',
+                         'regions', 'regionId','countryId', 'project_status', 'r', ));
     }
 
     /**
@@ -141,21 +159,39 @@ class ProjectController extends Controller
      */
     public function edit($projectid)
     {
-        $id         =  PaymentController::decryptedId($projectid);
-        $projects   =  DB::table('tblproject')->get();
-        $genders    =  DB::table('tblgender')->get();
-        $regions    =  DB::table('tblregion')->get();
-        $countries  =  DB::table('tblcountry')->get();
+        $id             =  PaymentController::decryptedId($projectid);
+        $projects       =  DB::table('tblproject')->get();
+        $genders        =  DB::table('tblgender')->get();
+        $regions        =  DB::table('tblregion')->get();
+        $countries      =  DB::table('tblcountry')->get();
 
-        $project_status = DB::table('tblstatus')->get()->pluck('id', 'status');
-        $townId         = DB::table('tbltown')->get()->pluck('town', 'tid');
-        $regionId       = DB::table('tblregion')->get()->pluck('region', 'rid');
-        $projectById    = DB::table('tblproject')->where('pid', $id)->get();
-        $countryId      = DB::table('tblcountry')->get()->pluck('region_name', 'id');
-        $project_status = DB::table('tblstatus')->get()->pluck('status', 'id');
+        $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
+        $townId         =  DB::table('tbltown')->get()->pluck('town', 'tid');
+        $regionId       =  DB::table('tblregion')->get()->pluck('region', 'rid');
+        $projectById    =  DB::table('tblproject')->where('pid', $id)->get();
+        $countryId      =  DB::table('tblcountry')->get()->pluck('region_name', 'id');
+        $project_status =  DB::table('tblstatus')->get()->pluck('status', 'id');
+
+        $owner         =   static::getAllProjects();
+
+            foreach ($owner as $key2 => $value2)
+            {
+
+                foreach ($projectById as $key => $value)
+                {
+                    if ($value->clientid === $value2->clientid)
+                    {
+                        $value = $value2 ;
+                        $project = $value;
+                        $r =  $project;
+                    }
+
+                }
+
+            }
 
         return view('projects.edit', compact('projectById', 'projects', 'countries', 'townId',
-                                            'regions', 'regionId','countryId', 'project_status'));
+                      'regions', 'regionId','countryId', 'project_status', 'r',));
     }
 
     /**

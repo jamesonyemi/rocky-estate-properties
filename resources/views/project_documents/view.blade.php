@@ -2,15 +2,26 @@
 @include('partials.breadcrumb')
     <!-- Start -->
     <div class="row">
-        <div class="col-lg-5 col-md-12">
+        <div class="col-lg-3 col-md-12">
             <div class="card mb-30">
                 @foreach ($owners as $owner)
+                <?php $ownedBy  = ($owner->full_name) ? $owner->full_name : $owner->company_name  ?>
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <span><i><b>Project Owner  <br></b>{{ $owner->full_name }}</i></span>
-                    <span><i><b>Project  <br></b>{{ $owner->title}}</i></span>
-                    <span><i><b>Location  <br></b>{{ $owner->location}}</i></span>
-                    <span><i><b>Contact <br></b>{{ $owner->phone1}}</i></span>
+                    <div class="row">
+                        <span><i><b>Project <br></b>{{ $owner->project_name}}</i><hr></span>
+                        <div class="col-12">
+                            <span><i><b>Project Owner  <br></b>{{ $ownedBy}}</i> <hr></span>
+                        </div>
+                        <div class="col-12">
+                            <span><i><b>Contact <br></b>{{ $owner->phone1}}</i><hr></span>
+                        </div>
+                        <div class="col-12">
+                            <span><i><b>Location  <br></b>{{$owner->location}}</i></span>
+                            <hr>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="card-body"></div>
             </div>
             @endforeach
@@ -41,11 +52,11 @@
                                             @foreach (json_decode($item->doc_link) as $doc)
                                             <tr>
                                                 <td> {!!  str_replace('/project-documents/', '', $doc ) !!} </td>
-                                                <td> 
+                                                <td>
                                                 <a href="{{ $doc }}" class="dropdown-item d-flex align-items-center" target="_blank">
-                                                    <i class="bx bx-show" style="color:red; float:right;" 
+                                                    <i class="bx bx-show" style="color:red; float:right;"
                                                         data-toggle="tooltip" data-placement="top" title="View">
-                                                    </i> 
+                                                    </i>
                                                 </a>
                                                 </td>
                                             </tr>

@@ -71,11 +71,12 @@
           .then(response => response.json())
           .then(data => console.log(data))
         ModalTitle.textContent = list.options[list.selectedIndex].text;
-        notify.textContent     = "Activation in Progress... " + ModalTitle.textContent;
-        notify.classList.add("text-success");
+        notify.textContent     = " "+"Restoring... " + ModalTitle.textContent;
+        notify.classList.add("badge");
+        notify.classList.add("badge-primary");
           setTimeout(() => {
             location.reload();
-          }, 1000);
+          },5000);
       });
 
 </script>

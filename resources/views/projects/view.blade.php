@@ -21,10 +21,11 @@
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3>Project Summary</h3>
+                <div class="col-3"><span><i><b>Owner:</b> {{ ($r->full_name) ? $r->full_name : $r->cc_company_name }}</i></span></div>
             </div>
-
+            <br><br>
             <div class="card-body">
-                @foreach ($projectId as $project)
+                @foreach ($projectById as $project)
                     <div class="form-row">
                         <div class="form-group col-md-1"></div>
                         <div class="form-group col-md-4">

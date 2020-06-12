@@ -4,7 +4,7 @@
     "workbench.colorTheme": "Shades of Purple",
     "workbench.iconTheme": "file-icons",
     "files.autoSave": "afterDelay",
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 0,
     "git.autofetch": true,
     "editor.fontFamily": "'Fira Code Retina',Fira Code iScript,'Operator Mono',Menlo,Monaco,Consolas, 'Courier New', monospace",
     "terminal.integrated.fontFamily": "'Fira Code Retina','Fira Code iScript',Operator Mono,Menlo,Monaco,Consolas, 'Courier New', monospace",
@@ -18,4 +18,8 @@
     "editor.formatOnSave": true,
     "eslint.run": "onType",
     "eslint.autoFixOnSave": true,
+    "cSpell.words": [
+        "flaged",
+        "isdeleted"
+    ],
 }

@@ -99,7 +99,7 @@ class CurrencyController extends Controller
      */
     public function destroy($id)
     {
-        $flaged_as_deleted     =  ['isdeleted' => true ];
+        $flaged_as_deleted     =  ['isdeleted' => true, 'active' => 'no' ];
         $deleted = DB::table('tblcurrency')->where('id', $id)->update($flaged_as_deleted);
         return redirect()->route('currency.index')->with('success', 'Currency #  ' .$id. '   Info Deleted');
     }

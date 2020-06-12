@@ -25,9 +25,9 @@ class ProjectDocumentController extends Controller
      */
     public function index()
     {
-       
-        $projectDocs = DB::table('tblprojectdocs')->get();
-        return view('project_documents.index', compact('projectDocs'));
+
+        $projectDocOwnedBy  =  DB::table('vw_projectdocs_with_owner')->get();
+        return view('project_documents.index', compact('projectDocOwnedBy') );
     }
 
     /**
@@ -51,7 +51,7 @@ class ProjectDocumentController extends Controller
      */
     public function store(Request $request)
     {
-            //code 
+            //code
             if ($request->hasFile('docname')) {
 
                 $relativePath    = '/project-documents/';
@@ -62,16 +62,16 @@ class ProjectDocumentController extends Controller
                 foreach ($files as $file) {
 
                     $file_name          =  date("Y-m-d h_i_s") . "_" . $file->getClientOriginalName();
-                    $b64imageEncoded    =  base64_encode($file_name);                     
+                    $b64imageEncoded    =  base64_encode($file_name);
                     $full_path          =  $file->move($destinationPath, $file_name);    //move files to destination folder
                     $alternative_name[] =  date("Y-m-d h_i_s") . "_" . pathinfo($file_name, PATHINFO_FILENAME);    //Get file original name, without extension
                     $fileNamesInArray[] =  $file_name;
                     $base64img_encode[] =  $b64imageEncoded;
                     $doc_link[]         =  $relativePath.$file_name;
-        
+
                 }
             }
-        
+
             $save = DB::table('tblprojectdocs')->insertGetId(array_merge(
                 request()->except(['_token', '_method', 'clientid', 'pid', 'alt_name', 'docname']),
                 [
@@ -83,7 +83,7 @@ class ProjectDocumentController extends Controller
                     'doc_link'     =>  json_encode($doc_link),
                 ]
             ));
-    
+
        return redirect()->route('project-docs.create')->with('success', 'Document #  ' .$save. ' Recorded Sucessfully');    }
 
     /**
@@ -95,7 +95,7 @@ class ProjectDocumentController extends Controller
     public function show($id)
     {
         $id             =  PaymentController::decryptedId($id);
-        $owners         =  DB::table('vw_projectdocs')->get();
+        $owners         =  DB::table('vw_projectdocs_with_owner')->where('id', $id)->get();
         $projectDocs    =  DB::table('tblprojectdocs')->get();
         $projects       =  DB::table("tblproject");
         $all_projects   =  $projects->get();
@@ -112,11 +112,11 @@ class ProjectDocumentController extends Controller
     public function edit($id)
     {
         $id             =  PaymentController::decryptedId($id);
-        $projectDocs    =  DB::table('tblprojectdocs')->get();
+        $projectDocs    =  DB::table('vw_projectdocs_with_owner')->where('id', $id)->get();
         $projects       =  DB::table("tblproject");
         $all_projects   =  $projects->get();
         $clientWithProjects = ClientController::clientWithProjects();
-        return view('project_documents.update', compact('all_projects','clientWithProjects', 'projectDocs') );
+        return view('project_documents.edit', compact('all_projects','clientWithProjects', 'projectDocs') );
     }
 
     /**
@@ -128,7 +128,12 @@ class ProjectDocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $id             = PaymentController::decryptedId($id);
+        $updateData     = ClientController::allExcept();
+        $update_project = DB::table('tblprojectdocs')->where('pid', $id)->update($updateData);
+        $isUpdated      = ($update_project) ? 'had been Updated' : 'No change made' ;
+        return redirect()->route('project_documents.index')->with('success', 'Project #' .$id. ' '. $isUpdated);
+
     }
 
     /**

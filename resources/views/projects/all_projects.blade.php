@@ -58,9 +58,9 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <!-- FILTERING BY PROJECT STATUS  -->
+                                   {{-- FILTERING BY PROJECT STATUS --}}
                                     <div><span id="filter_status"></span></div>
-                                    <!-- END OF FILTERING BY PROJECT STATUS-->
+                                    {{-- END OF FILTERING BY PROJECT STATUS --}}
                                     <h4 class="card-title"></h4>
                                     <div class="card-title-desc">  </div>
                                     <table id="" class="table table-bordered dt-responsive nowrap project" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -79,15 +79,31 @@
                                         <tbody>
 
                                             @foreach ($clientWithProjects as $project)
+                                            <?php $encryptId = Crypt::encrypt($project->pid) ?>
                                             <tr>
                                                 <td id="project_id"></td>
-                                                <td >{{ !empty($project->cc_company_name) ? $project->cc_company_name :$project->full_name }}</span></td>
+                                                <td>
+                                                <a href="{{ route('projects.show',  $encryptId) }}" class="nav-link">
+                                                    {{ !empty($project->cc_company_name) ? $project->cc_company_name :$project->full_name }}</span></a></td>
                                                 <td > {{ $project->project_title}} </td>
                                                 <td>{{ $project->region }}</span></td>
                                                 <td>{{ $project->location }}</td>
-                                                <td id="status"> {{ ucfirst($project->client_project_status) }} </td>
+                                                @switch($project->client_project_status)
+                                                        @case('ongoing')
+                                                        <td id="status" class="text-primary">{{ ucfirst($project->client_project_status) }}</td>
+                                                            @break
+                                                        @case('completed')
+                                                        <td id="status" class="text-success"  >{{ ucfirst($project->client_project_status) }}</td>
+                                                            @break
+                                                        @case('stalled')
+                                                        <td id="status" class="text-warning">{{ ucfirst($project->client_project_status) }}</td>
+                                                            @break
+                                                        @case('cancelled')
+                                                        <td id="status" class="text-danger" >{{ ucfirst($project->client_project_status) }}</td>
+                                                            @break
+                                                        @default
+                                                    @endswitch
                                                 <td>
-                                                    <?php $encryptId = Crypt::encrypt($project->pid) ?>
                                                     <a href=" {{ route('projects.show',  $encryptId)}}" class="d-inline-block text-success mr-2">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
@@ -96,7 +112,7 @@
                                                         </a>
                                                     <a  href="#" class="d-inline-block text-success"
                                                         onclick="event.preventDefault();
-                                                                 document.getElementById('delete_project'+ {{ $encryptId }}).submit();">
+                                                                 document.getElementById('delete_project'{{ $encryptId }}).submit();">
 
                                                     <form id="{{'delete_project' .$encryptId}}" action="{{ route('projects.destroy',  $encryptId) }}" method="post" >
                                                         {{ csrf_field() }}

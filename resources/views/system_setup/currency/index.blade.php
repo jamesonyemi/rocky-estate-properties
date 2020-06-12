@@ -38,9 +38,8 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Branch Name</th>
-                                                <th>Branch Name</th>
-                                                <th>Currency Name</th>
+                                                <th>Symbol</th>
+                                                <th>Name</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -48,12 +47,14 @@
                                         <tbody>
 
                                             @foreach ($currency as $curType)
-                                                @if ( $curType->isdeleted !== "" )
+                                                @if ( $curType->isdeleted === 0 )
                                             <tr>
                                                 <td id="project_id"></td>
-                                                <td >{{ $curType->short_name}}</span></td>
-                                                <td >{{ $curType->id}}</span></td>
-                                                <td>{{ $curType->long_name }}</span></td>
+                                                <td >{{ $curType->short_name}}</td>
+                                                <td>
+                                                    <a href="{{ route('currency.edit', $curType->id) }}" class="nav-link">{{ $curType->long_name }}
+                                                    </a>
+                                                </td>
                                                 <td>
                                                     <a href=" {{ route('currency.show', $curType->id)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
                                                         <i class="bx bxs-analyse"></i>
@@ -77,7 +78,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-
+                                    <br><br>
                                 </div>
                             </div>
                         </div>

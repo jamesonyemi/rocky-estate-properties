@@ -14,6 +14,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProjectController;
 use Faker\UniqueGenerator;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Crypt;
 
 class TownController extends Controller
 {
@@ -42,11 +43,13 @@ class TownController extends Controller
         $regions  = DB::table('tblregion')->pluck('region', 'rid');
         $regionId = DB::table('tblregion')->get()->pluck('rid', 'region');
         $townId   = DB::table('tbltown')->get()->pluck('tid', 'town');
+        $getTown  = static::filterData();
 
         return view('system_setup.towns.create', compact(
             'townId',
             'regions',
-            'regionId'
+            'regionId',
+            'getTown',
         ));
     }
 
@@ -59,15 +62,27 @@ class TownController extends Controller
     public function store(Request $request)
     {
         //code
-        $postData = ClientController::allExcept();
-        $create_town = DB::table('tbltown')->insertGetId(array_merge(
-            $postData,
-            [
-                'rid'     =>  $request->input('rid'),
-                'active'  =>  $request->input('active')
-            ]
-        ));
+        $fetchTowns     =   static::filterData();
+        $postData       =   ClientController::allExcept();
+        $alreadyExist   =   "The town ($request->town) already exist";
+        $toLower        =   strtolower($request->input("town"));
+        $data           =   [
+            'rid'     =>  $request->input('rid'),
+            'active'  =>  $request->input('active'),
+            'town'    =>  ucfirst($toLower),
+        ];
 
+        foreach (json_decode($fetchTowns) as $key => $value)
+        {
+            # code...
+            if ( in_array($request->town, [$value]) )
+            {
+                # code...
+                return redirect()->route('towns.create')->with('info', $alreadyExist);
+            }
+        }
+
+        $create_town    =   DB::table('tbltown')->insertGetId(array_merge($postData, $data));
         return redirect()->route('towns.index')->with('success', 'Town #  ' .$create_town. ' Created Sucessfully');
     }
 
@@ -89,7 +104,6 @@ class TownController extends Controller
 
         // I have join and a loop to do here
         $regionTownMap = static::regionTownMap();
-        // dd($regionTownMap)
         foreach ($regionTownMap as $key2 => $regionTown)
             {
 
@@ -113,10 +127,6 @@ class TownController extends Controller
             'regionId',
             'regionTownMap',
             'keyMap'
-            // 'project_visited',
-            // 'project_phase',
-            // 'genders',
-            // 'id'
         ));
     }
 
@@ -174,16 +184,16 @@ class TownController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request  $request, $id)
+    public function destroy(Request $request, $id)
     {
       // code;
-      $decryptId            = PaymentController::decryptedId($id);
-      $getTownId            = $decryptId;
-      $request->active      = 'no';
-      $request->is_deleted  = true;
-      $isDeleted = [ "active" => $request->active, "is_deleted" => $request->is_deleted ];
-      $deleted  = DB::table('tbltown')->where('tid', $getTownId)->update($isDeleted);
-      
+      $decryptId   = Crypt::decrypt($id);
+      $getTownId   = $decryptId;
+      $active      = 'no';
+      $deleted     = true;
+      $isDeleted   = [ "active" => $active, "is_deleted" => $deleted ];
+      $deleted     = DB::table('tbltown')->where('tid', $getTownId)->update($isDeleted);
+
       return redirect()->route('towns.index')->with('success', 'Town # ' .$getTownId. '  Info Deleted');
     }
 
@@ -209,11 +219,12 @@ class TownController extends Controller
     public function restoreTown(Request $request, $id)
     {
 
-        $id                   =  $request->tid;
-        $request->active      =  'yes';
-        $request->is_deleted  =  0;
-        $isActive             =  [ "active" => $request->active, "is_deleted" => $request->is_deleted ];
-        $deleted              =  DB::table('tbltown')->where('tid', $id)->update($isActive);
+        $id          =  $request->tid;
+        ddd($id);
+        $active      =  'yes';
+        $deleted     =  0;
+        $isActive    =  [ "active" => $active, "is_deleted" => $deleted ];
+        $deleted     =  DB::table('tbltown')->where('tid', $id)->update($isActive);
         return redirect()->route ('towns.index')->with('success', 'Town # ' .$request->tid. '  was Restored');
     }
 
@@ -222,9 +233,16 @@ class TownController extends Controller
          # code...
          $regionTown  = DB::table('tblregion as a')
          ->join('tbltown as b', 'b.rid', '=', 'a.rid')
-         ->select('b.rid as id', 'b.tid', 'b.town', 'a.region','b.active', 'b.is_deleted' )
+         ->select('b.tid as tid','b.rid as rid', 'b.town as town', 'a.region','b.active', 'b.is_deleted' )
          ->orderBy('b.tid')->get()->toArray();
 
          return $regionTown;
+    }
+
+    public static function filterData()
+    {
+         # code...
+        $get_data   =  DB::table('tbltown')->get()->pluck('town');
+        return json_encode($get_data);
     }
 }

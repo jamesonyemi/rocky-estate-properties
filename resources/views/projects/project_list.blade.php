@@ -72,15 +72,31 @@
                                         <tbody>
                                             @foreach ($projects as $project)
                                             @if ( $project->flag_as_deleted === 0)
+                                            <?php $encryptId = Crypt::encrypt($project->pid) ?>
                                             <tr>
                                                 <td id="project_id"></td>
-                                                <td >{{ !empty($project->cc_company_name) ? $project->cc_company_name :$project->full_name }}</span></td>
+                                                <td >
+                                                    <a href="{{ route('projects.show',  $encryptId) }}" class="nav-link">
+                                                    {{ !empty($project->cc_company_name) ? $project->cc_company_name :$project->full_name }}</span></a></td>
                                                 <td > {{ $project->project_title}} </td>
                                                 <td>{{ $project->region }}</span></td>
                                                 <td>{{ $project->location }}</td>
-                                                <td id="status"> {{ ucfirst($project->client_project_status) }} </td>
+                                                    @switch($project->client_project_status)
+                                                        @case('ongoing')
+                                                        <td id="status" class="text-primary">{{ ucfirst($project->client_project_status) }}</td>
+                                                            @break
+                                                        @case('completed')
+                                                        <td id="status" class="text-success"  >{{ ucfirst($project->client_project_status) }}</td>
+                                                            @break
+                                                        @case('stalled')
+                                                        <td id="status" class="text-warning">{{ ucfirst($project->client_project_status) }}</td>
+                                                            @break
+                                                        @case('cancelled')
+                                                        <td id="status" class="text-danger" >{{ ucfirst($project->client_project_status) }}</td>
+                                                            @break
+                                                        @default
+                                                    @endswitch
                                                 <td>
-                                                    <?php $encryptId = Crypt::encrypt($project->pid) ?>
                                                     <a href=" {{ route('projects.show',  $encryptId)}}" class="d-inline-block text-success mr-2">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>

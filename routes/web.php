@@ -67,6 +67,7 @@ use Illuminate\Support\Facades\Route;
             Route::resource('towns', 'TownController');
             Route::get('/restore-form', 'TownController@restore')->name('restore-form');
             Route::any('/towns/get-restore-data/{id}', 'TownController@getTown')->name('get-restore-data');
+            Route::any('/towns/create/filter-data', 'TownController@filterData')->name('filter-data');
             Route::any('/restore-update', 'TownController@restoreTown')->name('restore-update');
             Route::resource('nationality', 'NationalityController');
             Route::resource('title', 'TitleController');

@@ -7,14 +7,19 @@
     </div>
 @endif
 
+
 <script>
 ( (jQuery) => {
   let cancelAlert = document.querySelector('.close');
-  cancelAlert.addEventListener('click', () => {
-    $(this).parent('#success-mgs').remove();
-    window.location.reload();
 
-  })
+  if (cancelAlert) {
+
+      cancelAlert.addEventListener('click', () => {
+        $(this).parent('#success-mgs').remove();
+        window.location.reload();
+
+      })
+  }
 
 })();
 </script>
