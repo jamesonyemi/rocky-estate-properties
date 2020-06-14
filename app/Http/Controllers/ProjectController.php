@@ -228,7 +228,7 @@ class ProjectController extends Controller
         $isDeleted           =  $request->is_deleted;
         $flag_as_deleted     =  ['isdeleted' => $isDeleted, 'active' => $request->active ];
         $update_clientInfo   =  DB::table('tblproject')->where('pid', $id)->update($flag_as_deleted);
-        return redirect('/admin-portal/projects')->with('success', 'Client Info Deleted');
+        return redirect('/admin-portal/projects')->with('success', 'Client # ' . $id. ' Info Deleted');
     }
 
     public function genderStatus($projectid)
