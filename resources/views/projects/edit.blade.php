@@ -56,8 +56,10 @@
                             <label for="validate_country">Town</label>
                              <select id="tid" name="tid" class="form-control custom-select" required>
                             @foreach ($townId as $key => $town)
-                        <option value="{{ $key }}" {{ old('tid', in_array($town,[$town]) ? $project->tid : 'null') == $key ? 'selected' : '' }}>
-                            {{ ucwords($town) }}</option>
+                            @if ( in_array($project->tid, [$key]) && $project->active === 'yes'  )
+                            <option value="{{ $key }}" {{ old('tid', in_array($town,[$town]) ? $project->tid : 'null') == $key ? 'selected' : '' }}>
+                                {{ ucwords($town) }}</option>
+                                @endif
                         @endforeach
                         </select>
 

@@ -20,6 +20,8 @@
     "eslint.autoFixOnSave": true,
     "cSpell.words": [
         "flaged",
-        "isdeleted"
+        "isdeleted",
+        "tblcountry",
+        "tbltown"
     ],
 }

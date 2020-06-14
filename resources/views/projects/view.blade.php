@@ -30,7 +30,7 @@
                         <div class="form-group col-md-1"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_title">Project Title</label>
-                            <input type="text" class="form-control " placeholder="" id="title"
+                            <input type="text" class="form-control list-group-item " placeholder="" id="title"
                                 name="title" value="{{ old('title', $project->title) }}" disabled>
                         </div>
                         <div class="form-group col-md-2">
@@ -38,13 +38,17 @@
                         </div>
                     <div class="form-group col-md-4">
                         <label for="validate_country">Region</label>
-                        <select  id="region" name="region" class="form-control custom-select" disabled>
+                        <div class="form-group">
                             @foreach ($regionId as $key => $value)
-                        <option value="{{ $key }}" {{ old('region', in_array($value,[$value]) ? $project->rid : 'null') === $key ? 'selected' : '' }}>
-                            {{ ucwords($value) }}</option>
-                        @endforeach
-                        </select>
-
+                                @if ( in_array($project->rid, [$key]) && $project->active === 'yes'  )
+                                <div>
+                                    <div class="form-group list-group-item col-12" >
+                                        {{ ucwords($value) }}
+                                    </div>
+                                </div>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                     </div>
 
@@ -52,18 +56,21 @@
                         <div class="form-group col-md-1"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_country">Town</label>
-                             <select id="town" name="town" class="form-control custom-select" disabled>
-                            @foreach ($townId as $key => $town)
-                        <option value="{{ $key }}" {{ old('town', in_array($town,[$town]) ? $project->tid : 'null') == $key ? 'selected' : '' }}>
-                            {{ ucwords($town) }}</option>
-                        @endforeach
-                        </select>
+                        @foreach ($townId as $key => $town)
+                        @if ( in_array($project->rid, [$key]) && $project->active === 'yes'  )
+                        <div>
+                            <div class="form-group list-group-item col-12" >
+                                {{ ucwords($town) }}
+                            </div>
+                        </div>
+                        @endif
+                    @endforeach
 
                         </div>
                         <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
                             <label for="other_landmark">Other Land Marks Close to Project</label>
-                            <input type="text" class="form-control" id="landmark"
+                            <input type="text" class="form-control list-group-item" id="landmark"
                                 name="landmark" value="{{ old('title', $project->landmark) }}" disabled>
                         </div>
                     </div>
@@ -71,17 +78,22 @@
                         <div class="form-group col-md-1"></div>
                         <div class="form-group col-md-4">
                             <label for="project_state">Current State of Project</label>
-                            <select id="statusid" name="statusid" class="form-control custom-select" disabled>
-                            @foreach ($project_status as $key => $status)
-                               <option value="{{ $key }}" {{ old('statusid', in_array($status,[$status]) ? $project->tid : 'null') == $key ? 'selected' : '' }}>
-                            {{ ucwords($status) }}</option>
+                            <div class="form-group">
+                                @foreach ($project_status as $key => $status)
+                                @if ( in_array($project->statusid,[$key]) )
+                                    <div>
+                                        <div class="form-group list-group-item col-12" >
+                                            {{ ucwords($status) }}
+                                        </div>
+                                    </div>
+                                    @endif
                                 @endforeach
-                            </select>
+                            </div>
                         </div>
                         <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
                             <label for="validate_phone_number">Total Cost of Project</label>
-                            <input type="text" class="form-control" id="totalcost"
+                            <input type="text" class="form-control list-group-item" id="totalcost"
                                 name="totalcost" value="{{ old('totalcost', $project->totalcost) }}" disabled>
                         </div>
                     </div>
@@ -90,7 +102,7 @@
                         <div class="form-group col-md-6"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_othername">Project Description</label>
-                        <textarea name="description" id="description" cols="38" rows="5" disabled value="{{ old('description', $project->description) }}">
+                        <textarea class="list-group-item" name="description" id="description" cols="38" rows="5" disabled value="{{ old('description', $project->description) }}">
                             {{$project->description}}</textarea>
                         </div>
                     </div>

@@ -166,7 +166,7 @@ class ProjectController extends Controller
         $countries      =  DB::table('tblcountry')->get();
 
         $project_status =  DB::table('tblstatus')->get()->pluck('id', 'status');
-        $townId         =  DB::table('tbltown')->get()->pluck('town', 'tid');
+        $townId         =  DB::table('tbltown')->where('active', 'yes')->get()->pluck('town', 'tid');
         $regionId       =  DB::table('tblregion')->get()->pluck('region', 'rid');
         $projectById    =  DB::table('tblproject')->where('pid', $id)->get();
         $countryId      =  DB::table('tblcountry')->get()->pluck('region_name', 'id');
