@@ -145,6 +145,16 @@ class ClientController extends Controller
         return view('clients.create', compact('genders', 'countryId','titleId'));
     }
 
+    public function non_corporateForm()
+    {
+        //code
+        $genders    =  DB::table('tblgender')->pluck('id', 'type');
+        $countryId  =  DB::table('tblcountry')->get()->pluck('id', 'country_name');
+        $titleId    =  DB::table('tbltitle')->get()->pluck('tid', 'salutation');
+
+        return view('clients.create', compact('genders', 'countryId','titleId'));
+    }
+
     public static function allExcept()
     {
         $data = request()->except(['_token', '_method']);
@@ -425,7 +435,7 @@ class ClientController extends Controller
             'cc_fax'              =>  request('fax'),
             'cc_tel_no'           =>  request('tel_no'),
             'cc_res_addr'         =>  request('res_addr'),
-            'email'               =>  request('primary_email'),
+            'email'               =>  request('email'),
         ]);
         return $postData;
     }
@@ -469,6 +479,40 @@ class ClientController extends Controller
         # code...
         $random_integer = time().random_int(1111, 9999);
         return $random_integer;
+    }
+
+    public function fetchEmail()
+    {
+        # code...
+        return static::filterEmail("tblclients", "email");
+    }
+
+    public static function filterData( $table,$key, $optionalKey = '')
+    {
+        //  # code...
+        //  if ( $optionalKey )
+        //  {
+        //      $get_data  =  DB::table($table)->get()->pluck($key)->first();
+        //      return json_encode($get_data);
+        //  }
+        //  else
+        //  {
+        //      # code...
+        //      $get_data  =  DB::table($table)->get()->pluck($key, $optionalKey )->first();
+        //      return json_encode($get_data);
+        //  }
+
+         $get_data  =  DB::table($table)->get()->pluck($key);
+             return json_encode($get_data);
+
+    }
+
+    public static function filterEmail( $table, $email_value)
+    {
+
+         $get_email  =  DB::table($table)->get()->pluck($email_value);
+             return json_encode($get_email);
+
     }
 
 }

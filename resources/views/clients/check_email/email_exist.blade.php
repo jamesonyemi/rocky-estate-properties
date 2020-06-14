@@ -1,8 +1,4 @@
-@include('clients.tablist')
-
-@include('clients.check_email.email_exist')
-
-{{-- <script>
+<script>
     let firstEmailField   =  document.getElementById("email");
     let secEmailField     =  document.getElementById("secondary_email");
     let notify            =  document.getElementById("signal-message");
@@ -59,4 +55,4 @@
 
 )();
 
-</script> --}}
+</script>

@@ -57,14 +57,6 @@
        let ModalTitle     = document.getElementById("exampleModalLongTitle");
        let closeModal     = document.getElementById("close-modal");
 
-
-      //  list.addEventListener('change', () => {
-      //   // let getId                = list.options[list.selectedIndex].value;
-      //     ModalTitle.textContent = list.options[list.selectedIndex].text;
-      //     ModalTitle.textContent = "Activating... " + ModalTitle.textContent;
-      //     ModalTitle.classList.add("text-success");
-      //   });
-
       btnSaveChanges.addEventListener('click', (e) => {
         let getId = list.options[list.selectedIndex].value;
         fetch(`{!! url('admin-portal/system-setup/towns/get-restore-data') !!}` + '/' +getId )

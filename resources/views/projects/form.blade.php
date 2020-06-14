@@ -63,7 +63,7 @@
 
                         <div class="form-group col-md-4">
                             <label for="title">Towns:</label>
-                            <select id="tid" name="tid" class="form-control">
+                            <select id="tid" name="tid" class="form-control" required>
                             </select>
                         </div>
                     </div>

@@ -18,7 +18,7 @@
                         <div class="form-group col-md-4">
                             <label for="validate_title">Title</label>
                             <select id="title" name="title" class="form-control custom-select" required>
-                                <option value="">-- select --</option>
+                                <option value="">--select--</option>
                               @foreach ($titleId as $value => $title_id)
                                     <option value="{{ $value }}" class="text-capitalize">{{ ucwords($value)  }}</option>
                                     @endforeach
@@ -35,7 +35,7 @@
                         <div class="form-group col-md-4">
                             <label for="validate_othername">Middle Name</label>
                             <input type="text" class="form-control" name="oname" id="oname"
-                                placeholder="" required>
+                                placeholder="" >
                             </div>
                                 <div class="form-group col-md-2"> </div>
                         <div class="form-group col-md-4">
@@ -52,6 +52,7 @@
                         <div class="form-group col-md-4">
                             <label for="validate_email">Email</label>
                             <input type="email" name="email" class="form-control" id="email" required>
+                            <span id="signal-message"></span>
                         </div>
                     </div>
                     <div class="form-row">
@@ -69,7 +70,7 @@
                     <div class="form-group col-md-4">
                     <label for="validate_country">Nationality</label>
                     <select id="nationality" name="nationality" class="form-control custom-select"  required>
-                                <option value="">-- select --</option>
+                                <option value="">--select--</option>
                                 @foreach ($countryId as $key => $country)
                                 <option value="{{ $country }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                 @endforeach
@@ -79,7 +80,7 @@
                         <div class="form-group col-md-4">
                             <label for="validate_gender">Gender</label>
                             <select id="gender" name="gender" class="form-control custom-select"  required>
-                            <option value="">-- select --</option>
+                            <option value="">--select--</option>
                                 @foreach ($genders as $id => $gender_type)
                                 <option value="{{ $gender_type }}" class="text-capitalize">{{ ucwords($id)  }}</option>
                                 @endforeach
@@ -108,7 +109,7 @@
                       <div class="container">
                           <div class="row">
                               <div class="col text-center">
-                                  <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
+                                  <button type="submit" id="btn-save" class="btn btn-lg btn-primary"><i data-feather="database"></i>
                                     Save</button>
                                 </div>
                             <div class="form-group col-md-2"></div>

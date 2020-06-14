@@ -49,9 +49,9 @@
 <script src="{{asset('assets/js/client-project/dynamic_dropdown.js')}}" type="text/javascript"></script>
 
 {{-- =======================custom-de-asseto================= --}}
-<!-- JAVASCRIPT --> 
+<!-- JAVASCRIPT -->
 <script src=" {{ asset('custom_assets/libs/metismenu/metisMenu.min.js') }}"></script>
-<script src=" {{ asset('custom_assets/libs/simplebar/simplebar.min.js') }}"></script> 
+<script src=" {{ asset('custom_assets/libs/simplebar/simplebar.min.js') }}"></script>
 <script src=" {{ asset('custom_assets/libs/node-waves/waves.min.js') }}"></script>
 
 <!-- Required datatable js -->

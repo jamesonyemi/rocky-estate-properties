@@ -224,10 +224,11 @@ class ProjectController extends Controller
         //code
         $id                  =  PaymentController::decryptedId($projectid);
         $request->is_deleted =  true;
+        $request->active =  'no';
         $isDeleted           =  $request->is_deleted;
-        $flag_as_deleted     =  ['isdeleted' => $isDeleted];
+        $flag_as_deleted     =  ['isdeleted' => $isDeleted, 'active' => $request->active ];
         $update_clientInfo   =  DB::table('tblproject')->where('pid', $id)->update($flag_as_deleted);
-        return redirect('/admin-portal/all-projects')->with('success', 'Client Info Deleted');
+        return redirect('/admin-portal/projects')->with('success', 'Client Info Deleted');
     }
 
     public function genderStatus($projectid)

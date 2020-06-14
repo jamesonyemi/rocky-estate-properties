@@ -26,9 +26,10 @@
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="p-email">Primary Email</label>
-            <input type="email" class="form-control" placeholder="" id="primary_email" name="primary_email" required>
+            <input type="email" class="form-control" placeholder="" id="email" name="email" required>
+            <span id="signal-message"></span>
             </div>
-                <div class="form-group col-md-2"> </div>    
+                <div class="form-group col-md-2"> </div>
         <div class="form-group col-md-4">
             <label for="s-email">Secondary Email</label>
             <input type="email" class="form-control" placeholder="" id="secondary_email" name="secondary_email">
@@ -62,7 +63,7 @@
       <div class="container">
           <div class="row">
               <div class="col text-center">
-                  <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
+                  <button type="submit" id="btn-save" class="btn btn-lg btn-primary"><i data-feather="database"></i>
                     Save</button>
                 </div>
             <div class="form-group col-md-2"></div>

@@ -11,11 +11,6 @@
                                 Add New Client
                             </button>
                         </a>
-                        {{-- <a href="{!!url('admin-portal/clients/create') !!}" style="margin-left: 20px;">
-                            <button type="button" class="btn btn-outline-primary">
-                                All Clients
-                            </button>
-                        </a> --}}
                     </div>
                 </div>
         </div>

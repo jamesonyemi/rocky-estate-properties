@@ -86,7 +86,7 @@
                                                     </a>
                                                     <a href="{{ route('towns.edit', $encrypt) }}" class="d-inline-block text-success mr-2">
                                                             <i class="bx bx-edit"></i>
-                                                        </a>
+                                                    </a>
                                                     <form id="delete" action="{{ route('towns.destroy', $encrypt) }}" method="POST" class="d-inline-block text-success">
                                                         {{ csrf_field() }}
                                                         @method('DELETE')

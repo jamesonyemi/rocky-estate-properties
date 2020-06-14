@@ -49,11 +49,6 @@
                     <!-- end page title -->
 
 
-
-
-
-
-
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -66,11 +61,10 @@
                                     <table id="" class="table table-bordered dt-responsive nowrap project" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th>PID</th>
+                                                <th>#</th>
                                                 <th>Owner</th>
-                                                <th>Project Title</th>
-                                                <th>Region</th>
-                                                <th>Town</th>
+                                                {{-- <th>Project</th> --}}
+                                                <th>Location</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -85,9 +79,8 @@
                                                 <td>
                                                 <a href="{{ route('projects.show',  $encryptId) }}" class="nav-link">
                                                     {{ !empty($project->cc_company_name) ? $project->cc_company_name :$project->full_name }}</span></a></td>
-                                                <td > {{ $project->project_title}} </td>
-                                                <td>{{ $project->region }}</span></td>
-                                                <td>{{ $project->location }}</td>
+                                                {{-- <td > {{ $project->project_title}} </td> --}}
+                                                <td>{{ $project->location . ' ('. $project->region .')'}}</span></td>
                                                 @switch($project->client_project_status)
                                                         @case('ongoing')
                                                         <td id="status" class="text-primary">{{ ucfirst($project->client_project_status) }}</td>
@@ -109,23 +102,18 @@
                                                     </a>
                                                     <a href="{{ route('projects.edit',  $encryptId) }}" class="d-inline-block text-success mr-2">
                                                             <i class="bx bx-edit"></i>
-                                                        </a>
-                                                    <a  href="#" class="d-inline-block text-success"
-                                                        onclick="event.preventDefault();
-                                                                 document.getElementById('delete_project'{{ $encryptId }}).submit();">
-
-                                                    <form id="{{'delete_project' .$encryptId}}" action="{{ route('projects.destroy',  $encryptId) }}" method="post" >
+                                                   </a>
+                                                    <form id="delete" action="{{ route('projects.destroy', $encryptId) }}" method="POST" class="d-inline-block text-success">
                                                         {{ csrf_field() }}
-                                                        <input name="_method" type="hidden" value="DELETE">
-                                                        <i class="bx bx-trash"></i>
+                                                        @method('DELETE')
+                                                    <button class="btn  bx bx-trash text-danger" type="submit" style="margin-bottom: 6px; margin-left:-14px;">
+                                                    </button>
                                                     </form>
-                                                </a>
                                                 </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
                         </div>
