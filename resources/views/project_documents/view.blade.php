@@ -2,7 +2,7 @@
 @include('partials.breadcrumb')
     <!-- Start -->
     <div class="row">
-        <div class="col-lg-3 col-md-12">
+        <div class="col-lg-4 col-md-12">
             <div class="card mb-30">
                 @foreach ($owners as $owner)
                 <?php $ownedBy  = ($owner->full_name) ? $owner->full_name : $owner->company_name  ?>
@@ -13,7 +13,21 @@
                             <span><i><b>Project Owner  <br></b>{{ $ownedBy}}</i> <hr></span>
                         </div>
                         <div class="col-12">
-                            <span><i><b>Contact <br></b>{{ $owner->phone1}}</i><hr></span>
+                            <span><i><b>Contact <br></b>
+                                <div class="row">
+                                    <div class="">
+                                        @if ( empty($owner->phone1) )
+                                                <i class="text-center col text-danger">
+                                                {{ 'no contact provided yet' }}
+                                                </i>
+                                            @else
+                                            <i class="text-center col">{{ $owner->phone1 }}</i>
+                                           <br>
+                                            <i class="text-center col">{{ $owner->phone2 }}</i>
+                                        @endif
+                                    </i><hr></span>
+                                    </div>
+                                </div>
                         </div>
                         <div class="col-12">
                             <span><i><b>Location  <br></b>{{$owner->location}}</i></span>
@@ -26,7 +40,7 @@
             </div>
             @endforeach
         </div>
-        <div class="col-lg-7 col-md-12">
+        <div class="col-lg-8 col-md-12">
             <div class="card mb-30">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h3>Project Documents</h3>

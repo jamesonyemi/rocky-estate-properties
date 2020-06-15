@@ -19,9 +19,13 @@
     "eslint.run": "onType",
     "eslint.autoFixOnSave": true,
     "cSpell.words": [
+        "clientid",
         "flaged",
         "isdeleted",
+        "tblclients",
         "tblcountry",
-        "tbltown"
+        "tblgender",
+        "tbltown",
+        "this"
     ],
 }

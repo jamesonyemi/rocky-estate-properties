@@ -13,20 +13,20 @@
                     <div class="form-group col-md-4">
                         <label for="client">Client</label>
                         <select id="clientid" name="clientid" class="form-control custom-select" required>
-                            <option>-- select --</option>
+                            <option value="">--select--</option>
                             @foreach ($clients as $client_id => $client)
-                            
+
                                 @if ($client->clientid )
                                 <option value="{{ $client->clientid }}" class="text-capitalize">
                                     {{ ucwords( $client->title . " " .$client->fname . " " . $client->lname)  }}
                                 </option>
                                 @endif
-                                
+
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-2"></div>
-            
+
                     <div class="form-group col-md-4">
                         <label for="pid">Project:</label>
                         <select id="pid" name="pid" class="form-control"></select>
@@ -42,8 +42,8 @@
                         <div class="form-group col-md-4">
                             <label for="status">Status of Project on Visit</label>
                             <select id="status" name="status" class="form-control custom-select" required>
-                                <option>-- select --</option>
-                                @foreach ($project_status as $key => $status) 
+                                <option value="">---select---</option>
+                                @foreach ($project_status as $key => $status)
                                     <option value="{{ $status }}" class="text-capitalize">{{ ucwords($key)  }}</option>
                                     @endforeach
                                 </select>
@@ -53,14 +53,14 @@
                         <div class="form-group col-md-4">
                             <label for="img_url">Photos of Project on Visit</label>
                             <input type="file" class="form-control" id="img_name" name="img_name[]" multiple required>
-                        
+
                         </div>
                         <div class="form-group col-md-2">
 
                         </div>
                        <div class="form-group col-md-4">
                             <label for="visit_comment">Brief Comment</label>
-                            <textarea name="comments" id="comments" cols="44" rows="6" required></textarea>
+                            <textarea name="comments" id="comments" cols="44" rows="6" required dir="ltr" required></textarea>
                         </div>
                     </div>
                     <hr style="background-color:fuchsia; opacity:0.1">

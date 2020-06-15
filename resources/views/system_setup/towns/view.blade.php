@@ -22,19 +22,17 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3>View Town</h3>
             </div>
-            {{-- {{dd($keyMap)}} --}}
-            {{-- @foreach ($nationality as $nation) --}}
             <div class="card-body">
                 <form class="mt-5">
                     {{ csrf_field() }}
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="validate_region">Region</label>
-                        <input type="text" id="region" value="{{ old('region', $keyMap->region) }}"  
+                        <input type="text" id="region" value="{{ old('region', $keyMap->region) }}"
                             name="region" class="form-control" disabled>
                         </div>
                         <div class="form-group col-md-2"></div>
-                
+
                         <div class="form-group col-md-4">
                             <label for="title">Town:</label>
                             <input type="text" id="town" value="{{ old('town', $keyMap->town) }}"
@@ -48,6 +46,3 @@
 
         <!-- End -->
  @include('partials.footer')
-        
-
-      

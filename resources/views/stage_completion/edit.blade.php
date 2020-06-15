@@ -3,12 +3,27 @@
         <h3>Stage of Completion </h3>
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span><i><b>Project Owner:</b> {{ $r->full_name }}</i></span>
+                <div class="row">
+                    <div>
+                        <span>
+                            <i class="badge badge-default">Project Owner:</i>
+                               <i class="badge badge-primary"> {{ ($r->full_name) ? $r->full_name : $r->company_name  }}</i>
+                            </span>
+                    </div>
+                    <div>
+                        <span>
+                            <i class="badge badge-default">Project Budget:</i>
+                            <i class="badge badge-primary">
+                                {{ !empty($r->project_budget) ? $r->project_budget : 'Not Specified yet'  }}
+                            </i>
+                        </span>
+                    </div>
+                </div>
                 <div class="col-md-8">
                     @include('stage_completion.gallery_modal')
                 </div>
             </div>
-            <div class="card-body"> 
+            <div class="card-body">
             <form method="POST" action="{{ route('stage-of-completion.update', $r->id)}}" enctype="multipart/form-data" class="mt-5">
                 {{ csrf_field() }}
                 <input name="_method" type="hidden" value="PUT">

@@ -27,22 +27,14 @@ class StageOfCompletionController extends Controller
     public function index()
     {
 
-        $clients  = DB::table('tblclients')->get();
-        $stageOfCompletionImg = DB::table('tblstage_image')->get();
-        $stageOfCompletion    = static::trackPhaseOfCompletion();
+        $clients                =  DB::table('tblclients')->get();
+        $stageOfCompletionImg   =  DB::table('tblstage_image')->get();
+        $stageOfCompletion      =  static::trackPhaseOfCompletion();
 
         return view('stage_completion.index', compact(
             'stageOfCompletionImg',
             'stageOfCompletion',
-            'clients'
-            // 'genders',
-            // 'townId',
-            // 'regions',
-            // 'regionId',
-            // 'project_status',
-            // 'project_visited',
-            // 'project_phase',
-            // 'id'
+            'clients',
         ));
     }
 
@@ -69,6 +61,7 @@ class StageOfCompletionController extends Controller
                         'c.dob as client_dob','d.totalcost as project_budget','b.amtspent',
                         'd.rid', 'r.region',
                         'd.tid', 't.town',
+                        'c.cc_company_name as company_name',
                         ( DB::raw('Concat(c.title, " ", c.fname, c.lname) as full_name') ))
             ->orderBy('a.id')->get()->toArray();
 
@@ -157,13 +150,13 @@ class StageOfCompletionController extends Controller
                     ]
                 ));
 
-                $lastInsertedRow =  DB::table('tblstage')->latest('id')->first();
-                $stageId     = $lastInsertedRow->id;
-                $stageCodeId = $lastInsertedRow->id;
-                $phase_Id    = $lastInsertedRow->phase_id;
+                $lastInsertedRow   =  DB::table('tblstage')->latest('id')->first();
+                $stageId           =  $lastInsertedRow->id;
+                $stageCodeId       =  $lastInsertedRow->id;
+                $phase_Id          =  $lastInsertedRow->phase_id;
 
-                $generateStageCode = ['stage_code' => static::generateUniqueCode($stageCodeId)];
-                $updateStageCode   = DB::table('tblstage')->where('id', $stageId )->update($generateStageCode);
+                $generateStageCode =  ['stage_code' => static::generateUniqueCode($stageCodeId)];
+                $updateStageCode   =  DB::table('tblstage')->where('id', $stageId )->update($generateStageCode);
 
                 $save_StageCompletion = DB::table('tblstage_image')->insertGetId(array_merge(
                     request()->except(['_token', '_method', 'amtspent', 'status_id', 'matpurchased', 'amtdetails','stage_code']),
@@ -437,7 +430,12 @@ class StageOfCompletionController extends Controller
      */
     public function destroy($id)
     {
-        return redirect('/admin-portal/stage-of-completion')->with('success', 'Data will Soon Self Delete ');
+
+        // $id             = PaymentController::decryptedId($id);
+        // $updateData     = ClientController::allExcept();
+        // $update_project = DB::table('tblproject')->where('pid', $id)->update($updateData);
+        // return redirect('/admin-portal/stage-of-completion')->with('success', 'Data will Soon Self Delete ');
+
     }
 
     /**
