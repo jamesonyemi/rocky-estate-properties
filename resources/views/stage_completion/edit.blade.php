@@ -4,31 +4,41 @@
         <div class="card mb-30">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div class="row">
-                    <div>
+                    <div >
                         <span>
                             <i class="badge badge-default">Project Owner:</i>
-                               <i class="badge badge-primary"> {{ ($r->full_name) ? $r->full_name : $r->company_name  }}</i>
+                               <i class="badge badge-primary"> {{ ($r->full_name) ? $r->full_name : $r->company_name  }} </i>
                             </span>
                     </div>
                     <div>
                         <span>
                             <i class="badge badge-default">Project Budget:</i>
                             <i class="badge badge-primary">
-                                {{ !empty($r->project_budget) ? $r->project_budget : 'Not Specified yet'  }}
-                            </i>
+                                {{ !empty($r->project_budget) ? $r->project_budget : 'Not Specified yet'  }} </i>
                         </span>
                     </div>
                 </div>
                 <div class="col-md-8">
-                    @include('stage_completion.gallery_modal')
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-md-6 col-lg-12">
+                            <label for="" style="float: right; clear: both;"> image preview</label>
+                        </div>
+                        <div class="col-3"></div>
+                        <div class="col-md-6 col-lg-12">
+                            @include('stage_completion.gallery_modal')
+                        </div>
+                    </div>
                 </div>
             </div>
+            <hr>
             <div class="card-body">
             <form method="POST" action="{{ route('stage-of-completion.update', $r->id)}}" enctype="multipart/form-data" class="mt-5">
                 {{ csrf_field() }}
                 <input name="_method" type="hidden" value="PUT">
 
                         <div class="form-row">
+                            <div class="col-1"></div>
                             <div class="form-group col-md-4">
                                 <label for="amount_spent">Amount Spent</label>
                             <input type="number" step="0.1" value="{{ $r->amtspent }}" class="form-control" id="amtspent"  name="amtspent" required>
@@ -51,6 +61,7 @@
                             </div>
                         </div>
                         <div class="form-row">
+                            <div class="col-1"></div>
                             <div class="form-group col-md-4">
                             <label for="phase">Project Phase</label>
                             <select id="phase_id" name="phase_id" class="form-control custom-select" required>
@@ -76,6 +87,7 @@
                         <br>
 
                     <div class="form-row">
+                        <div class="col-1"></div>
                         <div class="form-group col-md-4">
                             <label for="comment">Materials Purchased</label>
                                 <textarea name="matpurchased" id="matpurchased"  cols="50" rows="4"  required class="form-control">
@@ -92,6 +104,7 @@
                     <hr style="background-color:fuchsia; opacity:0.1">
                     <div class="container">
                         <div class="row">
+                            <div class="col-2"></div>
                             <div class="col text-center">
                                 <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i> Update Info</button>
                             </div>

@@ -351,7 +351,7 @@ class StageOfCompletionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //code
+        # code...
         $stagImage   =  DB::table('tblstage_image')->where('id', $id)->get()->pluck('stage_id', 'stage_id');
         $getField    =  DB::table('tblstage_image')->where('id', $id)->select('pid', 'img_name', 'alt_name', 'img_path', 'base64_img_encode')->first();
         $getImage    =  json_decode($getField->img_name);
@@ -370,27 +370,36 @@ class StageOfCompletionController extends Controller
             'amtdetails'   =>  $request->input('amtdetails'),
             'matpurchased' =>  $request->input('matpurchased'),
         ];
-        $updateStage   =  DB::table('tblstage')->where('id', $id)->update( array_merge( $excepts, $updateStage) );
 
-        if ($request->hasFile('img_name')) {
-
-            $destinationPath =  public_path() . static::$relativeImagePath;
-            $files           =  $request->file('img_name');   /** will get all files */
-
-            /** this statement will loop through all incoming files. */
-            foreach ($files as $file) {
-
-                $file_name           =  static::iCrypto()."_" . $file->getClientOriginalName();
-                $imageData           =  base64_encode(static::$relativeImagePath.$file_name);
-                $b64imageEncoded     =  $imageData;
-                $src                 =  'data:'.$file->getClientMimeType().';'.'base64,'.$b64imageEncoded;
-                $full_path           =  $file->move($destinationPath, $file_name);    /** move files to destination folder */
-                $alternative_name[]  =  $file_name;    /** Get file original name, without extension*/
-                $fileNamesInArray[]  =  $file_name;
-                $base64img_encode[]  =  $b64imageEncoded;
-                $imagePath[]         =  static::$relativeImagePath.$file_name;
-            }
+        if ( empty($request->img_name) ) {
+            # code...
+            $updateStageInfo  =  DB::table('tblstage')->where('id', $id)->update( array_merge( $excepts, $updateStage) );
+            $isUpdated        =  ($updateStageInfo) ? 'had been Updated' : 'No change made' ;
+            return redirect()->route('stage-of-completion.index')->with('success', 'Project Stage #' .$id. ' '. $isUpdated);
         }
+        else {
+            # code...
+            if ( !empty($request->img_name) ) {
+                # code...
+                if ( $request->hasFile('img_name') ) {
+
+                    $destinationPath   =  public_path() . static::$relativeImagePath;
+                    $files             =  $request->file('img_name');   /** will get all files */
+
+                /** this statement will loop through all incoming files. */
+                foreach ($files as $file) {
+
+                    $file_name           =  static::iCrypto()."_" . $file->getClientOriginalName();
+                    $imageData           =  base64_encode(static::$relativeImagePath.$file_name);
+                    $b64imageEncoded     =  $imageData;
+                    $src                 =  'data:'.$file->getClientMimeType().';'.'base64,'.$b64imageEncoded;
+                    $full_path           =  $file->move($destinationPath, $file_name);    /** move files to destination folder */
+                    $alternative_name[]  =  $file_name;    /** Get file original name, without extension*/
+                    $fileNamesInArray[]  =  $file_name;
+                    $base64img_encode[]  =  $b64imageEncoded;
+                    $imagePath[]         =  static::$relativeImagePath.$file_name;
+                }
+            }
 
         $incomingImage      =  json_encode($fileNamesInArray);
         $img_path           =  json_encode($imagePath);
@@ -415,10 +424,15 @@ class StageOfCompletionController extends Controller
         );
 
         $mergeUpdate    =  array_merge_recursive($mergeImage);
+        $iupdateStage   =  DB::table('tblstage')->where('id', $id)->update( array_merge( $excepts, $updateStage) );
         $updateData     =  DB::table('tblstage_image')->where('pid', $getField->pid)->update($mergeUpdate);
-            if ($updateData) {
-                return redirect()->route('stage-of-completion.index')->with('success', 'Project # '.$getField->pid.' Updated');
+        $isUpdated      =  ( $updateData && $iupdateStage ) ? 'had been Updated' : 'No change made' ;
+
+        return redirect()->route('stage-of-completion.index')
+                         ->with('success', 'Project #' .$getField->pid. ' '. $isUpdated);
+
             }
+        }
 
     }
 

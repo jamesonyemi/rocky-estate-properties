@@ -85,7 +85,7 @@
                             <div class="form-group col-md-2"></div>
                             <div class="form-group col-md-4">
                                 <label for="img_name">Photos of Work Done</label>
-                                <input type="file" class="form-control" id="img_name" name="img_name[]" multiple required>
+                                <input type="file" class="form-control" id="img_name" name="img_name[]" multiple   #imageInput accept="image/*" onChange="processFile(img_name)"  >
                             </div>
                         </div>
                         <br>
