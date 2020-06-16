@@ -137,7 +137,7 @@
                     {{-- <i class='bx bx-money'></i> --}}
                     <i class='bx bxs-bank'></i>
                 </div>
-                <span class="sub-title">Total Payments & Balances</span>
+                <span class="sub-title">Payments & Balance.</span>
                 {{-- <h3>6.47% <span class="badge badge-red"><i class='bx bx-down-arrow-alt'></i> 45.5%</span></h3> --}}
 
                 <div class="progress-list">
@@ -150,23 +150,6 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
-            <div class="stats-card-box">
-                <div class="icon-box">
-                    <i class='bx bx-git-branch'></i>
-                </div>
-                <span class="sub-title">Branches</span>
-                {{-- <h3>92.6% <span class="badge"><i class='bx bx-up-arrow-alt'></i> 26.0%</span></h3> --}}
-
-                <div class="progress-list">
-                    <div class="bar-inner">
-                        <div class="bar progress-line" data-width="86.0"></div>
-                    </div>
-
-                    {{-- <p>Subscribe in month</p> --}}
-                </div>
-            </div>
-        </div>
     </div>
     <!-- End -->
     @include('partials.footer')

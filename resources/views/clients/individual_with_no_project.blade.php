@@ -44,14 +44,22 @@
                                     <tbody>
 
                                         @foreach ($clientWithZeroProject as $item)
+                                        <?php $encryptId = Crypt::encrypt($item->clientid) ?>
                                         @if ( empty($item->cc_company_name) )
                                             <td id="client_id"></td>
-                                            <td style='text-align:left'>  {{ $item->fname ." ". $item->lname }} </td>
-                                            <td style='text-align:left'>{{ $item->email }}</td>
+                                            <td style='text-align:left'>
+                                                <a href=" {{ route('clients.show', $encryptId)}}" class="nav-link mr-2">
+                                                 {{ $item->fname ." ". $item->lname }}
+                                                </a>
+                                             </td>
+                                            <td style='text-align:left'>
+                                                <a href=" {{ route('clients.show', $encryptId)}}" class="nav-link mr-2">
+                                                {{ $item->email }}
+                                                </a>
+                                            </td>
                                             <td>{{ $item->phone1 }}</td>
                                             {{-- <td>{{ ($item->nationality === $key) ? $country_name : "" }}</td> --}}
                                             <td>
-                                                <?php $encryptId = Crypt::encrypt($item->clientid) ?>
                                                 <a href=" {{ route('clients.show', $encryptId)}}" class="d-inline-block text-success mr-2">
                                                     <i class="bx bxs-analyse"></i>
                                                 </a>

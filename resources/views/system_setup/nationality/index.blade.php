@@ -71,17 +71,25 @@
                                             @foreach ($nationality as $nation)
                                             <tr>
                                                 <td id="project_id"></td>
-                                                <td >{{ $nation->country_code}}</span></td>
-                                                <td >{{ $nation->id}}</span></td>
-                                                <td>{{ $nation->country_name }}</span></td>
+                                                <td >
+                                                    <a href=" {{ route('nationality.show', $nation->id)}}" class="nav-link mr-2" >
+                                                    {{ $nation->country_code}}
+                                                    </a>
+                                                </td>
+                                                <td >{{ $nation->id}}</td>
                                                 <td>
-                                                    <a href=" {{ route('nationality.show', $nation->id)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <a href=" {{ route('nationality.show', $nation->id)}}" class="nav-link mr-2" >
+                                                    {{ $nation->country_name }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href=" {{ route('nationality.show', $nation->id)}}" class="d-inline-block text-success mr-2" >
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('nationality.edit', $nation->id) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                    <a href="{{ route('nationality.edit', $nation->id) }}" class="d-inline-block text-success mr-2" >
                                                             <i class="bx bx-edit"></i>
                                                         </a>
-                                                 <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                                 <a  href="#" class="d-inline-block text-success"
                                                         onclick="event.preventDefault();
                                                                  document.getElementById('delete'+ {{$nation->id}} ).submit();">
 

@@ -21,8 +21,8 @@ class UserRoleController extends Controller
         //code
         $roles  = DB::table('tblrole')->get();
         return view('system_setup.role.index', compact( 'roles' ));
-    
-           
+
+
     }
 
     /**
@@ -67,25 +67,25 @@ class UserRoleController extends Controller
 
     public function assignUserRole(Request $request)
     {
-       
+
        $user_id         =  $request->input('user_id');
        $role_id         =  $request->input('role_id');
        $postData        =  ClientController::allExcept();
-       
-        foreach ($user_id as $value) 
+
+        foreach ($user_id as $value)
         {
-            
+
             $ids             =  $value;
             $updateRoleId    =  [ 'role_id' => $role_id ];
-            $insertData      =  [ 'role_id' => $role_id, 'user_id' => $ids, 'isdeleted' => "no",  'created_by'=> Auth::id(),  ]; 
+            $insertData      =  [ 'role_id' => $role_id, 'user_id' => $ids, 'isdeleted' => "no",  'created_by'=> Auth::id(),  ];
 
             $updateUserRole  =  DB::table('users')->where('id', $ids)->update( array_merge( $updateRoleId ) );
             $create_role     =  DB::table('tbluser_role')->insertGetId( array_merge( $insertData ));
-                
+
         }
-        
+
         return redirect()->route('role.index')->with('success', 'Role Assigned Successfully');
-    
+
     }
 
     /**
@@ -97,9 +97,10 @@ class UserRoleController extends Controller
     public function show($id)
     {
         //code
-        $roles = DB::table('tblrole')->where('id', $id)->get();
+        $id    =   PaymentController::decryptedId($id);
+        $roles =   DB::table('tblrole')->where('id', $id)->get();
         return view('system_setup.role.show', compact('roles' ));
-            
+
     }
 
     /**
@@ -111,7 +112,8 @@ class UserRoleController extends Controller
     public function edit($id)
     {
         //code
-        $roles = DB::table('tblrole')->where('id', $id)->get();
+        $id    =   PaymentController::decryptedId($id);
+        $roles =   DB::table('tblrole')->where('id', $id)->get();
         return view('system_setup.role.edit', compact('roles' ));
     }
 
@@ -124,6 +126,7 @@ class UserRoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $id    =   PaymentController::decryptedId($id);
         $updateData = ClientController::allExcept();
         $update     = DB::table('tblrole')->where('id', $id)->update($updateData);
         return redirect()->route('role.index')->with('success', 'Role #  ' .$id. '   Info Updated');
@@ -137,9 +140,10 @@ class UserRoleController extends Controller
      */
     public function destroy($id)
     {
+
+        $id                    =  PaymentController::decryptedId($id);
         $flaged_as_deleted     =  ['isdeleted' => true,  'active' => "no", ];
-        $deleted = DB::table('tblrole')->where('id', $id)->update($flaged_as_deleted);
+        $deleted               =  DB::table('tblrole')->where('id', $id)->update($flaged_as_deleted);
         return redirect()->route('role.index')->with('success', 'Role #  ' .$id. '   Info Deleted');
-    }   
+    }
 }
-    

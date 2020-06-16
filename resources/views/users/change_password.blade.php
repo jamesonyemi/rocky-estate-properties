@@ -1,19 +1,21 @@
 @include('partials.master_header')
     <br><br><br>
         <!-- Start -->
-        <div class="card mb-30">
+        <div class="card mb-30 mt-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3>New User</h3>
+                <h3>Reset User Password</h3>
             </div>
-            <hr>
             <div class="card-body">
-            <form class="mt-5" action="{{ route('verified-users.store') }}" method="POST">
+           @foreach ($verifiedUsers as $v_user)
+                <?php $encryptId = Crypt::encrypt($v_user->id);  ?>
+            <form class="mt-5" action="{{ route('verified-users.update', $encryptId) }}" method="POST">
                     {{ csrf_field() }}
+                    @method("PUT")
                     <div class="form-row">
                         <div class="form-group col-md-1"> </div>
                         <div class="form-group col-md-4 {{ $errors->has('first_name') ? ' has-error' : '' }}">
                             <label for="first_name">First Name</label>
-                        <input type="text" class="form-control" name="first_name" id="first_name" required>
+                        <input type="text" class="form-control" value="{{ old('first_name', $v_user->first_name) }}" name="first_name" id="first_name" required>
                             @if ($errors->has('first_name'))
                             <span class="help-block"><strong>{{ $errors->first('first_name') }}</strong></span>
                             @endif
@@ -21,14 +23,14 @@
                         <div class="form-group col-md-1"> </div>
                         <div class="form-group col-md-4">
                             <label for="middle_name">Middle Name</label>
-                        <input type="text" class="form-control" name="middle_name" id="middle_name" >
+                        <input type="text" class="form-control" value="{{ old('middle_name', $v_user->middle_name) }}" name="middle_name" id="middle_name" >
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-1"> </div>
                         <div class="form-group col-md-4 {{ $errors->has('last_name') ? ' has-error' : '' }} ">
                             <label for="last_name">Last Name</label>
-                        <input type="text" class="form-control" name="last_name" id="last_name" required>
+                        <input type="text" class="form-control" value="{{ old('last_name', $v_user->last_name) }}" name="last_name" id="last_name" required>
                                  @if ($errors->has('last_name'))
                                     <span class="help-block"><strong>{{ $errors->first('last_name') }}</strong></span>
                                  @endif
@@ -36,7 +38,7 @@
                         <div class="form-group col-md-1"> </div>
                         <div class="form-group col-md-4 {{ $errors->has('email') ? ' has-error' : '' }} ">
                             <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" required >
+                        <input type="email" class="form-control" value="{{ old('email', $v_user->email) }}" name="email" id="email" required>
                             @if ($errors->has('email'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('email') }}</strong>
@@ -66,11 +68,12 @@
                               <div class="col-1"></div>
                               <div class="col text-center">
                                   <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
-                                   Save</button>
+                                   Save Changes</button>
                                 </div>
                                 <div class="form-group col-md-2"></div>
                         </div>
                       </div>
+                      @endforeach
                 </form>
             </div>
         </div>
@@ -78,3 +81,74 @@
         <div class="flex-grow-1"></div>
  @include('partials.footer')
 </div>
+
+<script>
+    ( function () {
+
+        let password    = $('input[name="password"]');
+        let confirmPwd  = $('input[name="password_confirmation"]');
+        let error       = $('#error-msg');
+        let success     = $('#success-msg');
+        let saveButton  = $('button[type="submit"]');
+
+    confirmPwd.on('keypress,keyup, keydown, change', function () {
+        if ( confirmPwd.val() === password.val() ) {
+
+            let accepted = function () {
+                success.show();
+                error.hide();
+                saveButton.removeAttr("disabled","disabled");
+                AlertMsg(success, "\n"+ "Accepted");
+            }
+            return accepted();
+        }
+
+            if (  confirmPwd.val() !== password.val()  ) {
+
+                let rejected = function () {
+                    success.hide();
+                    error.show();
+                    saveButton.attr("disabled","disabled");
+                    AlertMsg(error, "\n"+ "Password mis-match");
+                }
+                return rejected();
+            }
+
+            // let comparePwd  =   ( password.val() === confirmPwd.val() ? accepted() : rejected() );
+         });
+
+    password.on('keypress,keyup, keydown, change', function () {
+        if ( password.val() === confirmPwd.val()   ) {
+
+            let accepted = function () {
+                success.show();
+                error.hide();
+                saveButton.removeAttr("disabled","disabled");
+                AlertMsg(success, "\n"+ "Accepted");
+            }
+            return accepted();
+        }
+
+            if (  password.val() !== confirmPwd.val()  ) {
+
+                let rejected = function () {
+                    success.hide();
+                    error.show();
+                    saveButton.attr("disabled","disabled");
+                    AlertMsg(error, "\n"+ "Password mis-match");
+                }
+                return rejected();
+            }
+
+            // let comparePwd  =   ( password.val() === confirmPwd.val() ? accepted() : rejected() );
+         });
+
+    })();
+
+    function AlertMsg(params, msg) {
+        let targetElement = params;
+        let msgContent    = targetElement.textContent;
+        let msgText       = targetElement.val(targetElement.text(msg));
+        msgContent        = msgText;
+    };
+</script>

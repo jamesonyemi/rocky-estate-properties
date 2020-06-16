@@ -3,7 +3,7 @@
    @include('partials.success_alert')
 
     <!-- Begin page -->
-    <div id="layout-wrapper">  
+    <div id="layout-wrapper">
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
@@ -18,10 +18,10 @@
                             <div class="page-title-box d-flex align-items-center justify-content-between">
                                 <h4 class="mb-0 font-size-18">Available Roles</h4>
                                 <div class="page-title-right">
-                                    <a href="{{ route('role.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
-                                        Create Role</a> 
-                                        <a href="{{ route('assign-role') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
-                                            Assign Role to User</a> 
+                                    <a href="{{ route('role.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
+                                        Create Role</a>
+                                        <a href="{{ route('assign-role') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
+                                            Assign Role to User</a>
                                 </div>
                             </div>
                         </div>
@@ -33,12 +33,12 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title"></h4>
-                                    <div class="card-title-desc">  </div>   
+                                    <div class="card-title-desc">  </div>
                                     <table id="" class="table table-bordered dt-responsive nowrap client" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Role</th> 
+                                                <th>Role</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -46,27 +46,32 @@
                                         <tbody>
 
                                             @foreach ($roles as $role)
+                                            <?php $encryptId = Crypt::encrypt($role->id) ?>
                                                 @if ( $role->isdeleted === 0  )
                                             <tr>
                                                 <td id="client_id"></td>
-                                                <td >{{ ucfirst($role->type) }}</span></td>
+                                                <td >
+                                                    <a href=" {{ route('role.show', $encryptId)}}" class="nav-link mr-2" >
+                                                    {{ ucfirst($role->type) }}
+                                                    </a>
+                                                </td>
                                                 <td>
-                                                    <a href=" {{ route('role.show', $role->id)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <a href=" {{ route('role.show', $encryptId)}}" class="d-inline-block text-success mr-2" >
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('role.edit', $role->id) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                    <a href="{{ route('role.edit', $encryptId) }}" class="d-inline-block text-success mr-2" >
                                                             <i class="bx bx-edit"></i>
                                                         </a>
-                                                 <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                                 <a  href="#" class="d-inline-block text-success"
                                                         onclick="event.preventDefault();
-                                                                 document.getElementById('delete'+ {{ $role->id }} ).submit();">
-                                                   
-                                                    <form id="{{'delete'.$role->id }}" action="{{ route('role.destroy', $role->id) }}" method="post" >
+                                                                 document.getElementById('delete'+ {{ $encryptId }} ).submit();">
+
+                                                    <form id="{{'delete'.$encryptId }}" action="{{ route('role.destroy', $encryptId) }}" method="post" >
                                                         {{ csrf_field() }}
                                                         <input name="_method" type="hidden" value="DELETE">
                                                         <i class="bx bx-trash"></i>
-                                                    </form> 
-                                                </a>   
+                                                    </form>
+                                                </a>
                                                 </td>
                                             </tr>
                                             @endif

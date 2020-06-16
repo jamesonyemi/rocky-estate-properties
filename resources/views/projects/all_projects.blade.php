@@ -31,7 +31,7 @@
                 <div class="container-fluid">
 
                     <!-- start page title -->
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
                                 <h4 class="mb-0 font-size-18 text-uppercase">Clients With Projects</h4>
@@ -66,7 +66,7 @@
                                                 {{-- <th>Project</th> --}}
                                                 <th>Location</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
+                                                <th style="width: 10px; vertical-align: middle">Action</th>
                                             </tr>
                                         </thead>
 
@@ -106,7 +106,7 @@
                                                     <form id="delete" action="{{ route('projects.destroy', $encryptId) }}" method="POST" class="d-inline-block text-success">
                                                         {{ csrf_field() }}
                                                         @method('DELETE')
-                                                    <button class="btn  bx bx-trash text-danger" type="submit" style="margin-bottom: 6px; margin-left:-14px;">
+                                                    <button class="btn  bx bx-trash text-danger" type="submit" style="margin-bottom: 7px; margin-left:-16px;">
                                                     </button>
                                                     </form>
                                                 </td>

@@ -49,18 +49,22 @@
 
                                         <tbody>
                                      @foreach ($getAllVisit as $visit)
+                                     <?php $encryptId = Crypt::encrypt($visit->vid) ?>
                                       <?php $owner = ($visit->full_name) ? $visit->full_name : $visit->company_name ?>
                                             <tr>
                                                 <td id="project_id"></td>
-                                                <td>{{ $owner }}</td>
+                                                <td>
+                                                    <a href=" {{ route('onsite-visit.show', $encryptId)}}" class="nav-link mr-2" >
+                                                    {{ $owner }}
+                                                    </a>
+                                                </td>
                                                 <td >{{ $visit->vdate}}</span></td>
                                                 <td >{{ $visit->title}}</span></td>
                                                 <td>
-                                                    <?php $encryptId = Crypt::encrypt($visit->vid) ?>
-                                                    <a href=" {{ route('onsite-visit.show', $encryptId)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <a href=" {{ route('onsite-visit.show', $encryptId)}}" class="d-inline-block text-success mr-2" >
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('onsite-visit.edit', $encryptId) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                    <a href="{{ route('onsite-visit.edit', $encryptId) }}" class="d-inline-block text-success mr-2" >
                                                             <i class="bx bx-edit"></i>
                                                     </a>
                                                 </td>

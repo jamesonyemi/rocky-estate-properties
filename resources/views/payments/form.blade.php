@@ -4,14 +4,16 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3>New Payment</h3>
             </div>
+            <hr>
             <div class="card-body">
-                <form class="mt-5" action="{{route('payments.store') }}"  method="POST">
+                <form class="mt-4" action="{{route('payments.store') }}"  method="POST">
                     {{ csrf_field() }}
                     <div class="form-row">
+                        <div class="col-1"></div>
                         <div class="form-group col-md-4">
                             <label for="client">Client</label>
                             <select id="clientid" name="clientid" class="form-control custom-select" required>
-                                <option value="">-- select --</option>
+                                <option value="">---select---</option>
                                  @foreach ($clientWithProjects as $item)
                                  <option value="{{ $item->clientid }}" class="text-capitalize">
                                      {{ ucwords( $item->full_name)  }}
@@ -26,6 +28,7 @@
                         </div>
                     </div>
                     <div class="form-row">
+                        <div class="col-1"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_region">Amount Received:</label>
                             <input type="number" step="0.1" id="amt_received" name="amt_received" class="form-control" required>
@@ -37,6 +40,7 @@
                         </div>
                     </div>
                     <div class="form-row">
+                        <div class="col-1"></div>
                         <div class="form-group col-md-4">
                             <label for="paymode">Payment Mode:</label>
                             <select id="paymentmode" name="paymentmode" class="form-control custom-select" required>
@@ -48,13 +52,14 @@
                         </div>
                         <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-4">
-                            <label for="title">Payment Date (format-- dd/mm/yy):</label>
+                            <label for="title">Payment Date (format-- mm/dd/yy):</label>
                         <input type="date" id="paymentdate" name="paymentdate" value="{{ date('Y-m-d') }}" max="{{date('Y-m-d') }}" class="form-control" required>
                             <span class="badge badge-pill badge-danger" id="error-msg" style="display:none; float:right; margin-top: 2.5px;" value="" ></span>
                             <span class="badge badge-pill badge-success" id="success-msg" style="display:none; float:right; margin-top: 2.5px;" value="" ></span>
                     </div>
-                    </div>  
+                    </div>
                     <div class="form-row" id="bank">
+                        <div class="col-1"></div>
                         <div class="form-group col-md-4" >
                             <label for="bank-name">Bank Name:</label>
                             <input type="text" id="bankname" name="bankname" class="form-control" required>
@@ -66,6 +71,7 @@
                         </div>
                     </div>
                     <div class="form-row">
+                        <div class="col-1"></div>
                         <div class="form-group col-md-4 cheque-no">
                             <label for="cheque-no">Cheque Number:</label>
                             <input type="text" id="chequeno" name="chequeno" class="form-control" required>
@@ -73,12 +79,13 @@
                         <div class="form-group col-md-2 hide-me"></div>
                         <div class="form-group col-md-4">
                             <label for="cheque-no">Comment:</label>
-                            <textarea name="comments" id="comments" cols="30" rows="4" class="form-control" required></textarea>
+                            <textarea name="comments" id="comments" cols="30" rows="2" class="form-control" required></textarea>
                         </div>
                     </div>
                      <hr style="background-color:fuchsia; opacity:0.1">
                       <div class="container">
                           <div class="row">
+                        <div class="col-2"></div>
                               <div class="col text-center">
                                   <button type="submit" class="btn btn-lg btn-primary"><i data-feather="database"></i>
                                    Save</button>
@@ -87,7 +94,7 @@
                         </div>
                       </div>
                 </form>
-               
+
             </div>
         </div>
  <br><br>
@@ -95,24 +102,24 @@
  @include('partials.footer')
 
  <script>
- ( (e)  => { 
+ ( (e)  => {
      let payMode = $('#paymentmode');
      let targets = $('#bank, .cheque-no, .hide-me');
-     let mode = payMode.on('change',  () => { 
+     let mode = payMode.on('change',  () => {
         switch (payMode.select().val()) {
             case 'cash':
             case 'mobile-money':
                 targets.remove();
             break;
-            
+
             case 'cheque':
             case 'cheque + cash':
                 window.location.reload();
                 break;
         }
-      
+
          });
-    })();  
+    })();
  </script>
 
 <script>
@@ -148,49 +155,6 @@
     });
     </script>
 
-    {{-- <script>
-        ( function () {
-            let paymentdate = $('input[type="date"].form-control');
-            console.log(paymentdate.val());
-            
-            let isDate = new Date();
-            console.log(isDate.getMonth());
-            let day = isDate.getDate()
-            let month = ( '0'+(isDate.getMonth() + 1) ).toString();
-            let today  = isDate.getFullYear()+'-'+month+'-'+isDate.getDate();
-                console.log(today);
-                
-            paymentdate.on( 'change', () => {
-                let showDate     = paymentdate.select().val();
-                let formatedDate = $('#date');
-                let error        = $('#error-msg');
-                let success      = $('#success-msg');
-                let saveButton   = $('button[type="submit"]');
-                
-                if ( showDate === today || showDate <= today ) {
-                    AlertMsg(success, "\n"+ "Correct");    
-                    success.show();
-                    error.hide();
-                    saveButton.show();
-                    saveButton.removeAttr("disabled","disabled")
-                    paymentdate.fadeOut();
-                    formatedDate.val(showDate).show();
-                    console.log("Awesome Today: "+showDate); 
-
-                } else if ( showDate >= today ) {
-                    AlertMsg(error, "Payment Date can not be in the Future");    
-                    error.show();
-                    success.hide();
-                    saveButton.attr("disabled","disabled")
-                    paymentdate.fadeOut();
-                    formatedDate.val(showDate).show();
-                    console.log("Future Today: "+showDate);  
-                } 
-            });
-        })();
-    </script> --}}
-
-
 <script>
     ( function () {
         let paymentdate = $('input[type="date"].form-control');
@@ -200,7 +164,7 @@
             formatedDate.hide();
             paymentdate.fadeIn();
         });
-       
+
     })();
 </script>
 
@@ -212,6 +176,3 @@
         msgContent        = msgText;
     };
 </script>
-        
-
-      

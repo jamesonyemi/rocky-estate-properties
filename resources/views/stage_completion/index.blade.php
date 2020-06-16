@@ -61,14 +61,22 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($stageOfCompletion as $item)
+                                            <?php $encryptId = Crypt::encrypt($item->id) ?>
                                             <tr>
                                                 <td id="stage"></td>
-                                                <td style='text-align:left'>  {{ $item->full_name }} </td>
-                                                <td style='text-align:left'>  {{ $item->title }} </td>
+                                                <td style='text-align:left'>
+                                                    <a href=" {!! route('stage-of-completion.show',$encryptId)!!}" class="nav-link mr-2" >
+                                                      {{ $item->full_name }}
+                                                    </a>
+                                                    </td>
+                                                <td style='text-align:left'>
+                                                    <a href=" {!! route('stage-of-completion.show',$encryptId)!!}" class="nav-link mr-2" >
+                                                      {{ $item->title }}
+                                                    </a>
+                                                    </td>
                                                 <td style='text-align:left'>  {!! $item->project_budget !!} </td>
                                                 <td style='text-align:left'>  {!! $item->amtspent !!} </td>
                                                 <td>
-                                                    <?php $encryptId = Crypt::encrypt($item->id) ?>
                                                     <a href=" {!! route('stage-of-completion.show',$encryptId)!!}" class="d-inline-block text-success mr-2" >
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>

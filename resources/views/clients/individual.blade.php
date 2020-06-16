@@ -43,24 +43,32 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($clientWithProjects as $item)
+                                        <?php $encryptId = Crypt::encrypt($item->clientid) ?>
                                         @if ( empty($item->cc_company_name))
                                         <tr>
                                             <td id="client_id"></td>
-                                            <td style='text-align:left'>  {{ $item->full_name }} </td>
-                                            <td style='text-align:left'>{{ $item->client_email }}</td>
+                                            <td style='text-align:left'>
+                                                <a href=" {{ route('clients.show', $encryptId)}}" class="d-inline-block nav-link mr-2" >
+                                                 {{ $item->full_name }}
+                                                </a>
+                                            </td>
+                                            <td style='text-align:left'>
+                                                <a href=" {{ route('clients.show', $encryptId)}}" class="d-inline-block nav-link mr-2" >
+                                                {{ $item->client_email }}
+                                                </a>
+                                            </td>
                                             <td>{{ $item->client_prime_contact }}</td>
                                             <td>{{ $item->region }}</td>
                                             <td>{{ $item->location }}</td>
                                             {{-- <td>{{ $item->project_title }}</td> --}}
                                             <td>
-                                                <?php $encryptId = Crypt::encrypt($item->clientid) ?>
-                                                <a href=" {{ route('clients.show', $encryptId)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                <a href=" {{ route('clients.show', $encryptId)}}" class="d-inline-block text-success mr-2" >
                                                     <i class="bx bxs-analyse"></i>
                                                 </a>
-                                                <a href="{{ route('clients.edit', $encryptId) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                <a href="{{ route('clients.edit', $encryptId) }}" class="d-inline-block text-success mr-2" >
                                                         <i class="bx bx-edit"></i>
                                                     </a>
-                                                <a  href="#" class="d-inline-block text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                                <a  href="#" class="d-inline-block text-success"
                                                     onclick="event.preventDefault();
                                                              document.getElementById('delete_client'+ {{ $encryptId }}).submit();">
 

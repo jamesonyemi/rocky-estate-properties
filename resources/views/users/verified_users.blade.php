@@ -1,7 +1,7 @@
 @include('partials.master_header')
 <!-- Begin page -->
 <br><br><br>
-<div id="layout-wrapper">   
+<div id="layout-wrapper">
     <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
@@ -25,14 +25,14 @@
                             <h6 style="margin-bottom:-5px;">Action Buttons</h6>
                         </div>
                         <div class="card-body">
-                            <a href="{{ route('verified-users.create') }}" 
-                            class="btn  btn-outline-primary btn-sm waves-effect waves-light" > 
+                            <a href="{{ route('verified-users.create') }}"
+                            class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
                                 Create User
-                            </a> 
+                            </a>
                             <a href="#" class="btn  btn-outline-primary btn-sm waves-effect waves-light"
-                                data-toggle="modal" data-target=".export-modal" > Export Users</a> 
-                            <a href="#" class="btn btn-outline-primary btn-sm waves-effect waves-light" 
-                                data-toggle="modal" data-target=".basicModalSM" >Import Users</a> 
+                                data-toggle="modal" data-target=".export-modal" > Export Users</a>
+                            <a href="#" class="btn btn-outline-primary btn-sm waves-effect waves-light"
+                                data-toggle="modal" data-target=".basicModalSM" >Import Users</a>
                         </div>
                     </div>
                     <!-- end page title -->
@@ -40,19 +40,18 @@
                     <!-- FILTERING BY PROJECT STATUS  -->
                     {{-- <div><span id="filter_status"></span></div> --}}
                     <!-- END OF FILTERING BY PROJECT STATUS-->
-                
+
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title"></h4>
-                                    <div class="card-title-desc">  </div>   
+                                    <div class="card-title-desc">  </div>
                                     <table id="" class="table table-bordered dt-responsive nowrap client" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
+                                                <th>Full Name</th>
                                                 <th>Status</th>
                                                 <th>Created At</th>
                                                 <th>Action</th>
@@ -62,19 +61,22 @@
                                         <tbody>
 
                                             @foreach ($verifiedUsers as $user)
+                                            <?php $encryptId = Crypt::encrypt($user->id) ?>
                                                 {{-- @if ( $user->isdeleted !== "" ) --}}
                                             <tr>
                                                 <td id="project_id"></td>
-                                                <td >{{ $user->first_name }}</span></td>
-                                                <td >{{ $user->last_name }}</span></td>
-                                                <td >{{ $user->active }}</span></td>
-                                                <td>{{  $user->created_at }}</span></td>
+                                                <td >
+                                                    <a href=" {{ route('verified-users.show', $encryptId)}}"  class="nav-link">
+                                                    {{ $user->full_name }}
+                                                    </a>
+                                                </td>
+                                                <td >{{ $user->active }}</td>
+                                                <td>{{  $user->created_at }}</td>
                                                 <td>
-                                                    <?php $encryptId = Crypt::encrypt($user->id) ?>
-                                                    <a href=" {{ route('verified-users.show', $encryptId)}}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view">
+                                                    <a href=" {{ route('verified-users.show', $encryptId)}}" class="d-inline-block text-success mr-2" >
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('verified-users.edit', $encryptId) }}" class="d-inline-block text-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                    <a href="{{ route('verified-users.edit', $encryptId) }}" class="d-inline-block text-success mr-2" >
                                                             <i class="bx bx-edit"></i>
                                                     </a>
                                                 </td>

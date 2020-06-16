@@ -10,7 +10,7 @@
             <div class="page-content">
                 <div class="container-fluid">
                     <!-- start page title -->
-                    <div class="row">
+                    <div class="row mt-5">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
                                 <h5 class="mb-0 font-size-18 text-uppercase">All Corporate Clients</h5>
@@ -41,8 +41,8 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Company Name</th>
-                                                <th>Primary Email</th>
+                                                <th>Company</th>
+                                                <th>Email</th>
                                                 <th>Mobile</th>
                                                 <th>Postal Addr.</th>
                                                 <th>Residential Addr.</th>
@@ -51,15 +51,23 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($clientWithZeroProject as $item)
+                                            <?php $encryptId = Crypt::encrypt($item->clientid) ?>
                                             <tr>
                                                 <td id="corporate_ids"></td>
-                                                <td style='text-align:left'>  {{ $item->cc_company_name }} </td>
-                                                <td style='text-align:left'>{{ $item->email }}</td>
+                                                <td style='text-align:left'>
+                                                    <a href=" {{ route('view-corporate-client',$encryptId)}}" class="d-inline-block nav-link mr-2">
+                                                     {{ $item->cc_company_name }}
+                                                    </a>
+                                                     </td>
+                                                <td style='text-align:left'>
+                                                    <a href=" {{ route('view-corporate-client',$encryptId)}}" class="d-inline-block nav-link mr-2">
+                                                    {{ $item->email }}
+                                                    </a>
+                                                </td>
                                                 <td>{{ $item->cc_mobile }}</td>
                                                 <td>{{ $item->cc_postal_addr }}</td>
                                                 <td>{{ $item->cc_res_addr }}</td>
                                                 <td>
-                                                    <?php $encryptId = Crypt::encrypt($item->clientid) ?>
                                                     <a href=" {{ route('view-corporate-client',$encryptId)}}" class="d-inline-block text-success mr-2">
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>

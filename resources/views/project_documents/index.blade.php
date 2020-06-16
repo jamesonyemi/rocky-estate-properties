@@ -64,15 +64,19 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($projectDocOwnedBy as $document)
+                                    <?php $encryptId = Crypt::encrypt($document->id) ?>
                                     <?php $owner  = ($document->full_name) ? $document->full_name : $document->company_name  ?>
                                     <tr>
                                         <td id="stage"></td>
-                                        <td style='text-align:left'>  {{ $owner}} </td>
+                                        <td style='text-align:left'>
+                                            <a href=" {!! route('project-docs.show',$encryptId )!!}" class="nav-link mr-2" >
+                                             {{ $owner}}
+                                            </a>
+                                         </td>
                                         <td style='text-align:left'>  {{ $document->is_ready }} </td>
                                         <td style='text-align:left'>  {{ $document->is_submitted }} </td>
                                         <td style='text-align:left'>  {!! $document->created_date !!} </td>
                                         <td>
-                                            <?php $encryptId = Crypt::encrypt($document->id) ?>
                                             <a href=" {!! route('project-docs.show',$encryptId )!!}" class="d-inline-block text-success mr-2" >
                                                 <i class="bx bxs-analyse"></i>
                                             </a>
