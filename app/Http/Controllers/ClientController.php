@@ -145,14 +145,24 @@ class ClientController extends Controller
         return view('clients.create', compact('genders', 'countryId','titleId'));
     }
 
-    public function non_corporateForm()
+    public function corporateForm()
     {
         //code
         $genders    =  DB::table('tblgender')->pluck('id', 'type');
         $countryId  =  DB::table('tblcountry')->get()->pluck('id', 'country_name');
         $titleId    =  DB::table('tbltitle')->get()->pluck('tid', 'salutation');
 
-        return view('clients.create', compact('genders', 'countryId','titleId'));
+        return view('clients.corporate', compact('genders', 'countryId','titleId'));
+    }
+
+    public function individualClientForm()
+    {
+        //code
+        $genders    =  DB::table('tblgender')->pluck('id', 'type');
+        $countryId  =  DB::table('tblcountry')->get()->pluck('id', 'country_name');
+        $titleId    =  DB::table('tbltitle')->get()->pluck('tid', 'salutation');
+
+        return view('clients.ic_form', compact('genders', 'countryId','titleId'));
     }
 
     public static function allExcept()

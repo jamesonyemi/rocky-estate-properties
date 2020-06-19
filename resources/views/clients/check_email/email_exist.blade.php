@@ -4,6 +4,8 @@
     let notify            =  document.getElementById("signal-message");
     let btnSave           =  document.getElementById("btn-save");
 
+
+
     (
       function clientInfo() {
             firstEmailField.addEventListener('keyup', (e) => {
@@ -22,10 +24,12 @@
                      if (result === true) {
 
                             firstEmailField.textContent = getId;
-                            secEmailField.value         = getId;
                             notify.classList.add("badge");
                             notify.classList.remove("badge-success");
                             notify.classList.add("badge-danger");
+                            notify.classList.add("bx");
+                            notify.classList.add("bx-x");
+                            notify.classList.remove("bx-check-double");
                             notify.innerText = getId + ", "+ 'already exist';
                             btnSave.setAttribute("disabled", "yes");
 
@@ -33,13 +37,15 @@
                      else {
 
                             firstEmailField.textContent = getId;
-                            secEmailField.value         = getId;
                             notify.classList.add("badge");
                             notify.classList.remove("badge-danger");
+                            notify.classList.remove("bx-x");
                             notify.classList.add("badge-success");
+                            notify.classList.add("bx");
+                            notify.classList.add("bx-check-double");
                             notify.innerText = getId + ", "+ 'accepted & approved';
                             firstEmailField.style.border = "1px solid green";
-                            btnSave.setAttribute("disabled", "yes");
+                            btnSave.removeAttribute("disabled", "yes");
                      }
 
                     console.log(data);

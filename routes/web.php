@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Route;
 
         Route::resource('clients', 'ClientController');
         Route::any('/all', 'ClientController@allClients')->name('client.all');
+        Route::any('/clients/create/cc-form', 'ClientController@corporateForm')->name('cc-form');
+        Route::any('/clients/create/ic-form', 'ClientController@individualClientForm')->name('ic-form');
         Route::any('/clients/create/fetch-email', 'ClientController@fetchEmail')->name('fetch-email');
         Route::any('/corporate-client', 'ClientController@corporateClient')->name('corporate-client');
         Route::any('/corporate-client-wp', 'ClientController@corporateClientWithProject')->name('corporate-client-wp');
@@ -60,7 +62,8 @@ use Illuminate\Support\Facades\Route;
         Route::any('/process-additional-cost', 'PaymentController@processAdditionalCost')->name('process-additional-cost');
         Route::any('/budget-review', 'PaymentController@budgetReview')->name('budget-review');
 
-        Route::get('/projects/create/{id}','ProjectController@getTowns');
+        Route::any('/projects/create/{id}','ProjectController@getTowns')->name('get-towns');
+        Route::any('/projects/create/filter-data', 'ProjectController@filterData')->name('filter-data');
         Route::any('/stage-of-completion/{image}/delete', 'StageOfCompletionController@deleteImage');
         Route::get('/onsite-visit/create/{id}','OnsiteVisitController@clientToProject');
 
