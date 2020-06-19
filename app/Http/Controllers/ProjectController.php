@@ -70,6 +70,13 @@ class ProjectController extends Controller
         return json_encode($towns);
     }
 
+    public static function filterData()
+    {
+         # code...
+        $get_data   =  DB::table('tbltown')->get()->pluck("town","tid");
+        return json_encode($get_data);
+    }
+
     public function clientToProject($clientid)
     {
         $clientProject =  DB::table("tblproject")->where("clientid",$clientid)->pluck("title","pid");
