@@ -51,7 +51,7 @@
                         <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-4">
                             <label for="validate_email">Email</label>
-                            <input type="email" name="email" class="form-control" id="email" required>
+                            <input type="email" id="email" name="email" class="form-control"  required>
                             <span id="signal-message"></span>
                         </div>
                     </div>
