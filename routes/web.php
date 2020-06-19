@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Route;
 
         Route::resource('clients', 'ClientController');
         Route::any('/all', 'ClientController@allClients')->name('client.all');
+        Route::any('/clients/create/cc-form', 'ClientController@corporateForm')->name('cc-form');
+        Route::any('/clients/create/ic-form', 'ClientController@individualClientForm')->name('ic-form');
         Route::any('/clients/create/fetch-email', 'ClientController@fetchEmail')->name('fetch-email');
         Route::any('/corporate-client', 'ClientController@corporateClient')->name('corporate-client');
         Route::any('/corporate-client-wp', 'ClientController@corporateClientWithProject')->name('corporate-client-wp');
