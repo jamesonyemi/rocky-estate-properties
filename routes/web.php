@@ -62,7 +62,8 @@ use Illuminate\Support\Facades\Route;
         Route::any('/process-additional-cost', 'PaymentController@processAdditionalCost')->name('process-additional-cost');
         Route::any('/budget-review', 'PaymentController@budgetReview')->name('budget-review');
 
-        Route::get('/projects/create/{id}','ProjectController@getTowns');
+        Route::any('/projects/create/{id}','ProjectController@getTowns')->name('get-towns');
+        Route::any('/projects/create/filter-data', 'ProjectController@filterData')->name('filter-data');
         Route::any('/stage-of-completion/{image}/delete', 'StageOfCompletionController@deleteImage');
         Route::get('/onsite-visit/create/{id}','OnsiteVisitController@clientToProject');
 
