@@ -16,11 +16,11 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">Available User Roles</h4>
+                                <h4 class="mb-0 font-size-18">Available User Role</h4>
                                 <div class="page-title-right">
-                                    <a href="{{ route('role.create') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
+                                    <a href="{{ route('role.create') }}" class="btn btn-outline-primary btn-sm waves-effect waves-light" >
                                         Create Role</a>
-                                        <a href="{{ route('assign-role') }}" class="btn  btn-outline-primary btn-sm waves-effect waves-light" >
+                                        <a href="{{ route('assign-role') }}" class="btn btn-outline-primary btn-sm waves-effect waves-light" >
                                             Assign Role to User</a>
                                 </div>
                             </div>
@@ -51,15 +51,15 @@
                                             <tr>
                                                 <td id="client_id"></td>
                                                 <td >
-                                                    <a href=" {{ route('role.show', $encryptId)}}" class="nav-link mr-2" >
+                                                    <a href=" {{ route('role.show', $encryptId)}}" class="mr-2 nav-link" >
                                                     {{ ucfirst($role->type) }}
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a href=" {{ route('role.show', $encryptId)}}" class="d-inline-block text-success mr-2" >
+                                                    <a href=" {{ route('role.show', $encryptId)}}" class="mr-2 d-inline-block text-success" >
                                                         <i class="bx bxs-analyse"></i>
                                                     </a>
-                                                    <a href="{{ route('role.edit', $encryptId) }}" class="d-inline-block text-success mr-2" >
+                                                    <a href="{{ route('role.edit', $encryptId) }}" class="mr-2 d-inline-block text-success" >
                                                             <i class="bx bx-edit"></i>
                                                         </a>
                                                  <a  href="#" class="d-inline-block text-success"
